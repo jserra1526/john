@@ -1,0 +1,6 @@
+# Browser session / login state must never be committed
+state.json
+*.storage.json
+code.txt
+scraper/auth.js
+report/coach/*.preview.png

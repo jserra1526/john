@@ -1,0 +1,793 @@
+Round,FixtureId,Team,Number,Name,K,HB,D,CP,M,I50,R50,1%,T,Cl,G,RP
+1,26640,Shepparton Bears,20,Mitchell Brett,19,6,25,5,7,1,6,3,0,0,0,84
+1,26640,Shepparton Bears,1,Luke Smith,17,8,25,12,6,4,2,3,3,4,1,132
+1,26640,Shepparton United,3,Joel Serra,17,9,26,16,2,3,3,2,3,13,0,96
+1,26640,Shepparton Bears,10,Adam Decicco,15,7,22,6,6,6,1,1,7,5,0,100
+1,26640,Shepparton United,5,Jesse Cucinotta,15,9,24,9,5,3,1,2,2,0,0,84
+1,26640,Shepparton United,7,Angus Hicks,15,7,22,10,2,5,1,1,6,6,0,77
+1,26640,Shepparton Bears,5,Xavier Stevenson,14,12,26,7,9,3,1,1,8,2,2,118
+1,26640,Shepparton Bears,15,Tanner Madigan,14,4,18,4,4,2,3,1,1,1,1,60
+1,26640,Shepparton Bears,29,Daniel Meek,13,8,21,5,9,0,2,1,0,0,0,87
+1,26640,Shepparton Bears,10,Sam O'Brien,13,8,21,8,5,3,2,3,1,2,1,95
+1,26640,Shepparton United,12,Brodie Newman,13,4,17,8,11,0,3,3,1,0,0,131
+1,26640,Shepparton Bears,16,Zac Metcalf,12,5,17,4,7,0,4,3,1,0,0,78
+1,26640,Shepparton Bears,32,Max Brodie,12,8,20,6,7,3,3,0,0,0,0,90
+1,26640,Shepparton United,15,Liam Serra,12,7,19,7,7,5,1,2,4,2,2,103
+1,26640,Shepparton United,33,Jordan Haynes,12,9,21,11,3,6,1,2,3,5,0,87
+1,26640,Shepparton United,1,Fraser Hicks,11,2,13,3,1,0,6,1,2,0,0,41
+1,26640,Shepparton United,18,Jordan Wiggins,11,2,13,1,5,0,4,0,0,1,0,50
+1,26640,Shepparton Bears,8,Jacob Watts,10,6,16,9,3,6,2,1,9,8,0,87
+1,26640,Shepparton United,8,Mitchell Trevaskis,10,4,14,3,4,0,4,1,1,2,0,64
+1,26640,Shepparton Bears,23,Liam Teague,9,12,21,13,4,3,0,0,2,5,1,87
+1,26640,Shepparton Bears,31,Lachlan Rumbiolo,9,5,14,4,2,1,1,1,3,1,0,60
+1,26640,Shepparton United,22,Matthew Casey,9,3,12,10,7,2,0,2,2,1,1,71
+1,26640,Shepparton United,14,Sheldon Bogdan,9,8,17,10,3,4,0,0,6,6,0,53
+1,26640,Shepparton United,16,Mitchell Serra,9,10,19,4,4,3,1,2,2,0,0,71
+1,26640,Shepparton Bears,2,Trent Herbert,8,4,12,2,9,3,1,0,4,0,2,81
+1,26640,Shepparton Bears,14,Liam Broom,8,5,13,6,4,2,0,6,2,3,1,90
+1,26640,Shepparton United,42,Jordan Loverso,8,3,11,3,5,2,0,1,3,0,0,41
+1,26640,Shepparton United,17,Kale Gibson,8,7,15,6,4,2,1,2,2,1,0,49
+1,26640,Shepparton Bears,4,Anthony Andronaco,7,1,8,3,3,3,0,0,1,0,0,39
+1,26640,Shepparton Bears,26,Noah Muir,7,7,14,8,3,2,0,2,2,0,2,51
+1,26640,Shepparton Bears,22,Bryce Stephenson,6,2,8,3,3,0,1,5,0,0,0,51
+1,26640,Shepparton Bears,25,Mitchell Fleming,6,5,11,3,3,0,0,2,4,0,1,57
+1,26640,Shepparton Bears,13,Kade Odwyer,5,5,10,6,4,1,1,1,7,3,1,65
+1,26640,Shepparton Bears,19,Ash Holland,5,6,11,9,3,1,2,1,5,3,1,104
+1,26640,Shepparton United,23,Sam McInneny,5,9,14,4,3,0,2,2,2,0,0,61
+1,26640,Shepparton United,4,Kaedyn Napier,4,9,13,4,4,2,0,1,0,0,0,45
+1,26640,Shepparton United,26,Jensen Dowling,4,3,7,4,2,0,0,1,1,2,2,67
+1,26640,Shepparton United,27,Declan Newbound,4,3,7,1,3,0,0,0,0,1,0,23
+1,26640,Shepparton Bears,5,Liam Duguid,3,3,6,4,0,1,0,1,4,1,0,34
+1,26640,Shepparton United,9,Jayedon Hexter,3,1,4,2,2,0,0,1,1,1,0,19
+1,26640,Shepparton United,59,David O'Dwyer,3,2,5,5,0,0,1,1,2,3,0,49
+1,26640,Shepparton Bears,11,Lachlan Ludeman,2,2,4,1,2,0,0,2,0,1,1,26
+1,26640,Shepparton United,12,Timothy Looby,1,0,1,0,0,0,0,1,0,0,0,2
+1,26640,Shepparton United,24,Zane Chalcraft,1,3,4,1,0,0,0,0,3,1,0,14
+2,26645,Shepparton United,7,Angus Hicks,18,9,27,12,5,7,2,2,4,8,1,107
+2,26645,Euroa,25,Nate Trotter,17,4,21,4,5,1,10,2,1,0,0,76
+2,26645,Shepparton United,33,Jordan Haynes,16,11,27,10,7,4,1,2,3,6,0,102
+2,26645,Euroa,19,Ryan Hill,15,6,21,7,4,2,6,1,4,4,0,75
+2,26645,Shepparton United,3,Joel Serra,14,5,19,5,4,2,1,2,4,3,0,68
+2,26645,Shepparton United,11,Brodie Newman,14,4,18,8,11,1,1,1,0,0,0,107
+2,26645,Shepparton United,15,Liam Serra,14,6,20,8,7,6,0,2,4,0,1,111
+2,26645,Euroa,9,Jayden Gleeson,13,13,26,7,3,1,1,2,5,2,0,81
+2,26645,Shepparton United,1,Fraser Hicks,12,5,17,5,3,0,5,1,1,0,0,62
+2,26645,Shepparton United,10,Matthew Casey,12,0,12,10,6,1,0,0,3,2,3,80
+2,26645,Euroa,2,Jett Trotter,12,10,22,5,5,4,1,0,2,1,3,84
+2,26645,Euroa,5,Cohen Paul,12,5,17,6,5,1,4,6,2,0,0,111
+2,26645,Euroa,11,Andrew Bell,12,10,22,8,6,4,0,1,2,4,0,102
+2,26645,Euroa,12,Darby Wilson,11,7,18,5,6,2,2,7,2,0,0,81
+2,26645,Shepparton United,14,Sheldon Bogdan,9,5,14,8,3,4,1,0,5,5,0,63
+2,26645,Euroa,14,Marcus Varley,9,1,10,4,3,1,2,3,9,3,0,62
+2,26645,Shepparton United,4,Kaedyn Napier,8,5,13,3,6,3,0,1,0,1,1,64
+2,26645,Shepparton United,42,Jordan Loverso,8,3,11,3,4,4,0,0,3,1,1,62
+2,26645,Shepparton United,8,Mitchell Trevaskis,7,3,10,2,4,0,3,0,0,0,0,40
+2,26645,Shepparton United,16,Mitchell Serra,7,4,11,2,2,3,0,0,0,0,0,35
+2,26645,Euroa,23,Adam Giobbi,7,3,10,7,5,2,0,1,1,0,2,72
+2,26645,Shepparton United,9,Jayedon Hexter,6,3,9,6,3,0,0,2,4,0,2,54
+2,26645,Shepparton United,12,Timothy Looby,6,1,7,2,3,0,0,0,0,1,1,29
+2,26645,Shepparton United,18,Jordan Wiggins,6,1,7,2,5,0,0,2,0,0,0,29
+2,26645,Shepparton United,59,David O'Dwyer,6,6,12,8,2,3,0,0,2,5,0,95
+2,26645,Euroa,10,Jack Mckernan,6,2,8,2,2,3,0,0,0,0,0,23
+2,26645,Euroa,28,Nicholas Asquith,6,5,11,2,3,1,0,1,4,0,2,58
+2,26645,Euroa,15,Zac Gleeson,6,4,10,3,6,1,0,1,1,0,0,38
+2,26645,Shepparton United,62,Jack Supple,6,6,12,7,3,1,0,2,2,1,0,50
+2,26645,Euroa,1,Max Gleeson,5,12,17,10,4,1,0,0,7,4,0,72
+2,26645,Euroa,43,Nic Burke,5,4,9,2,3,0,0,0,2,0,0,33
+2,26645,Shepparton United,23,Sam McInneny,4,2,6,1,3,1,2,0,1,0,0,31
+2,26645,Shepparton United,26,Jensen Dowling,3,3,6,7,1,0,1,0,2,2,0,36
+2,26645,Shepparton United,17,Kale Gibson,3,3,6,1,2,1,2,0,0,0,0,26
+2,26645,Euroa,8,Keily Jager,3,2,5,4,3,1,1,2,0,0,0,39
+2,26645,Euroa,16,Mitchell Walters,3,1,4,4,0,1,0,1,2,0,0,11
+2,26645,Euroa,26,Hugh Bailey,3,5,8,4,1,0,0,3,2,4,0,50
+2,26645,Euroa,47,Joshua Robertson,3,3,6,3,1,1,0,0,2,0,0,15
+2,26645,Euroa,33,Henry Thomas,3,6,9,5,2,1,0,1,2,1,0,42
+2,26645,Euroa,41,Nicholas McCabe,3,4,7,0,5,0,3,0,2,0,0,39
+2,26645,Shepparton United,27,Declan Newbound,2,3,5,1,2,0,1,2,2,1,0,30
+2,26645,Shepparton United,24,Zane Chalcraft,1,1,2,2,0,1,0,0,2,0,1,21
+2,26645,Euroa,4,Will Creevey,0,1,1,0,0,0,1,1,1,0,0,6
+2,26645,Euroa,35,Lachlan Curran,0,2,2,0,0,0,0,0,2,0,0,11
+3,26654,Shepparton United,33,Jordan Haynes,22,8,30,19,5,6,5,1,4,10,0,129
+3,26654,Shepparton United,5,Jesse Cucinotta,21,2,23,6,8,4,4,5,4,0,0,129
+3,26654,Shepparton Swans,3,Adam Fichera,21,4,25,4,6,1,10,0,5,1,0,115
+3,26654,Shepparton United,11,Brodie Newman,19,8,27,10,9,1,8,5,0,0,0,152
+3,26654,Shepparton Swans,2,Oliver Warburton,19,6,25,9,8,6,3,0,5,7,1,107
+3,26654,Shepparton Swans,35,Enrique Goggin,19,6,25,8,9,5,3,7,1,1,0,141
+3,26654,Shepparton United,8,Mitchell Trevaskis,17,3,20,5,9,4,3,2,1,0,0,97
+3,26654,Shepparton Swans,44,Xavier Janke,17,8,25,3,10,1,3,2,3,1,0,99
+3,26654,Shepparton United,17,Kale Gibson,15,2,17,2,8,0,5,3,2,0,1,86
+3,26654,Shepparton Swans,13,Lucas Rachele,15,7,22,4,9,1,7,3,7,0,0,110
+3,26654,Shepparton United,18,Jordan Wiggins,14,4,18,6,8,0,7,4,1,0,0,94
+3,26654,Shepparton Swans,36,Christian Georgiou,14,5,19,6,7,5,0,5,6,3,1,103
+3,26654,Shepparton United,3,Joel Serra,13,12,25,16,5,6,1,0,2,8,0,98
+3,26654,Shepparton United,10,Matthew Casey,12,0,12,8,4,4,0,1,0,3,2,54
+3,26654,Shepparton United,15,Liam Serra,12,9,21,9,8,3,1,2,8,1,2,116
+3,26654,Shepparton Swans,4,Max Clohesy,12,12,24,17,6,3,4,5,10,5,0,132
+3,26654,Shepparton Swans,14,Zac Clohesy,12,5,17,3,6,0,4,6,2,0,0,89
+3,26654,Shepparton United,4,Kaedyn Napier,11,3,14,8,9,3,1,2,3,0,0,80
+3,26654,Shepparton United,7,Angus Hicks,11,11,22,11,3,6,1,2,8,10,0,120
+3,26654,Shepparton Swans,24,Flynn Grumley,11,12,23,11,4,4,4,2,2,2,0,111
+3,26654,Shepparton Swans,45,Kade Thomas,11,1,12,1,7,2,1,0,0,1,0,36
+3,26654,Shepparton United,62,Jack Supple,10,8,18,6,3,3,4,4,3,3,1,82
+3,26654,Shepparton Swans,27,Kade Anderson,9,7,16,9,3,2,2,2,4,4,0,76
+3,26654,Shepparton Swans,38,Harper Simpson,9,1,10,7,2,0,0,4,5,0,3,78
+3,26654,Shepparton United,16,Mitchell Serra,8,2,10,2,5,0,3,0,0,0,0,40
+3,26654,Shepparton Swans,7,Nathan Rachele,8,5,13,1,5,3,0,1,3,0,1,52
+3,26654,Shepparton United,9,Jayedon Hexter,7,3,10,5,4,2,0,2,3,0,1,58
+3,26654,Shepparton United,59,David O'Dwyer,7,6,13,12,0,4,0,1,0,10,0,113
+3,26654,Shepparton Swans,8,Joeve Cooper,7,5,12,5,3,5,0,2,4,2,0,69
+3,26654,Shepparton Swans,23,Ty Sutherland,7,2,9,2,6,2,1,5,6,1,0,67
+3,26654,Shepparton Swans,32,Kade Dwyer,7,5,12,5,2,2,0,3,9,1,0,82
+3,26654,Shepparton Swans,15,Kade Alper,7,3,10,3,4,3,0,3,2,2,0,53
+3,26654,Shepparton United,12,Timothy Looby,6,1,7,4,5,2,0,0,2,2,0,52
+3,26654,Shepparton United,23,Sam McInneny,6,5,11,3,4,0,0,0,0,0,0,45
+3,26654,Shepparton United,42,Jordan Loverso,6,7,13,7,4,1,0,0,3,0,0,50
+3,26654,Shepparton Swans,33,Rory Duffy,6,5,11,2,4,3,0,1,0,1,0,41
+3,26654,Shepparton United,39,Connor Hayes,6,4,10,4,4,0,1,0,2,0,0,47
+3,26654,Shepparton Swans,30,Jake Cirillo,4,6,10,6,2,1,1,0,3,3,0,44
+3,26654,Shepparton United,26,Jensen Dowling,3,5,8,6,0,1,0,3,1,3,1,70
+3,26654,Shepparton United,45,Blake Sofra,3,8,11,6,2,1,0,2,3,1,0,21
+3,26654,Shepparton Swans,17,Harrison Mazzella,3,2,5,1,1,3,0,1,0,0,0,10
+3,26654,Shepparton Swans,19,Zac Alderton,2,3,5,4,0,0,1,0,1,3,0,19
+3,26654,Shepparton United,14,Sheldon Bogdan,0,3,3,3,0,1,0,1,3,2,0,26
+3,26654,Shepparton Swans,46,Connor Fallon,0,3,3,2,0,0,0,1,1,0,0,4
+4,26658,Mooroopna,2,Kai Madgwick,24,11,35,18,4,9,3,3,6,11,1,156
+4,26658,Mooroopna,39,Dan Tuddenham,21,4,25,9,6,2,6,0,1,5,1,81
+4,26658,Shepparton United,7,Angus Hicks,19,9,28,14,7,3,2,2,9,8,1,163
+4,26658,Shepparton United,15,Liam Serra,18,4,22,4,12,6,0,3,2,0,1,98
+4,26658,Mooroopna,12,Isaac Dowling,18,12,30,10,9,4,2,3,3,5,2,121
+4,26658,Shepparton United,1,Fraser Hicks,14,12,26,7,6,1,0,0,2,0,0,87
+4,26658,Mooroopna,35,Coby James,14,11,25,7,4,0,4,0,2,0,0,91
+4,26658,Shepparton United,14,Sheldon Bogdan,12,12,24,12,3,3,0,3,4,6,0,93
+4,26658,Mooroopna,1,Rory Huggard,12,5,17,4,6,1,4,3,1,0,0,77
+4,26658,Shepparton United,3,Joel Serra,11,19,30,14,3,2,2,1,6,7,0,100
+4,26658,Shepparton United,33,Jordan Haynes,11,6,17,12,3,6,2,4,5,5,0,90
+4,26658,Mooroopna,40,Jed Woods,11,12,23,10,5,3,2,0,6,4,0,87
+4,26658,Shepparton United,11,Brodie Newman,10,1,11,6,9,4,1,3,1,0,1,77
+4,26658,Mooroopna,9,Keelin Betson,10,12,22,12,0,3,2,1,7,6,1,105
+4,26658,Mooroopna,11,Xavier Chandler,10,4,14,3,5,2,1,0,1,1,1,42
+4,26658,Mooroopna,14,Ben Woods,10,5,15,4,7,1,3,0,2,0,0,55
+4,26658,Shepparton United,4,Kaedyn Napier,9,6,15,7,4,4,6,2,2,2,0,98
+4,26658,Shepparton United,8,Mitchell Trevaskis,9,8,17,5,0,0,2,2,1,0,0,46
+4,26658,Shepparton United,23,Sam McInneny,9,2,11,4,4,3,0,1,1,0,1,56
+4,26658,Mooroopna,13,Dom Gugliotti,9,5,14,6,4,0,7,0,1,1,0,52
+4,26658,Mooroopna,7,Jack Johnston,9,2,11,2,5,0,3,6,2,2,0,65
+4,26658,Shepparton United,10,Matthew Casey,8,3,11,6,1,1,0,0,2,0,0,17
+4,26658,Shepparton United,16,Mitchell Serra,8,7,15,4,3,4,0,3,2,0,0,55
+4,26658,Mooroopna,6,Jack Osborne,8,2,10,8,8,2,0,2,3,0,3,74
+4,26658,Mooroopna,30,Liam Betson,8,15,23,17,3,3,1,4,7,10,0,139
+4,26658,Shepparton United,62,Jack Supple,8,7,15,5,3,1,1,2,3,1,1,54
+4,26658,Shepparton United,18,Jordan Wiggins,7,3,10,5,3,1,4,2,2,1,0,51
+4,26658,Shepparton United,5,Jesse Cucinotta,6,4,10,1,1,0,3,1,4,0,0,30
+4,26658,Mooroopna,19,Noah Williams,6,8,14,3,3,1,0,2,2,1,0,51
+4,26658,Mooroopna,41,Campbell McElhinney,6,1,7,2,2,0,0,3,3,1,0,46
+4,26658,Shepparton United,12,Timothy Looby,5,2,7,3,4,1,0,0,1,0,2,38
+4,26658,Shepparton United,26,Jensen Dowling,5,6,11,6,2,3,0,1,0,2,0,68
+4,26658,Shepparton United,17,Kale Gibson,5,9,14,4,0,0,0,0,4,0,0,39
+4,26658,Shepparton United,27,Declan Newbound,4,5,9,4,3,0,1,0,1,0,0,41
+4,26658,Mooroopna,16,Oscar Emanuelli,4,7,11,3,3,3,1,0,1,0,0,39
+4,26658,Mooroopna,31,Will Wood,4,5,9,7,2,1,1,0,2,2,0,54
+4,26658,Mooroopna,33,Jobe Jakobs,4,6,10,3,1,0,1,1,1,0,0,34
+4,26658,Mooroopna,38,Toby Williams,3,2,5,1,0,0,0,3,2,0,1,22
+4,26658,Shepparton United,39,Connor Hayes,3,5,8,2,3,1,2,1,1,0,0,38
+4,26658,Shepparton United,59,David O'Dwyer,2,0,2,2,0,1,0,0,2,2,0,27
+4,26658,Mooroopna,23,William Emanuelli,2,3,5,1,3,1,0,2,0,0,0,20
+4,26658,Mooroopna,45,Fraser McElhinney,2,2,4,2,2,1,0,0,0,1,0,12
+4,26658,Shepparton United,9,Jayedon Hexter,1,0,1,1,1,0,0,2,0,0,1,10
+4,26658,Mooroopna,4,Jordan Anderson,0,1,1,0,0,0,0,0,1,0,0,1
+5,26667,Shepparton United,5,Jesse Cucinotta,25,5,30,7,13,4,1,0,2,4,0,116
+5,26667,Shepparton United,4,Kaedyn Napier,24,9,33,7,16,1,6,4,3,0,0,141
+5,26667,Mansfield,4,Callum Brown,21,10,31,15,8,6,1,0,3,7,5,168
+5,26667,Mansfield,5,Harry Mahoney,19,13,32,12,5,0,5,4,3,2,0,110
+5,26667,Mansfield,6,Max Mahoney,18,13,31,17,9,6,1,5,8,7,1,146
+5,26667,Shepparton United,7,Angus Hicks,16,12,28,10,6,4,3,1,1,5,2,105
+5,26667,Shepparton United,15,Liam Serra,16,9,25,9,14,4,2,0,1,1,1,106
+5,26667,Shepparton United,33,Jordan Haynes,16,13,29,9,13,6,4,2,4,2,1,143
+5,26667,Mansfield,15,Nathan Buchanan,16,5,21,4,6,2,7,0,2,0,0,87
+5,26667,Shepparton United,18,Jordan Wiggins,15,4,19,5,8,0,3,2,1,1,0,87
+5,26667,Mansfield,2,Sam Thomson,15,8,23,12,4,7,2,4,2,8,0,99
+5,26667,Mansfield,9,Matthew King,15,9,24,8,9,5,3,0,3,3,3,146
+5,26667,Shepparton United,1,Fraser Hicks,14,0,14,1,5,0,3,2,2,0,0,54
+5,26667,Shepparton United,11,Brodie Newman,14,4,18,4,11,0,3,3,0,0,0,94
+5,26667,Mansfield,29,Tom Dunstan,14,3,17,3,4,1,4,2,1,1,0,59
+5,26667,Shepparton United,8,Mitchell Trevaskis,13,1,14,3,10,2,2,1,1,1,0,76
+5,26667,Mansfield,33,William Hogan,12,4,16,7,6,5,2,1,6,1,2,89
+5,26667,Shepparton United,3,Joel Serra,9,11,20,9,4,4,1,0,1,6,1,92
+5,26667,Shepparton United,12,Timothy Looby,9,1,10,2,5,1,0,1,0,1,0,39
+5,26667,Shepparton United,14,Sheldon Bogdan,9,17,26,12,0,3,0,1,3,5,0,77
+5,26667,Shepparton United,16,Mitchell Serra,9,2,11,3,5,2,3,2,1,0,2,77
+5,26667,Shepparton United,17,Kale Gibson,9,2,11,1,2,1,0,2,2,0,0,28
+5,26667,Mansfield,1,Jayden Howes,9,6,15,7,5,4,0,2,5,4,0,104
+5,26667,Shepparton United,10,Matthew Casey,8,2,10,5,6,3,0,0,0,0,3,61
+5,26667,Shepparton United,42,Jordan Loverso,8,3,11,5,5,3,0,1,2,0,1,49
+5,26667,Shepparton United,23,Sam McInneny,7,0,7,3,5,1,0,1,1,0,0,37
+5,26667,Mansfield,7,Will Foster,7,3,10,3,4,1,0,4,3,1,2,62
+5,26667,Mansfield,20,Campbell Smedley,7,3,10,5,4,1,2,3,2,1,0,63
+5,26667,Mansfield,30,Cody George,6,11,17,10,3,2,0,1,3,2,0,68
+5,26667,Shepparton United,62,Jack Supple,6,2,8,2,2,1,0,0,3,1,0,19
+5,26667,Mansfield,38,Al Bennett,6,3,9,3,2,1,0,0,0,0,3,44
+5,26667,Shepparton United,26,Jensen Dowling,5,8,13,11,1,2,0,1,1,7,0,68
+5,26667,Shepparton United,27,Declan Newbound,5,4,9,3,5,0,2,0,0,0,0,31
+5,26667,Mansfield,51,William Dunstan,5,4,9,4,2,3,0,2,1,0,0,39
+5,26667,Mansfield,16,Jack Marks,5,5,10,5,0,2,0,2,4,0,0,43
+5,26667,Mansfield,37,Harry Purcell,5,1,6,2,2,2,0,1,2,0,0,28
+5,26667,Mansfield,22,Adam Storer,3,0,3,1,2,1,0,2,1,0,1,25
+5,26667,Mansfield,26,Angus Bolitho,3,3,6,0,2,0,1,1,3,0,0,22
+5,26667,Shepparton United,34,Kallyun Sanders,3,1,4,2,2,0,0,1,0,1,0,11
+5,26667,Mansfield,17,Luke Menhenett,2,1,3,2,1,1,2,1,2,0,0,18
+5,26667,Mansfield,34,Brayden Van Winden,1,1,2,1,0,0,1,0,0,0,0,10
+5,26667,Mansfield,21,Daniel Bruno,1,4,5,1,0,0,0,0,0,0,0,11
+5,26667,Mansfield,40,Fergus Schier,1,7,8,3,1,0,0,3,1,3,0,48
+5,26667,Shepparton United,20,Kye Jeffery,0,3,3,1,0,0,0,2,2,0,0,15
+6,26668,Shepparton United,5,Jesse Cucinotta,24,6,30,8,8,4,3,2,5,6,0,114
+6,26668,Shepparton United,11,Brodie Newman,21,3,24,15,15,0,6,6,2,0,0,201
+6,26668,Shepparton United,30,Stuart Horner,21,21,42,16,12,5,2,2,5,11,0,186
+6,26668,Shepparton United,15,Liam Serra,20,9,29,10,13,4,2,2,1,1,2,116
+6,26668,Shepparton United,4,Kaedyn Napier,19,2,21,9,4,0,4,3,4,3,0,118
+6,26668,Echuca,37,Jack Evans,17,8,25,6,8,4,3,2,3,0,1,99
+6,26668,Echuca,6,Tom Evans,16,5,21,8,4,3,2,1,7,2,1,106
+6,26668,Echuca,18,Mitchell Wales,15,3,18,8,4,6,2,0,6,7,0,87
+6,26668,Echuca,20,Cooper Barber,15,10,25,8,6,4,0,2,6,5,2,134
+6,26668,Shepparton United,33,Jordan Haynes,13,11,24,10,5,4,0,4,9,4,0,97
+6,26668,Echuca,14,Aiden Mills,13,0,13,2,5,0,5,3,1,0,0,54
+6,26668,Echuca,21,Jesse Tuohey,13,4,17,3,6,1,1,2,7,0,1,96
+6,26668,Echuca,55,Curtis Townrow,13,2,15,2,6,0,5,3,2,0,0,75
+6,26668,Shepparton United,12,Timothy Looby,12,0,12,7,7,2,0,0,1,0,4,90
+6,26668,Echuca,26,Echuca 26,12,1,13,5,6,2,3,2,4,1,0,71
+6,26668,Shepparton United,1,Fraser Hicks,11,4,15,4,6,2,2,0,2,1,0,57
+6,26668,Echuca,10,Jackson Stewart,11,22,33,13,3,5,0,2,7,8,1,124
+6,26668,Shepparton United,62,Jack Supple,11,3,14,4,5,3,1,1,1,0,0,45
+6,26668,Shepparton United,8,Mitchell Trevaskis,10,2,12,2,7,1,1,1,2,0,0,55
+6,26668,Shepparton United,18,Jordan Wiggins,10,5,15,4,7,0,4,1,3,1,0,77
+6,26668,Shepparton United,23,Sam McInneny,10,2,12,3,7,3,1,0,2,0,0,47
+6,26668,Echuca,30,Liam Tenace,10,6,16,10,8,1,1,0,2,4,1,138
+6,26668,Echuca,9,Hugh Byrne,10,7,17,6,4,1,1,1,4,1,2,86
+6,26668,Shepparton United,3,Joel Serra,9,14,23,14,3,4,0,1,4,7,0,86
+6,26668,Shepparton United,14,Sheldon Bogdan,8,3,11,3,3,1,0,1,6,0,0,44
+6,26668,Echuca,4,Samuel Reid,8,12,20,12,5,2,0,0,4,4,0,82
+6,26668,Echuca,22,Darby Jones,8,2,10,9,3,0,1,2,1,5,2,77
+6,26668,Echuca,15,Lachlan Hogan,7,9,16,7,3,1,0,1,3,1,0,59
+6,26668,Shepparton United,10,Matthew Casey,6,0,6,3,6,3,0,0,0,0,2,44
+6,26668,Echuca,24,Hudson Kellett,6,11,17,10,1,2,0,0,2,6,1,59
+6,26668,Echuca,23,Makai Cronin,6,2,8,0,2,4,0,0,1,0,1,38
+6,26668,Echuca,47,Patrick Kennedy,6,5,11,4,6,0,2,0,3,1,0,55
+6,26668,Echuca,48,Luke Edwards,6,0,6,0,3,0,5,1,0,0,0,28
+6,26668,Echuca,29,Jessie Johnstone,6,3,9,4,2,3,0,4,1,1,0,40
+6,26668,Shepparton United,26,Jensen Dowling,5,3,8,3,1,2,0,1,1,2,0,49
+6,26668,Echuca,3,Liam Gronow,5,3,8,3,1,3,0,0,3,2,2,44
+6,26668,Echuca,17,Harrison Milburn,5,8,13,5,7,0,1,3,3,1,0,68
+6,26668,Shepparton United,28,Nicholas Loverso,5,8,13,6,3,1,1,0,5,2,0,70
+6,26668,Shepparton United,42,Jordan Loverso,4,1,5,1,2,1,0,0,3,0,0,23
+6,26668,Shepparton United,34,Kallyun Sanders,4,2,6,1,5,0,0,1,1,0,0,24
+6,26668,Shepparton United,16,Mitchell Serra,3,5,8,3,2,1,0,0,1,0,0,26
+6,26668,Shepparton United,27,Declan Newbound,3,1,4,2,3,0,0,1,0,0,0,25
+6,26668,Echuca,38,William Deutsher,3,3,6,3,3,0,1,3,5,0,0,45
+6,26668,Shepparton United,31,Kye Jeffery,1,3,4,4,0,0,0,1,1,2,0,15
+7,26679,Shepparton United,15,Liam Serra,24,10,34,9,18,6,0,0,5,1,1,169
+7,26679,Shepparton United,11,Brodie Newman,21,8,29,9,18,1,6,3,0,0,0,148
+7,26679,Shepparton United,7,Angus Hicks,19,17,36,16,2,5,3,0,10,10,1,186
+7,26679,Tatura,5,Curtis Ryan,19,3,22,4,3,1,8,1,0,1,0,68
+7,26679,Shepparton United,3,Joel Serra,17,13,30,14,11,7,1,0,3,4,1,133
+7,26679,Shepparton United,8,Mitchell Trevaskis,17,8,25,3,10,1,4,2,1,0,0,89
+7,26679,Shepparton United,4,Kaedyn Napier,16,3,19,4,10,2,1,2,3,1,0,104
+7,26679,Shepparton United,14,Sheldon Bogdan,16,13,29,8,5,6,0,2,6,8,0,97
+7,26679,Shepparton United,33,Jordan Haynes,16,18,34,18,4,5,5,3,9,11,0,174
+7,26679,Tatura,1,Ben Darrou,15,1,16,11,8,5,0,0,3,2,2,97
+7,26679,Shepparton United,17,Kale Gibson,14,2,16,1,10,3,0,3,2,0,1,78
+7,26679,Shepparton United,10,Matthew Casey,13,1,14,4,9,0,0,0,3,0,9,130
+7,26679,Tatura,38,Jess Petherick,13,3,16,3,9,3,4,1,0,0,0,84
+7,26679,Shepparton United,1,Fraser Hicks,12,8,20,4,7,3,1,1,0,1,0,76
+7,26679,Shepparton United,5,Jesse Cucinotta,12,3,15,4,5,3,2,2,3,1,0,66
+7,26679,Tatura,6,James Bennett,12,9,21,10,3,4,2,1,3,7,1,72
+7,26679,Tatura,7,Kieran Andrew,12,7,19,8,3,2,4,4,2,0,0,69
+7,26679,Shepparton United,26,Jensen Dowling,11,6,17,10,6,3,1,1,1,4,1,113
+7,26679,Shepparton United,45,Blake Sofra,11,2,13,3,5,2,0,1,2,0,1,61
+7,26679,Shepparton United,42,Jordan Loverso,10,4,14,5,5,3,0,2,9,1,3,91
+7,26679,Shepparton United,18,Jordan Wiggins,9,9,18,3,8,0,2,2,1,0,0,87
+7,26679,Shepparton United,27,Declan Newbound,9,5,14,8,5,2,2,1,3,0,0,85
+7,26679,Tatura,3,Thomas Sullivan,9,6,15,8,7,1,1,5,3,5,0,84
+7,26679,Tatura,13,Sean Johns,9,7,16,5,3,0,3,1,3,1,0,63
+7,26679,Tatura,22,Sean McAllister,9,8,17,0,7,0,5,0,1,1,0,61
+7,26679,Tatura,24,Finn Radley,9,1,10,4,9,5,0,0,2,0,1,69
+7,26679,Tatura,14,Harry Murdoch,9,7,16,6,6,1,0,0,0,5,0,58
+7,26679,Shepparton United,23,Sam McInneny,8,4,12,2,10,2,0,0,0,0,1,66
+7,26679,Tatura,44,Michael Archer,8,4,12,2,3,1,1,1,2,0,0,36
+7,26679,Shepparton United,28,Nicholas Loverso,8,3,11,4,4,4,0,1,1,0,0,60
+7,26679,Shepparton United,16,Mitchell Serra,7,7,14,4,4,4,0,2,1,0,0,59
+7,26679,Tatura,19,Comanche Walls,7,4,11,4,3,0,1,1,1,0,0,34
+7,26679,Tatura,43,Cade Dealy,7,3,10,3,4,0,3,3,1,0,0,45
+7,26679,Tatura,16,Christopher Ryan,7,3,10,5,4,0,3,3,0,0,0,50
+7,26679,Tatura,17,Ryan Young,5,5,10,5,1,3,1,1,1,4,0,67
+7,26679,Tatura,18,Blake Armstrong,5,0,5,1,3,3,0,0,1,0,0,26
+7,26679,Tatura,8,Mitchell Elliott,4,10,14,8,1,1,1,0,3,3,0,48
+7,26679,Tatura,9,Xavier Hutchison,4,1,5,4,2,1,0,1,3,0,0,39
+7,26679,Tatura,10,Kitt McCamley,4,7,11,4,2,0,2,0,5,0,0,42
+7,26679,Tatura,23,Ryan Butler,4,2,6,1,1,1,0,0,1,0,1,21
+7,26679,Shepparton United,12,Timothy Looby,2,5,7,2,3,0,0,0,0,0,1,37
+7,26679,Tatura,25,Lincoln D'Augello,2,3,5,2,2,1,1,2,2,2,0,31
+7,26679,Tatura,26,Ciaran Hubble,1,0,1,0,0,0,0,3,0,0,0,11
+7,26679,Shepparton United,34,Kallyun Sanders,1,3,4,2,2,1,0,1,2,0,0,17
+8,26682,Kyabram,17,Brad Whitford,33,5,38,3,7,3,12,6,2,2,0,154
+8,26682,Kyabram,8,Kaine Herbert,25,6,31,10,9,7,3,3,3,9,2,157
+8,26682,Shepparton United,33,Jordan Haynes,20,12,32,10,12,7,1,4,1,6,0,131
+8,26682,Shepparton United,7,Angus Hicks,18,16,34,13,3,8,5,4,3,10,0,154
+8,26682,Shepparton United,11,Brodie Newman,18,3,21,4,9,3,3,10,4,1,0,112
+8,26682,Shepparton United,30,Michael Barlow,17,17,34,12,8,1,2,0,3,5,1,123
+8,26682,Kyabram,7,Anthony Depasquale,16,3,19,9,10,3,0,1,2,0,3,104
+8,26682,Kyabram,4,Rhys Clark,15,4,19,11,8,5,2,7,7,6,2,128
+8,26682,Shepparton United,3,Joel Serra,15,12,27,12,5,7,2,7,3,7,1,117
+8,26682,Shepparton United,4,Kaedyn Napier,15,4,19,7,10,1,5,3,0,5,0,119
+8,26682,Kyabram,2,Jack Russell,13,10,23,6,6,2,1,1,7,2,0,92
+8,26682,Kyabram,11,Zac Norris,12,14,26,19,5,2,2,3,3,14,0,136
+8,26682,Kyabram,19,Charlie Barnett,11,3,14,6,5,3,0,1,1,2,2,71
+8,26682,Kyabram,28,Bohden Learmonth,11,6,17,4,6,0,0,2,5,0,0,75
+8,26682,Shepparton United,5,Jesse Cucinotta,11,11,22,9,3,3,3,4,2,4,0,98
+8,26682,Shepparton United,27,Declan Newbound,11,6,17,2,3,1,6,3,4,0,0,81
+8,26682,Kyabram,5,Riley Ironside,10,5,15,8,3,5,0,2,2,1,1,73
+8,26682,Kyabram,6,Coby McCarthy,10,13,23,6,6,2,2,4,1,1,0,72
+8,26682,Kyabram,33,Aidan Robinson,10,0,10,2,5,0,4,4,2,0,0,66
+8,26682,Shepparton United,10,Matthew Casey,10,2,12,4,9,3,0,2,1,0,4,97
+8,26682,Kyabram,15,Jake Parkinson,10,3,13,3,3,2,4,1,2,0,0,65
+8,26682,Kyabram,21,Jack Sinclair,9,7,16,2,4,2,1,1,3,0,0,45
+8,26682,Shepparton United,12,Timothy Looby,9,0,9,1,7,1,0,1,0,0,1,53
+8,26682,Kyabram,9,Thomas Burnett,8,3,11,2,4,1,1,1,4,0,0,42
+8,26682,Kyabram,10,Joshua Dillon,8,4,12,5,4,5,1,1,5,1,0,58
+8,26682,Shepparton United,15,Liam Serra,8,3,11,3,2,1,0,2,2,0,2,43
+8,26682,Shepparton United,26,Jensen Dowling,8,3,11,7,3,2,2,3,0,4,0,91
+8,26682,Shepparton United,1,Fraser Hicks,7,5,12,2,3,1,2,2,2,0,0,48
+8,26682,Shepparton United,8,Mitchell Trevaskis,7,6,13,2,6,1,1,2,0,0,0,53
+8,26682,Shepparton United,14,Sheldon Bogdan,7,9,16,5,3,1,2,3,2,2,0,51
+8,26682,Shepparton United,16,Mitchell Serra,7,7,14,3,5,2,1,1,4,0,0,56
+8,26682,Kyabram,12,Cooper Vick,6,1,7,2,3,2,1,3,7,2,0,56
+8,26682,Kyabram,40,Miller Griffiths,6,2,8,2,5,1,1,0,1,0,1,36
+8,26682,Shepparton United,42,Jordan Loverso,6,4,10,2,3,1,0,5,4,0,0,54
+8,26682,Shepparton United,18,Jordan Wiggins,5,5,10,2,2,0,0,1,1,0,0,36
+8,26682,Shepparton United,23,Sam McInneny,5,7,12,2,3,1,0,3,0,0,1,52
+8,26682,Shepparton United,17,Kale Gibson,5,3,8,1,3,0,1,2,3,0,0,39
+8,26682,Shepparton United,28,Nicholas Loverso,5,3,8,3,4,2,1,1,1,1,0,39
+8,26682,Shepparton United,21,Caiden Phillips,5,2,7,1,3,1,0,9,0,0,0,43
+8,26682,Kyabram,24,Mackinley Ayton,4,2,6,2,2,1,0,1,4,0,0,34
+8,26682,Kyabram,32,Adam Pulsoni,4,2,6,1,3,0,2,1,0,1,0,28
+8,26682,Kyabram,41,Ben Railton,4,0,4,2,2,1,1,2,3,0,0,32
+8,26682,Kyabram,16,Oscar Dixon,3,2,5,2,3,0,0,3,2,0,0,34
+8,26682,Kyabram,18,Isaiah Scobie,3,1,4,1,2,0,0,0,0,0,0,15
+9,26690,Shepparton United,4,Kaedyn Napier,22,3,25,5,11,3,3,2,2,1,0,119
+9,26690,Shepparton United,5,Jesse Cucinotta,20,8,28,2,10,7,2,2,6,1,0,121
+9,26690,Shepparton United,15,Liam Serra,20,11,31,7,15,6,0,1,3,1,6,167
+9,26690,Shepparton United,17,Kale Gibson,20,10,30,2,19,3,5,0,0,1,0,135
+9,26690,Benalla,7,David Mennen,19,7,26,15,3,8,6,2,4,4,0,108
+9,26690,Shepparton United,3,Joel Serra,18,12,30,11,8,2,2,3,4,9,1,144
+9,26690,Shepparton United,7,Angus Hicks,18,15,33,11,6,5,0,2,6,6,1,126
+9,26690,Shepparton United,13,Zavier Maher,18,10,28,10,3,9,1,3,11,7,3,131
+9,26690,Shepparton United,11,Brodie Newman,16,6,22,3,10,2,1,5,1,0,0,105
+9,26690,Benalla,18,Kevin Maroney,16,6,22,6,4,0,8,6,2,3,0,93
+9,26690,Benalla,12,Ryley Ely,15,9,24,10,3,3,2,5,7,7,0,84
+9,26690,Shepparton United,33,Jordan Haynes,14,10,24,8,8,4,1,1,6,7,0,124
+9,26690,Benalla,2,Christopher Welsh,12,13,25,9,4,5,3,3,6,4,0,93
+9,26690,Shepparton United,23,Sam McInneny,11,4,15,5,6,2,0,1,1,0,5,91
+9,26690,Shepparton United,10,Matthew Casey,10,2,12,7,4,0,0,0,0,0,5,60
+9,26690,Shepparton United,42,Jordan Loverso,10,2,12,4,5,4,0,1,6,0,0,64
+9,26690,Benalla,23,Brady Bartlett,10,5,15,6,5,1,5,2,0,0,0,45
+9,26690,Shepparton United,16,Mitchell Serra,9,7,16,3,7,5,0,2,1,0,0,72
+9,26690,Benalla,11,James Martiniello,9,7,16,5,7,4,1,1,1,3,0,61
+9,26690,Shepparton United,1,Fraser Hicks,8,6,14,2,6,0,1,0,3,0,0,56
+9,26690,Shepparton United,28,Nicholas Loverso,8,2,10,1,8,0,0,2,2,0,0,47
+9,26690,Shepparton United,21,Caiden Phillips,8,1,9,0,6,0,2,4,1,1,0,61
+9,26690,Benalla,4,Cooper Gracie,7,8,15,6,5,1,0,3,5,0,0,60
+9,26690,Benalla,24,Mark Marriott,7,9,16,11,3,2,1,8,11,8,1,157
+9,26690,Shepparton United,8,Mitchell Trevaskis,6,4,10,2,4,2,0,3,2,0,0,41
+9,26690,Shepparton United,14,Sheldon Bogdan,6,13,19,11,2,3,0,1,5,3,0,92
+9,26690,Shepparton United,18,Jordan Wiggins,6,6,12,3,5,0,5,4,0,0,0,71
+9,26690,Shepparton United,26,Jensen Dowling,6,3,9,3,1,3,0,2,1,1,1,78
+9,26690,Shepparton United,27,Declan Newbound,6,8,14,2,4,1,1,1,1,0,0,43
+9,26690,Benalla,1,Mitchell Vasterink,6,6,12,6,5,1,0,0,1,0,0,37
+9,26690,Benalla,15,Henry Hill,6,0,6,2,2,0,2,3,4,0,0,41
+9,26690,Benalla,37,Hugo Cornell,6,8,14,2,6,0,0,0,1,0,0,49
+9,26690,Benalla,21,Sam Begley,5,4,9,3,1,0,3,3,3,0,0,47
+9,26690,Benalla,10,Patrick Warner,4,4,8,3,1,2,0,3,0,1,0,29
+9,26690,Benalla,16,Travis Young,4,5,9,4,1,1,1,7,0,0,0,32
+9,26690,Benalla,27,Tom Riley,4,1,5,2,2,0,0,6,2,0,1,37
+9,26690,Benalla,17,Michael Mummery,4,0,4,1,3,0,0,1,1,0,3,45
+9,26690,Benalla,26,Charlie McCarthy,4,4,8,2,1,0,1,1,4,0,0,31
+9,26690,Benalla,29,Rory Sammon,4,5,9,3,2,0,3,1,0,0,0,38
+9,26690,Benalla,36,Jaidyn Chee,4,0,4,3,1,1,0,1,2,0,1,42
+9,26690,Shepparton United,12,Timothy Looby,2,1,3,1,1,0,0,2,0,0,0,14
+9,26690,Benalla,28,Jack Fullager,2,5,7,3,1,0,1,3,2,0,0,42
+9,26690,Benalla,39,Hamish Willett,2,4,6,3,1,1,0,0,0,1,0,17
+9,26690,Benalla,14,Colby Mathieson,2,4,6,6,0,0,2,3,1,1,0,27
+10,26696,Seymour,7,Huw Jones,23,9,32,5,5,2,10,1,0,1,0,94
+10,26696,Shepparton United,33,Jordan Haynes,19,14,33,10,10,7,2,2,13,7,1,152
+10,26696,Shepparton United,4,Kaedyn Napier,18,3,21,6,12,2,1,1,1,2,0,87
+10,26696,Seymour,3,Dylan Cook,18,17,35,21,6,4,1,3,6,16,1,143
+10,26696,Seymour,17,Jaron Murphy,15,5,20,4,7,4,1,1,2,1,1,74
+10,26696,Shepparton United,21,Caiden Phillips,15,4,19,5,4,2,1,4,1,1,0,78
+10,26696,Shepparton United,5,Jesse Cucinotta,14,6,20,3,7,3,2,4,4,1,0,76
+10,26696,Seymour,30,Nicholas Quigg,14,10,24,9,4,6,1,2,11,2,0,98
+10,26696,Shepparton United,1,Fraser Hicks,13,6,19,0,6,1,3,0,3,1,0,63
+10,26696,Shepparton United,11,Brodie Newman,13,10,23,7,7,0,3,7,1,0,0,133
+10,26696,Seymour,8,Jack Murphy,13,12,25,8,5,3,5,4,5,3,0,103
+10,26696,Shepparton United,3,Joel Serra,12,15,27,12,2,5,1,2,5,6,1,104
+10,26696,Shepparton United,18,Jordan Wiggins,11,8,19,2,8,2,3,6,1,0,0,92
+10,26696,Shepparton United,42,Jordan Loverso,11,3,14,9,7,2,0,2,4,0,2,83
+10,26696,Seymour,47,Josh Porter,11,2,13,3,3,2,4,3,3,0,0,57
+10,26696,Shepparton United,28,Nicholas Loverso,11,4,15,4,9,1,0,4,5,0,0,84
+10,26696,Seymour,5,Riley Mason,10,3,13,9,6,4,0,4,0,0,3,90
+10,26696,Shepparton United,8,Mitchell Trevaskis,9,4,13,2,8,0,2,3,1,1,0,52
+10,26696,Shepparton United,15,Liam Serra,9,8,17,4,6,1,0,1,0,1,1,69
+10,26696,Shepparton United,27,Declan Newbound,9,3,12,2,7,1,0,4,2,0,0,66
+10,26696,Seymour,33,Tom Jeffrey,9,4,13,6,6,4,0,1,3,1,1,91
+10,26696,Shepparton United,13,Zavier Maher,9,10,19,10,3,4,0,2,4,7,0,98
+10,26696,Shepparton United,7,Angus Hicks,8,4,12,5,1,2,3,1,3,3,0,50
+10,26696,Shepparton United,14,Sheldon Bogdan,8,9,17,8,6,2,3,0,7,3,0,89
+10,26696,Shepparton United,17,Kale Gibson,8,1,9,2,4,1,1,4,1,1,0,40
+10,26696,Seymour,16,Tom Stapleton,8,7,15,13,0,4,3,2,2,8,1,118
+10,26696,Shepparton United,16,Mitchell Serra,7,6,13,2,4,1,1,2,3,2,0,64
+10,26696,Shepparton United,23,Sam McInneny,7,4,11,2,4,5,0,0,3,2,0,64
+10,26696,Shepparton United,26,Jensen Dowling,7,3,10,4,1,2,2,4,1,3,0,68
+10,26696,Seymour,11,Lewis Lubeck,7,1,8,1,2,0,4,2,1,0,0,37
+10,26696,Seymour,15,Xavier Dimasi,7,4,11,6,1,1,2,1,2,7,0,54
+10,26696,Seymour,6,Nicholas Dundon,7,2,9,3,3,0,1,0,2,1,0,20
+10,26696,Seymour,2,Cooper Holdsworth-Rose,6,2,8,2,4,2,2,5,3,0,0,45
+10,26696,Seymour,42,Lachlan Giles,5,2,7,2,2,0,1,5,4,1,0,54
+10,26696,Shepparton United,45,Blake Sofra,5,4,9,6,2,1,0,3,1,2,0,46
+10,26696,Seymour,25,Thomas Martin,4,6,10,3,2,0,1,2,0,0,1,45
+10,26696,Seymour,12,Ricky Schraven,3,2,5,2,2,0,0,0,1,1,1,34
+10,26696,Seymour,19,Rielly Old,3,3,6,5,1,1,0,1,4,2,0,24
+10,26696,Seymour,36,Jack Davey,3,2,5,1,2,0,2,1,2,0,0,18
+10,26696,Shepparton United,10,Matthew Casey,2,2,4,0,0,1,0,1,0,0,0,8
+10,26696,Seymour,13,Jesse Brock,2,1,3,3,1,0,1,3,1,2,0,19
+10,26696,Seymour,40,Darcy Giles,2,5,7,4,0,0,1,4,6,2,0,42
+10,26696,Seymour,18,Nathan Fowler,1,2,3,2,1,0,0,2,4,1,0,32
+10,26696,Seymour,28,Sam Thomson,1,2,3,1,1,0,0,1,1,0,0,13
+11,26700,Shepparton United,5,Jesse Cucinotta,21,0,21,4,7,4,1,3,1,2,0,57
+11,26700,Rochester,15,Dylan Gordon,19,4,23,4,3,0,13,5,3,0,0,95
+11,26700,Rochester,12,Hugh Hamilton,19,6,25,9,8,5,1,0,4,7,2,117
+11,26700,Shepparton United,4,Kaedyn Napier,18,9,27,9,11,1,7,1,3,1,0,112
+11,26700,Shepparton United,11,Brodie Newman,17,8,25,10,9,1,10,6,2,0,0,165
+11,26700,Shepparton United,30,Michael Barlow,16,16,32,18,4,3,5,1,3,9,1,129
+11,26700,Shepparton United,3,Joel Serra,15,8,23,8,3,1,3,2,4,4,0,68
+11,26700,Shepparton United,33,Jordan Haynes,15,6,21,14,5,3,1,5,11,7,0,108
+11,26700,Rochester,19,Nate Rasmussen,14,11,25,10,7,5,0,3,3,5,0,114
+11,26700,Shepparton United,18,Jordan Wiggins,14,2,16,4,9,3,3,1,1,0,0,85
+11,26700,Rochester,4,Mitchell Bright,13,4,17,5,5,3,1,1,2,1,0,64
+11,26700,Rochester,16,Ryley Ferguson,13,6,19,12,4,3,2,2,4,8,0,123
+11,26700,Rochester,6,Andrew Henderson,12,7,19,15,7,5,0,2,5,0,2,125
+11,26700,Rochester,14,Fletcher White,12,8,20,5,5,1,5,1,1,3,0,73
+11,26700,Shepparton United,10,Matthew Casey,12,0,12,7,4,4,0,0,2,2,0,62
+11,26700,Rochester,63,Caelan Templeton,12,4,16,6,5,4,0,4,2,1,0,51
+11,26700,Rochester,22,Bailey Wileman,11,17,28,17,3,6,2,1,14,6,1,137
+11,26700,Shepparton United,14,Sheldon Bogdan,11,9,20,13,4,2,2,3,8,4,0,109
+11,26700,Rochester,1,Hamish Hooppell,10,0,10,3,2,5,1,1,6,5,1,47
+11,26700,Rochester,3,Adam McPhee,10,4,14,3,4,3,1,0,3,3,0,62
+11,26700,Shepparton United,1,Fraser Hicks,10,7,17,6,4,1,1,2,4,1,0,73
+11,26700,Shepparton United,15,Liam Serra,10,4,14,5,7,2,1,0,0,0,1,65
+11,26700,Shepparton United,16,Mitchell Serra,10,3,13,4,6,2,0,0,2,0,1,67
+11,26700,Rochester,2,Mitchell Trewhella,9,11,20,9,4,3,0,3,11,5,0,108
+11,26700,Rochester,38,Matt Kellett,9,3,12,5,5,3,0,3,3,1,0,61
+11,26700,Rochester,21,Ryan O'Keefe,9,6,15,0,5,0,3,5,0,0,0,66
+11,26700,Shepparton United,27,Declan Newbound,8,4,12,3,6,0,1,0,1,0,0,34
+11,26700,Shepparton United,17,Kale Gibson,8,2,10,5,3,1,2,0,0,1,0,46
+11,26700,Rochester,20,Darby Wileman,7,3,10,6,4,1,0,5,2,2,1,61
+11,26700,Rochester,35,Jude Palmer,7,5,12,6,5,1,1,2,2,2,0,65
+11,26700,Shepparton United,21,Caiden Phillips,7,2,9,2,2,1,3,3,4,0,0,51
+11,26700,Shepparton United,12,Timothy Looby,6,3,9,6,4,0,0,2,1,0,1,53
+11,26700,Rochester,10,Felix Fogarty,5,3,8,7,1,2,0,2,3,0,3,58
+11,26700,Rochester,11,Grant Fuller,5,2,7,4,1,1,0,3,4,0,0,33
+11,26700,Rochester,27,Kyle Waters,5,5,10,6,3,3,0,0,2,0,1,49
+11,26700,Shepparton United,28,Nicholas Loverso,5,1,6,1,1,2,1,1,1,0,0,10
+11,26700,Shepparton United,23,Sam McInneny,4,0,4,2,1,1,1,0,0,0,0,16
+11,26700,Shepparton United,26,Jensen Dowling,4,2,6,2,4,0,2,0,0,0,0,80
+11,26700,Rochester,39,Hunter Wileman,4,3,7,3,3,1,0,1,2,1,1,33
+11,26700,Shepparton United,45,Nate Warrin,4,1,5,3,2,2,1,1,1,0,0,27
+11,26700,Rochester,29,Nathan McCarty,3,4,7,4,3,1,1,2,3,1,0,50
+11,26700,Shepparton United,42,Jordan Loverso,3,0,3,2,1,2,0,0,3,1,0,16
+11,26700,Rochester,9,Cale James,3,4,7,3,2,0,0,1,2,1,0,40
+11,26700,Shepparton United,31,Kye Jeffery,1,5,6,3,2,0,0,0,1,1,0,12
+12,26709,Shepparton United,15,Liam Serra,19,7,26,7,12,3,0,1,2,0,2,104
+12,26709,Shepparton United,33,Jordan Haynes,19,10,29,9,7,6,1,2,9,5,0,129
+12,26709,Shepparton United,5,Jesse Cucinotta,18,7,25,9,5,8,0,1,1,4,0,93
+12,26709,Euroa,10,Jack Mckernan,17,7,24,12,8,0,4,5,2,6,0,141
+12,26709,Shepparton United,4,Kaedyn Napier,16,5,21,2,9,2,5,4,2,0,0,100
+12,26709,Euroa,2,Jett Trotter,16,9,25,7,8,3,3,1,1,1,2,103
+12,26709,Euroa,9,Jayden Gleeson,16,9,25,10,5,5,4,5,6,2,0,100
+12,26709,Shepparton United,30,Michael Barlow,16,15,31,11,8,4,2,0,2,10,0,132
+12,26709,Shepparton United,10,Matthew Casey,15,2,17,8,11,3,0,0,0,0,7,131
+12,26709,Shepparton United,11,Brodie Newman,15,4,19,2,12,1,5,2,0,0,0,105
+12,26709,Euroa,4,Will Creevey,15,14,29,15,3,7,2,3,2,6,0,124
+12,26709,Euroa,19,Ryan Hill,15,10,25,13,5,2,1,3,5,3,0,108
+12,26709,Shepparton United,18,Jordan Wiggins,14,2,16,2,10,0,2,0,0,0,0,61
+12,26709,Euroa,1,Max Gleeson,14,7,21,7,7,2,1,2,5,2,0,96
+12,26709,Shepparton United,42,Jordan Loverso,13,8,21,7,8,3,0,2,6,1,1,85
+12,26709,Shepparton United,17,Kale Gibson,13,4,17,3,8,1,2,2,1,0,0,53
+12,26709,Euroa,28,Nicholas Asquith,13,1,14,4,6,0,3,5,3,0,0,83
+12,26709,Shepparton United,28,Nicholas Loverso,13,2,15,2,7,4,3,2,3,0,0,69
+12,26709,Euroa,5,Cohen Paul,12,7,19,10,6,2,1,2,3,1,0,86
+12,26709,Euroa,15,Zac Gleeson,11,4,15,1,11,2,0,1,0,0,1,79
+12,26709,Shepparton United,1,Fraser Hicks,10,8,18,4,1,1,4,0,1,0,0,53
+12,26709,Euroa,23,Adam Giobbi,10,1,11,3,5,0,7,2,1,0,0,65
+12,26709,Euroa,22,Jacob Gleeson,10,7,17,4,8,5,2,1,5,0,0,76
+12,26709,Shepparton United,8,Mitchell Trevaskis,9,9,18,7,7,1,0,0,0,0,1,51
+12,26709,Shepparton United,14,Sheldon Bogdan,9,12,21,9,6,1,0,2,8,6,0,106
+12,26709,Shepparton United,16,Mitchell Serra,8,5,13,5,6,1,1,4,3,3,0,73
+12,26709,Shepparton United,27,Declan Newbound,8,1,9,4,3,1,2,2,2,0,0,50
+12,26709,Euroa,43,Nic Burke,8,4,12,5,4,2,0,1,2,2,1,53
+12,26709,Euroa,18,Jack Frewen,7,5,12,5,6,1,1,6,5,1,0,61
+12,26709,Shepparton United,12,Timothy Looby,6,3,9,0,4,1,0,0,0,0,0,35
+12,26709,Shepparton United,23,Sam McInneny,6,4,10,2,3,1,1,2,1,1,0,29
+12,26709,Shepparton United,26,Jensen Dowling,6,11,17,14,2,2,0,3,0,9,0,129
+12,26709,Shepparton United,21,Caiden Phillips,6,1,7,2,3,0,3,2,2,0,0,42
+12,26709,Euroa,12,Darby Wilson,5,6,11,7,1,1,1,0,7,4,0,70
+12,26709,Euroa,16,Mitchell Walters,5,8,13,7,3,4,0,2,2,0,1,65
+12,26709,Euroa,36,Declan Redfern,5,1,6,3,2,1,1,2,2,1,0,34
+12,26709,Shepparton United,31,Kye Jeffery,5,2,7,3,1,1,0,6,2,0,1,48
+12,26709,Euroa,33,Henry Thomas,4,6,10,3,2,1,0,0,0,1,0,22
+12,26709,Shepparton United,45,Nate Warrin,4,3,7,4,3,2,0,3,3,1,1,50
+12,26709,Euroa,8,Keily Jager,3,4,7,4,2,0,0,3,0,1,1,38
+12,26709,Euroa,41,Nicholas McCabe,3,1,4,1,1,1,1,0,0,0,0,18
+12,26709,Euroa,29,Lincoln Mckernan,3,6,9,3,1,0,2,4,2,0,0,39
+12,26709,Euroa,40,Jack Walters,3,2,5,2,2,0,0,4,4,0,0,39
+12,26709,Euroa,27,Maxwell Miller,2,3,5,3,0,0,0,2,1,2,0,22
+13,26714,Shepparton Bears,17,Lewis McShane,22,8,30,11,11,5,3,1,8,5,2,153
+13,26714,Shepparton Bears,20,Mitchell Brett,21,4,25,8,7,3,5,2,0,1,0,112
+13,26714,Shepparton Bears,19,Daniel Meek,18,6,24,7,12,5,5,2,1,1,0,139
+13,26714,Shepparton Bears,1,Luke Smith,16,8,24,11,5,4,0,1,6,6,2,113
+13,26714,Shepparton United,3,Joel Serra,16,22,38,21,1,7,3,0,3,11,0,146
+13,26714,Shepparton United,7,Angus Hicks,16,7,23,9,3,3,1,1,3,6,0,85
+13,26714,Shepparton United,5,Jesse Cucinotta,15,6,21,8,5,6,2,1,3,4,0,90
+13,26714,Shepparton United,12,Brodie Newman,15,3,18,4,8,0,6,2,2,1,0,107
+13,26714,Shepparton Bears,13,Kade Odwyer,12,8,20,5,4,5,2,1,5,3,0,91
+13,26714,Shepparton United,4,Kaedyn Napier,12,6,18,10,5,0,6,3,4,3,0,106
+13,26714,Shepparton United,15,Liam Serra,12,10,22,9,6,2,0,1,2,1,1,75
+13,26714,Shepparton Bears,2,Spencer Sharp,12,3,15,7,7,2,4,1,2,2,1,94
+13,26714,Shepparton United,1,Fraser Hicks,11,5,16,3,2,1,5,2,3,0,0,57
+13,26714,Shepparton United,8,Mitchell Trevaskis,11,11,22,8,6,3,4,2,1,1,0,90
+13,26714,Shepparton Bears,23,Liam Teague,10,11,21,9,3,2,3,0,3,5,0,63
+13,26714,Shepparton United,18,Jordan Wiggins,10,5,15,4,5,0,4,1,4,1,0,75
+13,26714,Shepparton Bears,8,Jacob Watts,9,6,15,5,2,4,2,2,9,0,0,73
+13,26714,Shepparton Bears,16,Zac Metcalf,9,4,13,8,5,1,1,1,2,3,2,97
+13,26714,Shepparton United,23,Sam McInneny,9,3,12,2,4,2,1,1,2,0,0,41
+13,26714,Shepparton Bears,18,Lincoln Brand,9,11,20,11,3,3,0,0,5,2,0,59
+13,26714,Shepparton United,27,Declan Newbound,8,5,13,3,3,1,1,4,1,0,0,41
+13,26714,Shepparton Bears,25,Mitchell Fleming,7,9,16,7,6,3,0,1,4,0,0,85
+13,26714,Shepparton Bears,32,Max Brodie,7,5,12,4,4,1,2,0,0,1,0,56
+13,26714,Shepparton Bears,14,Liam Broom,7,5,12,7,1,4,0,2,5,4,0,90
+13,26714,Shepparton Bears,10,Sam O'Brien,7,8,15,6,3,1,1,0,3,1,0,62
+13,26714,Shepparton United,14,Sheldon Bogdan,7,13,20,14,3,0,2,0,10,8,0,106
+13,26714,Shepparton United,28,Nicholas Loverso,7,5,12,7,2,1,0,1,5,1,0,44
+13,26714,Shepparton United,33,Lucas O'Hara,7,2,9,2,3,3,0,1,1,0,0,38
+13,26714,Shepparton United,22,Matthew Casey,6,1,7,2,4,0,0,0,0,0,3,54
+13,26714,Shepparton Bears,3,Ned Byrne,6,4,10,2,5,1,0,0,2,1,0,46
+13,26714,Shepparton Bears,5,Liam Duguid,5,5,10,3,3,2,2,1,0,1,0,46
+13,26714,Shepparton Bears,22,Bryce Stephenson,5,7,12,6,1,0,1,2,2,1,0,45
+13,26714,Shepparton Bears,6,Connor Fleming,5,1,6,4,0,1,0,1,2,0,1,27
+13,26714,Shepparton United,20,Kye Jeffery,5,4,9,5,2,3,1,2,3,2,0,47
+13,26714,Shepparton Bears,11,Lachlan Ludeman,4,4,8,4,3,1,3,0,2,1,0,48
+13,26714,Shepparton United,32,Blake Sofra,4,7,11,9,0,2,1,0,2,2,0,50
+13,26714,Shepparton Bears,4,Angus Williams,4,7,11,7,4,1,0,2,3,0,1,61
+13,26714,Shepparton Bears,15,Tanner Madigan,3,2,5,0,2,0,0,0,5,0,0,17
+13,26714,Shepparton United,17,Kale Gibson,3,3,6,3,1,2,0,1,4,1,0,32
+13,26714,Shepparton United,21,Caiden Phillips,3,4,7,2,1,0,0,3,2,0,0,29
+13,26714,Shepparton United,26,Jensen Dowling,2,3,5,4,0,1,1,3,4,2,0,90
+13,26714,Shepparton Bears,7,Jhett Cooper,2,7,9,5,0,0,1,2,2,0,0,45
+13,26714,Shepparton United,16,Mitchell Serra,1,0,1,1,1,1,0,0,0,0,0,10
+13,26714,Shepparton United,42,Jordan Loverso,1,6,7,3,0,0,0,2,5,2,0,21
+14,26720,Shepparton Swans,5,Ethan Warburton,28,4,32,3,7,2,9,2,0,3,0,125
+14,26720,Shepparton United,7,Angus Hicks,25,10,35,12,4,9,0,3,4,7,2,133
+14,26720,Shepparton United,5,Jesse Cucinotta,20,3,23,5,5,6,1,6,3,3,1,106
+14,26720,Shepparton Swans,3,Adam Fichera,20,2,22,4,7,1,4,3,4,2,0,104
+14,26720,Shepparton Swans,35,Enrique Goggin,19,11,30,14,8,5,2,1,11,7,0,136
+14,26720,Shepparton United,15,Liam Serra,18,9,27,10,10,7,0,0,8,0,2,140
+14,26720,Shepparton United,3,Joel Serra,16,20,36,25,3,3,2,0,7,12,0,155
+14,26720,Shepparton Swans,2,Oliver Warburton,16,14,30,12,10,4,3,0,3,7,1,134
+14,26720,Shepparton United,11,Brodie Newman,15,4,19,8,10,0,4,4,2,0,0,121
+14,26720,Shepparton Swans,10,Sam Bicknell,15,5,20,7,11,1,2,3,6,0,0,102
+14,26720,Shepparton Swans,19,Zac Alderton,15,9,24,8,4,3,1,2,3,7,2,103
+14,26720,Shepparton United,4,Kaedyn Napier,14,3,17,5,8,2,4,1,4,1,1,94
+14,26720,Shepparton Swans,14,Zac Clohesy,14,8,22,10,11,0,6,3,1,1,0,134
+14,26720,Shepparton United,17,Kale Gibson,13,3,16,4,5,3,4,1,2,1,1,64
+14,26720,Shepparton United,13,Zavier Maher,13,17,30,16,7,8,0,1,5,8,1,146
+14,26720,Shepparton Swans,7,Nathan Rachele,12,5,17,6,5,7,1,4,7,0,0,81
+14,26720,Shepparton United,14,Sheldon Bogdan,11,13,24,11,8,6,1,1,3,6,0,91
+14,26720,Shepparton United,28,Nicholas Loverso,11,5,16,5,4,3,1,0,1,2,0,64
+14,26720,Shepparton United,18,Jordan Wiggins,10,1,11,2,4,0,2,1,1,0,0,50
+14,26720,Shepparton Swans,22,Quade Johnstone,10,8,18,7,8,2,2,2,5,5,1,86
+14,26720,Shepparton Swans,23,Ty Sutherland,10,2,12,8,3,3,2,5,3,4,0,74
+14,26720,Shepparton Swans,32,Kade Dwyer,10,4,14,5,2,1,1,2,1,1,0,48
+14,26720,Shepparton Swans,25,Will Dwyer,10,2,12,6,1,1,2,1,4,3,0,51
+14,26720,Shepparton United,23,Sam McInneny,9,1,10,4,6,4,0,1,2,0,2,63
+14,26720,Shepparton United,10,Matthew Casey,8,0,8,4,1,1,0,0,1,1,4,53
+14,26720,Shepparton United,12,Timothy Looby,8,2,10,5,4,1,0,0,0,0,1,49
+14,26720,Shepparton Swans,13,Lucas Rachele,8,6,14,7,6,1,3,3,6,1,0,72
+14,26720,Shepparton Swans,27,Kade Anderson,8,7,15,6,6,1,1,3,4,0,0,64
+14,26720,Shepparton United,42,Jordan Loverso,7,7,14,7,2,3,0,3,2,1,1,58
+14,26720,Shepparton Swans,11,Liam Rachele,7,4,11,3,3,1,0,3,4,0,3,51
+14,26720,Shepparton Swans,33,Rory Duffy,7,3,10,3,5,1,1,1,2,0,0,48
+14,26720,Shepparton Swans,44,Xavier Janke,7,7,14,4,4,0,3,5,2,1,0,47
+14,26720,Shepparton United,8,Mitchell Trevaskis,6,3,9,4,4,1,2,0,2,1,0,51
+14,26720,Shepparton United,27,Declan Newbound,6,2,8,0,3,1,1,1,2,0,0,48
+14,26720,Shepparton United,39,Connor Hayes,6,4,10,5,1,1,0,1,0,0,0,22
+14,26720,Shepparton United,21,Caiden Phillips,6,0,6,0,2,1,1,3,1,0,0,34
+14,26720,Shepparton United,26,Jensen Dowling,5,11,16,11,0,2,1,1,0,5,1,107
+14,26720,Shepparton Swans,15,Kade Alper,5,2,7,4,3,2,0,0,0,0,0,24
+14,26720,Shepparton United,45,Nate Warrin,5,2,7,3,3,1,1,2,3,0,1,47
+14,26720,Shepparton Swans,6,James Auld,3,4,7,4,2,0,0,3,0,1,2,50
+14,26720,Shepparton Swans,8,Joeve Cooper,3,4,7,2,2,0,0,0,1,1,0,27
+14,26720,Shepparton United,31,Kye Jeffery,3,7,10,5,0,0,0,3,5,0,1,55
+14,26720,Shepparton Swans,21,Nate Sutherland,2,2,4,4,0,0,1,3,3,2,0,31
+14,26720,Shepparton Swans,31,Braedan Meka,0,4,4,2,0,0,0,0,2,0,0,21
+15,26725,Shepparton United,13,Zavier Maher,24,10,34,20,7,12,4,1,3,11,1,175
+15,26725,Shepparton United,7,Angus Hicks,20,11,31,14,2,3,3,3,15,7,0,125
+15,26725,Shepparton United,4,Kaedyn Napier,19,10,29,11,12,0,7,4,2,1,0,145
+15,26725,Mooroopna,12,Isaac Dowling,17,12,29,13,6,5,4,1,3,5,0,103
+15,26725,Shepparton United,17,Kale Gibson,14,5,19,5,5,2,2,3,3,0,0,78
+15,26725,Mooroopna,13,Dom Gugliotti,14,2,16,5,4,1,6,3,2,1,0,81
+15,26725,Mooroopna,11,Xavier Chandler,13,1,14,3,4,0,8,0,4,0,0,67
+15,26725,Mooroopna,35,Coby James,13,4,17,5,4,4,4,0,4,0,0,58
+15,26725,Mooroopna,20,Reeve Evans,13,8,21,8,3,4,0,6,6,1,1,88
+15,26725,Shepparton United,15,Liam Serra,12,6,18,7,7,4,0,2,3,0,0,72
+15,26725,Shepparton United,18,Jordan Wiggins,12,2,14,3,6,0,2,2,0,1,0,68
+15,26725,Mooroopna,40,Jed Woods,12,17,29,19,1,8,3,2,4,11,0,119
+15,26725,Shepparton United,5,Jesse Cucinotta,11,5,16,4,4,4,0,3,3,0,0,67
+15,26725,Shepparton United,30,Michael Barlow,11,18,29,18,4,2,1,3,2,12,0,118
+15,26725,Shepparton United,3,Joel Serra,10,18,28,11,3,4,2,3,7,10,0,120
+15,26725,Shepparton United,11,Brodie Newman,10,8,18,8,8,1,5,5,1,0,0,95
+15,26725,Mooroopna,4,Jordan Anderson,10,4,14,8,1,3,0,2,6,2,0,58
+15,26725,Shepparton United,27,Declan Newbound,9,1,10,4,8,3,0,5,4,0,0,78
+15,26725,Mooroopna,9,Keelin Betson,9,11,20,11,4,2,3,4,14,6,0,133
+15,26725,Mooroopna,38,Toby Williams,9,3,12,4,4,4,0,1,3,0,1,63
+15,26725,Mooroopna,18,Kobie Issell,8,2,10,4,2,1,0,1,0,0,0,31
+15,26725,Mooroopna,22,Ben Hicks,8,4,12,5,2,0,3,2,2,1,0,62
+15,26725,Mooroopna,41,Campbell McElhinney,8,3,11,6,4,1,3,1,4,1,0,59
+15,26725,Mooroopna,7,Jack Johnston,8,1,9,8,2,2,0,0,5,1,3,81
+15,26725,Shepparton United,8,Mitchell Trevaskis,7,1,8,4,2,1,2,1,1,1,0,32
+15,26725,Shepparton United,10,Matthew Casey,7,1,8,5,3,0,0,0,0,0,3,42
+15,26725,Shepparton United,12,Timothy Looby,7,1,8,5,3,2,0,0,1,0,1,48
+15,26725,Shepparton United,14,Sheldon Bogdan,7,14,21,13,3,5,0,0,7,2,0,68
+15,26725,Shepparton United,26,Jensen Dowling,7,4,11,6,3,2,2,2,4,4,0,112
+15,26725,Shepparton United,42,Jordan Loverso,7,3,10,7,1,5,0,1,11,1,0,41
+15,26725,Mooroopna,1,Rory Huggard,7,2,9,2,2,0,2,4,2,0,0,33
+15,26725,Mooroopna,30,Liam Betson,7,12,19,15,1,1,3,4,6,11,0,131
+15,26725,Mooroopna,26,Mackenzie Calleja,7,1,8,4,3,1,6,6,2,1,0,69
+15,26725,Mooroopna,6,Jack Osborne,6,0,6,5,3,2,0,2,3,0,3,66
+15,26725,Mooroopna,14,Ben Woods,6,4,10,4,2,0,0,5,8,2,1,35
+15,26725,Shepparton United,23,Sam McInneny,5,2,7,5,2,1,0,0,3,0,2,52
+15,26725,Mooroopna,16,Oscar Emanuelli,5,6,11,7,1,2,0,2,2,0,0,41
+15,26725,Shepparton United,28,Nicholas Loverso,5,3,8,4,2,2,0,1,2,0,0,21
+15,26725,Mooroopna,25,Harrison Bell,5,4,9,3,3,1,0,3,1,0,2,51
+15,26725,Mooroopna,23,William Emanuelli,4,3,7,2,3,2,0,0,4,0,0,33
+15,26725,Shepparton United,21,Caiden Phillips,4,7,11,3,3,0,0,3,3,0,0,46
+15,26725,Mooroopna,19,Noah Williams,2,2,4,2,0,0,0,1,1,0,1,21
+15,26725,Shepparton United,39,Connor Hayes,1,2,3,2,0,0,0,0,0,0,0,6
+15,26725,Shepparton United,31,Kye Jeffery,1,4,5,4,1,0,0,3,3,0,1,41
+16,26729,Shepparton United,7,Angus Hicks,25,11,36,13,7,5,0,4,6,6,2,172
+16,26729,Shepparton United,11,Brodie Newman,23,5,28,6,19,2,1,0,0,0,3,166
+16,26729,Shepparton United,13,Zavier Maher,23,13,36,20,5,12,2,1,6,10,1,163
+16,26729,Shepparton United,17,Kale Gibson,22,5,27,2,5,2,3,2,2,0,0,89
+16,26729,Tatura,7,Kieran Andrew,22,3,25,7,7,1,8,3,9,3,0,114
+16,26729,Shepparton United,4,Kaedyn Napier,21,8,29,8,9,6,0,1,3,1,0,132
+16,26729,Tatura,12,Charlie Murdoch,21,7,28,12,8,1,3,2,9,4,0,111
+16,26729,Shepparton United,15,Liam Serra,20,12,32,8,16,5,1,2,1,0,1,137
+16,26729,Shepparton United,10,Matthew Casey,18,0,18,5,13,4,0,1,1,0,8,140
+16,26729,Tatura,22,Sean McAllister,17,15,32,11,9,1,4,2,5,8,0,117
+16,26729,Tatura,24,Finn Radley,17,3,20,7,12,0,3,4,3,0,0,120
+16,26729,Shepparton United,23,Sam McInneny,16,1,17,3,13,2,0,0,2,0,0,70
+16,26729,Shepparton United,5,Jesse Cucinotta,15,8,23,9,5,2,1,1,3,3,0,90
+16,26729,Tatura,19,Comanche Walls,15,4,19,4,12,1,3,4,4,0,0,103
+16,26729,Tatura,14,Harry Murdoch,14,11,25,7,9,2,2,2,5,6,1,121
+16,26729,Tatura,20,Oscar Willis,14,2,16,2,5,0,5,2,2,1,0,44
+16,26729,Shepparton United,42,Jordan Loverso,13,0,13,2,10,2,0,2,5,0,2,98
+16,26729,Tatura,9,Xavier Hutchison,13,3,16,6,4,0,6,2,6,3,0,75
+16,26729,Shepparton United,31,Kye Jeffery,12,7,19,8,7,4,1,1,2,0,1,78
+16,26729,Shepparton United,3,Joel Serra,10,16,26,11,5,0,0,0,1,6,0,98
+16,26729,Tatura,37,Will Russell,10,0,10,3,5,4,0,1,0,0,1,24
+16,26729,Tatura,43,Cade Dealy,10,6,16,3,8,0,1,3,0,0,0,63
+16,26729,Shepparton United,28,Nicholas Loverso,10,9,19,4,5,2,0,1,4,0,0,67
+16,26729,Shepparton United,18,Jordan Wiggins,9,7,16,3,6,1,2,1,1,0,0,61
+16,26729,Tatura,6,James Bennett,9,9,18,7,3,3,3,2,5,6,0,68
+16,26729,Shepparton United,36,Nathan Ferrier,9,3,12,1,8,1,1,0,0,0,1,57
+16,26729,Shepparton United,8,Mitchell Trevaskis,8,12,20,4,9,2,0,0,2,1,0,77
+16,26729,Tatura,38,Jess Petherick,8,8,16,6,5,3,0,4,3,0,0,76
+16,26729,Shepparton United,21,Caiden Phillips,8,6,14,8,6,2,0,1,3,0,0,77
+16,26729,Shepparton United,12,Timothy Looby,7,2,9,5,5,2,0,0,0,0,2,64
+16,26729,Shepparton United,27,Declan Newbound,7,5,12,3,5,0,3,5,1,0,0,59
+16,26729,Tatura,26,Ciaran Hubble,7,2,9,1,5,0,2,2,1,0,0,43
+16,26729,Shepparton United,14,Sheldon Bogdan,6,10,16,7,6,2,0,1,4,3,0,86
+16,26729,Tatura,52,Christian Corso,6,9,15,5,6,0,0,5,1,0,0,64
+16,26729,Shepparton United,24,Zane Chalcraft,5,1,6,3,1,4,0,2,4,1,0,31
+16,26729,Shepparton United,26,Jensen Dowling,5,7,12,9,3,1,0,1,1,4,2,130
+16,26729,Tatura,2,Liam Scopelliti,5,3,8,5,0,2,0,4,6,1,0,56
+16,26729,Tatura,21,Nicholas Watt,4,6,10,5,2,1,0,1,1,1,0,41
+16,26729,Tatura,10,Kitt McCamley,3,4,7,2,3,0,0,2,1,0,0,25
+16,26729,Tatura,17,Ryan Young,3,1,4,2,0,0,0,0,1,2,0,34
+16,26729,Tatura,18,Blake Armstrong,3,0,3,1,2,0,0,2,1,0,2,34
+16,26729,Tatura,27,Ryan Skinner,3,2,5,1,1,0,0,1,1,1,0,3
+16,26729,Tatura,32,Jayden Armstrong,3,4,7,5,1,0,0,1,2,0,1,33
+16,26729,Tatura,29,Callum Farquhar,2,1,3,2,0,1,1,1,0,1,0,23
+17,26738,Echuca,18,Mitchell Wales,21,16,37,12,7,7,5,4,2,6,1,136
+17,26738,Shepparton United,4,Kaedyn Napier,19,2,21,1,8,3,4,8,2,0,0,93
+17,26738,Echuca,6,Tom Evans,19,12,31,7,7,5,2,1,1,5,1,107
+17,26738,Shepparton United,13,Zavier Maher,18,12,30,21,1,8,2,1,8,13,1,147
+17,26738,Echuca,5,Malik Gordon,17,7,24,5,9,6,1,3,2,0,2,123
+17,26738,Echuca,25,Jack McHale,17,22,39,25,8,7,0,1,8,12,1,200
+17,26738,Echuca,37,Jack Evans,16,7,23,4,3,6,0,0,3,2,1,78
+17,26738,Echuca,27,Mitchell Bell,15,5,20,3,4,4,3,4,2,1,4,100
+17,26738,Echuca,52,William Monahan,14,10,24,4,7,1,4,1,5,0,0,94
+17,26738,Shepparton United,5,Jesse Cucinotta,13,4,17,3,8,1,5,1,0,1,1,65
+17,26738,Shepparton United,7,Angus Hicks,12,14,26,10,6,0,0,2,7,4,2,106
+17,26738,Shepparton United,15,Liam Serra,11,9,20,4,8,4,0,0,1,0,0,81
+17,26738,Shepparton United,17,Kale Gibson,11,2,13,3,4,2,2,3,1,1,0,64
+17,26738,Echuca,10,Jackson Stewart,11,18,29,14,2,5,0,1,4,7,0,117
+17,26738,Shepparton United,3,Joel Serra,10,11,21,11,4,3,3,2,5,6,0,81
+17,26738,Shepparton United,23,Sam McInneny,10,3,13,5,4,1,2,0,3,1,1,61
+17,26738,Shepparton United,33,Jordan Haynes,10,5,15,9,2,1,1,1,8,6,0,81
+17,26738,Echuca,22,Darby Jones,10,6,16,8,5,1,2,2,2,6,2,115
+17,26738,Echuca,23,Makai Cronin,10,5,15,8,3,2,0,1,1,1,3,78
+17,26738,Echuca,38,William Deutsher,10,4,14,2,4,1,0,2,4,0,0,52
+17,26738,Echuca,48,Luke Edwards,10,7,17,6,6,2,1,3,3,2,1,88
+17,26738,Echuca,39,Baxter Slater,10,18,28,15,3,4,2,0,7,7,2,142
+17,26738,Shepparton United,10,Matthew Casey,9,2,11,7,4,3,1,0,1,1,2,53
+17,26738,Echuca,4,Samuel Reid,9,11,20,10,2,2,1,1,2,7,1,86
+17,26738,Echuca,21,Jesse Tuohey,9,10,19,2,4,4,1,1,3,0,3,69
+17,26738,Shepparton United,1,Fraser Hicks,8,5,13,4,2,0,3,1,1,0,0,53
+17,26738,Shepparton United,27,Declan Newbound,8,4,12,4,4,0,0,6,1,0,0,55
+17,26738,Shepparton United,8,Mitchell Trevaskis,7,6,13,2,7,0,2,0,4,0,0,65
+17,26738,Shepparton United,14,Sheldon Bogdan,7,9,16,5,2,3,2,0,4,0,0,57
+17,26738,Echuca,31,Sam Edgar,7,3,10,3,3,2,1,2,5,2,2,71
+17,26738,Shepparton United,18,Jordan Wiggins,6,4,10,2,3,1,1,3,0,1,0,50
+17,26738,Echuca,30,Liam Tenace,6,7,13,7,5,2,0,0,2,0,3,83
+17,26738,Echuca,55,Curtis Townrow,6,0,6,0,1,0,3,7,1,0,0,43
+17,26738,Echuca,53,Connor Armstrong,6,1,7,0,5,0,1,3,1,0,0,46
+17,26738,Shepparton United,12,Timothy Looby,5,1,6,0,3,2,0,0,0,0,1,23
+17,26738,Echuca,17,Harrison Milburn,5,7,12,4,1,0,2,2,3,1,0,55
+17,26738,Shepparton United,31,Kye Jeffery,5,2,7,5,3,2,0,1,1,1,1,45
+17,26738,Shepparton United,42,Jordan Loverso,4,1,5,2,2,3,0,2,4,0,1,39
+17,26738,Shepparton United,28,Nicholas Loverso,4,2,6,2,2,1,2,1,1,0,0,26
+17,26738,Shepparton United,21,Caiden Phillips,4,9,13,3,3,0,1,8,2,0,0,63
+17,26738,Echuca,14,Aiden Mills,3,0,3,1,1,0,1,3,3,0,0,27
+17,26738,Echuca,11,Angus Byrne,3,2,5,4,2,1,0,2,0,0,0,31
+17,26738,Shepparton United,24,Zane Chalcraft,1,5,6,2,0,0,0,2,1,0,0,14
+17,26738,Shepparton United,26,Jensen Dowling,1,6,7,4,0,0,2,0,3,2,0,110
+18,26740,Shepparton United,7,Angus Hicks,24,11,35,11,4,17,1,1,3,7,0,140
+18,26740,Mansfield,5,Harry Mahoney,23,9,32,8,5,11,2,1,4,0,0,133
+18,26740,Shepparton United,13,Zavier Maher,18,13,31,22,5,5,3,2,4,15,3,161
+18,26740,Shepparton United,5,Jesse Cucinotta,16,11,27,12,4,0,3,3,5,5,0,97
+18,26740,Mansfield,1,Jayden Howes,16,8,24,14,5,9,2,3,10,10,2,147
+18,26740,Mansfield,2,Sam Thomson,16,10,26,16,7,4,3,2,8,13,1,152
+18,26740,Shepparton United,1,Fraser Hicks,15,6,21,3,4,0,6,1,1,1,0,75
+18,26740,Shepparton United,4,Kaedyn Napier,15,9,24,8,8,0,8,2,1,2,1,131
+18,26740,Mansfield,9,Matthew King,15,8,23,3,8,0,4,3,3,0,0,99
+18,26740,Mansfield,6,Max Mahoney,13,11,24,15,8,7,1,1,12,8,1,146
+18,26740,Mansfield,43,Benjamin Reardon,13,2,15,7,6,1,3,1,1,2,2,83
+18,26740,Shepparton United,27,Declan Newbound,12,1,13,3,7,0,3,2,2,0,0,70
+18,26740,Shepparton United,33,Jordan Haynes,12,13,25,11,5,2,1,1,7,3,0,79
+18,26740,Shepparton United,10,Matthew Casey,11,1,12,5,6,4,0,0,2,2,4,93
+18,26740,Mansfield,15,Nathan Buchanan,11,5,16,6,6,2,1,2,1,1,0,59
+18,26740,Shepparton United,45,Jimmy Holding,11,5,16,5,7,4,2,1,3,2,1,81
+18,26740,Shepparton United,15,Liam Serra,10,3,13,5,4,2,0,3,3,0,3,77
+18,26740,Shepparton United,18,Jordan Wiggins,10,8,18,6,9,0,3,0,1,0,0,88
+18,26740,Mansfield,14,Brett Mahoney,10,12,22,9,5,5,2,0,1,3,1,94
+18,26740,Shepparton United,42,Jordan Loverso,9,3,12,6,4,5,0,2,2,1,0,37
+18,26740,Shepparton United,17,Kale Gibson,9,5,14,3,6,2,3,2,0,0,2,74
+18,26740,Shepparton United,21,Caiden Phillips,8,3,11,4,4,1,3,2,4,1,0,59
+18,26740,Shepparton United,12,Timothy Looby,7,2,9,4,3,2,0,0,1,1,3,66
+18,26740,Mansfield,17,Luke Menhenett,7,8,15,7,3,0,2,0,1,0,0,60
+18,26740,Mansfield,19,Samuel Guppy,7,3,10,4,4,1,1,2,3,0,2,81
+18,26740,Shepparton United,36,Nathan Ferrier,7,5,12,5,4,0,1,0,0,0,0,38
+18,26740,Shepparton United,26,Jensen Dowling,6,7,13,10,2,1,2,3,4,5,0,130
+18,26740,Mansfield,51,William Dunstan,6,1,7,2,3,0,0,5,2,0,0,34
+18,26740,Mansfield,54,William Brooks,6,0,6,2,3,0,2,5,2,0,0,33
+18,26740,Mansfield,33,William Hogan,6,6,12,9,5,1,0,0,2,1,2,77
+18,26740,Shepparton United,8,Mitchell Trevaskis,5,7,12,3,5,0,0,2,7,1,0,81
+18,26740,Shepparton United,23,Sam McInneny,5,4,9,5,5,0,0,0,3,0,1,44
+18,26740,Mansfield,7,Will Foster,5,3,8,5,1,3,0,1,5,2,0,48
+18,26740,Mansfield,23,William Kelly,5,2,7,4,3,1,0,1,1,0,2,46
+18,26740,Mansfield,49,Jay Canterbury,5,5,10,3,5,0,3,1,1,0,0,77
+18,26740,Shepparton United,3,Joel Serra,4,9,13,6,1,1,1,2,3,2,0,58
+18,26740,Mansfield,30,Cody George,4,6,10,6,2,2,0,1,6,2,0,54
+18,26740,Mansfield,16,Jack Marks,4,6,10,5,1,1,0,1,3,3,1,38
+18,26740,Mansfield,26,Angus Bolitho,4,3,7,3,3,0,1,1,2,1,0,51
+18,26740,Shepparton United,43,Nate Yze,4,4,8,5,1,2,0,0,4,0,1,47
+18,26740,Mansfield,25,Andrew Thomson,3,4,7,6,0,0,1,1,2,0,0,41
+18,26740,Shepparton United,14,Sheldon Bogdan,2,10,12,10,0,0,0,1,4,4,0,62
+18,26740,Mansfield,34,Brayden Van Winden,2,0,2,0,1,0,0,3,1,1,0,13
+18,26740,Mansfield,42,Gus Van der Heyden,2,1,3,3,0,3,0,3,6,2,0,81
