@@ -10,7 +10,7 @@ Source: the Premier Data app (pdapp2.advancedhp.com.au), scraped on 25 September
 
 3. **United's style: the best marking, cleanest-kicking team in the league.** Out of 12 clubs they ranked **1st** for marks, uncontested marks, kicking efficiency, overall disposal efficiency and fewest midfield turnovers, and **2nd** for marks inside 50. On average they took 22 more marks and had 32 more disposals than their opponents each game.
 
-4. **The big weakness is the hard, defensive side of the game.** United ranked **last (12th)** for pressure acts, one-percenters (spoils, smothers, shepherds), spoils and loose-ball gets, **11th** for groundball gets and smothers, and **10th** for tackles. Opponents laid about **10 more tackles a game** than United.
+4. **The big weakness is the hard, defensive side of the game.** United ranked **last (12th)** for overall pressure, one-percenters (spoils, smothers, shepherds), spoils and loose-ball gets, **11th** for groundball gets and smothers, and **10th** for tackles. Opponents laid about **10 more tackles a game** than United.
 
 5. **Wins came from getting the ball forward, not from winning the contest.** The biggest link to the final margin was getting more inside 50s and scoring shots than the opponent. In wins, United averaged **54 inside 50s and 19 marks inside 50**. In losses it was **42 and 11**. Tackle numbers were about the same in wins and losses, so when United lost, the ball simply wasn't getting forward enough.
 
@@ -66,7 +66,7 @@ Each bar compares United's per-game average with the other 11 clubs. Stats where
 | Clearances | 41.8 | 42.3 | 8 |
 | Tackles | 55.2 | 62.0 | 10 |
 | Groundball gets | 77.9 | 86.9 | 11 |
-| Pressure acts | 105.2 | 124.2 | 12 |
+| Overall pressure | 105.2 | 124.2 | 12 |
 | One-percenters | 36.3 | 43.3 | 12 |
 | Spoils | 13.7 | 17.7 | 12 |
 
@@ -84,7 +84,7 @@ Against their own opponents over the season, United's per-game differentials wer
 
 ![What wins games](report/04_what_wins_games.png)
 
-This chart uses United's 18 games. For each stat it measures how closely beating the opponent on that stat moved with the final margin. The strongest links were scoring shots (0.93), inside 50s (0.92), disposals (0.84) and marks inside 50 (0.81). Tackles (0.40) and pressure acts (−0.05) had little or no link. Winning the rebound-50 count went with losing (−0.59), because it means the opponent had the ball in their forward half.
+This chart uses United's 18 games. For each stat it measures how closely beating the opponent on that stat moved with the final margin. The strongest links were scoring shots (0.93), inside 50s (0.92), disposals (0.84) and marks inside 50 (0.81). Tackles (0.40) and overall pressure (−0.05) had little or no link. Winning the rebound-50 count went with losing (−0.59), because it means the opponent had the ball in their forward half.
 
 Average per game in wins vs losses (United's numbers):
 
@@ -195,7 +195,8 @@ Stat abbreviations used in the CSVs:
 | HO | Hit outs |
 | TGB | Total groundball gets |
 | IP | Intercept possessions |
-| PR | Pressure acts |
+| PR | Overall pressure |
+| PRA | Pressure acts |
 | TO | Turnovers |
 | 1% | One-percenters |
 

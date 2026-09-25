@@ -323,7 +323,7 @@
    "rank": 7,
    "league_avg": 24.7
   },
-  "Pressure acts": {
+  "Overall pressure": {
    "value": 105.2,
    "rank": 12,
    "league_avg": 124.2
@@ -416,7 +416,7 @@
  ],
  "weaknesses": [
   "One-percenters",
-  "Pressure acts",
+  "Overall pressure",
   "Spoils",
   "Loose-ball gets",
   "Groundball gets",
@@ -885,7 +885,7 @@
   "Intercept possessions": 0.25,
   "Hit outs": 0.11,
   "Contested marks": 0.09,
-  "Pressure acts": -0.05,
+  "Overall pressure": -0.05,
   "Intercept marks": -0.2,
   "Turnovers": -0.22,
   "Rebound 50s": -0.59
@@ -951,7 +951,7 @@
    53.8,
    56.6
   ],
-  "Pressure acts": [
+  "Overall pressure": [
    103.7,
    106.7
   ],

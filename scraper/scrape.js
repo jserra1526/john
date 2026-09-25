@@ -37,25 +37,26 @@ async function openPage(page, url, wait = 15000) {
   await page.waitForTimeout(wait);
 }
 
-async function teamSummary(page, out, shots) {
-  await openPage(page, '/TeamSummary/8591');
-  await page.screenshot({ path: `${shots}/team-summary.png`, fullPage: true });
+// teamId 8591 = Shepparton United (files unprefixed); other clubs get a prefix, e.g. 8582 -> "echuca_".
+async function teamSummary(page, out, shots, teamId = '8591', prefix = '') {
+  await openPage(page, `/TeamSummary/${teamId}`);
+  await page.screenshot({ path: `${shots}/${prefix}team-summary.png`, fullPage: true });
   let g = grids(await tables(page));
-  writeCsv(`${out}/team_season_for_vs_against.csv`, g.find(t => t[0][0] === 'Stat Type'));
+  writeCsv(`${out}/${prefix}team_season_for_vs_against.csv`, g.find(t => t[0][0] === 'Stat Type'));
   for (const mode of ['For', 'Against', 'Differential']) {
     await page.getByRole('button', { name: mode, exact: true }).click();
     await page.waitForTimeout(4000);
     g = grids(await tables(page));
-    writeCsv(`${out}/team_match_stats_${mode.toLowerCase()}.csv`, dropCols(g.find(t => t[0][0] === 'Opponent'), ['Vision']));
+    writeCsv(`${out}/${prefix}team_match_stats_${mode.toLowerCase()}.csv`, dropCols(g.find(t => t[0][0] === 'Opponent'), ['Vision']));
   }
   await page.getByText('Player Statistics', { exact: true }).click();
   await page.waitForTimeout(6000);
-  await page.screenshot({ path: `${shots}/team-summary-players.png`, fullPage: true });
+  await page.screenshot({ path: `${shots}/${prefix}team-summary-players.png`, fullPage: true });
   g = grids(await tables(page));
   const players = g.find(t => t[0][0] === 'Name');
   players[0].unshift('Number');
   for (const r of players.slice(1)) { const m = r[0].match(/^(\d+)\.\s*(.*)$/); r.splice(0, 1, m ? m[1] : '', m ? m[2] : r[0]); }
-  writeCsv(`${out}/player_season_averages.csv`, players);
+  writeCsv(`${out}/${prefix}player_season_averages.csv`, players);
 }
 
 // The leaderboard grid is virtualised (only ~25 rows exist in the DOM), so scroll it and merge rows by name.
@@ -167,7 +168,8 @@ async function matchPlayerStats(page, out, shots, team = 'SHEPPARTON UNITED') {
   fs.mkdirSync(out, { recursive: true });
   fs.mkdirSync(shots, { recursive: true });
   const { browser, page } = await launch(stateFile);
-  const steps = { teamSummary, leaders, fixtures, matchPlayerStats };
+  const echucaSummary = (page, out, shots) => teamSummary(page, out, shots, '8582', 'echuca_');
+  const steps = { teamSummary, echucaSummary, leaders, fixtures, matchPlayerStats };
   for (const [name, fn] of Object.entries(steps)) {
     if (only.length && !only.includes(name)) continue;
     try { await fn(page, out, shots); } catch (e) { console.log(name, 'ERR', e.message.split('\n')[0]); }

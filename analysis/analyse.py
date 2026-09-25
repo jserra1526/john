@@ -118,7 +118,7 @@ labels = {"RP": "Ranking points", "D": "Disposals", "K": "Kicks", "HB": "Handbal
           "TGB": "Groundball gets", "CM": "Contested marks", "UM": "Uncontested marks", "IM": "Intercept marks",
           "MI50": "Marks inside 50", "CC": "Centre clearances", "R50": "Rebound 50s", "FF": "Frees for",
           "FA": "Frees against", "1%": "One-percenters", "BTO": "Back-half turnovers", "MTO": "Midfield turnovers",
-          "FTO": "Forward-half turnovers", "PR": "Pressure acts", "Ch": "Chases", "Sm": "Smothers", "Sp": "Spoils",
+          "FTO": "Forward-half turnovers", "PR": "Overall pressure", "PRA": "Pressure acts", "Ch": "Chases", "Sm": "Smothers", "Sp": "Spoils",
           "GA%": "Goal accuracy %", "DE%": "Disposal efficiency %", "K%": "Kick efficiency %", "H%": "Handball efficiency %",
           "I50%": "Inside-50 efficiency %", "C%": "Clearance %", "R50%": "Rebound-50 efficiency %", "BUC": "Ball-up clearances",
           "LBG": "Loose-ball gets", "HBG": "Hard-ball gets", "GA": "Goal assists", "B": "Behinds"}
@@ -144,7 +144,7 @@ ax.barh([f"{labels[c]}  (#{int(rank.loc[TEAM, c])})" for c in uz.index], uz.valu
         color=[BLUE if v > 0 else ORANGE for v in uz.values], height=0.72, edgecolor=SURF, linewidth=2)
 ax.axvline(0, color=INK2, linewidth=1)
 ax.set_xlabel("Standard deviations from the league average (right = better than average)")
-ax.set_title(f"{TEAM} vs the other 11 GVL clubs (per-game averages)\nLeague rank out of 12 in brackets. Turnovers are flipped so right is always good.")
+ax.set_title(f"{TEAM} vs the other 11 GVL clubs (per-game averages)\nRank of 12 in brackets; right is better (turnovers flipped)")
 ax.grid(axis="y", visible=False)
 save(fig, "03_team_strengths_weaknesses.png")
 

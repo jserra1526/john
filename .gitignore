@@ -3,3 +3,4 @@ state.json
 *.storage.json
 code.txt
 scraper/auth.js
+report/coach/*.preview.png
