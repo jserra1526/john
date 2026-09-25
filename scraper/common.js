@@ -10,13 +10,14 @@ function proxySpki() {
   ).toString().trim();
 }
 
-async function launch() {
+async function launch(stateFile) {
   const browser = await chromium.launch({
     executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome',
     proxy: { server: process.env.HTTPS_PROXY },
     args: [`--ignore-certificate-errors-spki-list=${proxySpki()}`],
   });
-  const context = await browser.newContext({ viewport: { width: 1600, height: 1000 }, acceptDownloads: true });
+  const context = await browser.newContext({ viewport: { width: 1600, height: 1000 }, acceptDownloads: true,
+    ...(stateFile ? { storageState: stateFile } : {}) });
   const page = await context.newPage();
   return { browser, context, page };
 }

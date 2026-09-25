@@ -1,0 +1,1508 @@
+{
+ "ladder": {
+  "pos": 8,
+  "W": 9,
+  "L": 9,
+  "pct": 108.7,
+  "pts": 36,
+  "finals_teams": [
+   "Echuca",
+   "Kyabram",
+   "Mooroopna",
+   "Seymour",
+   "Shepparton Bears",
+   "Shepparton Swans"
+  ],
+  "premier": [
+   "Echuca"
+  ]
+ },
+ "results": [
+  {
+   "Round": 1,
+   "Opponent": "Shepparton Bears",
+   "Venue": "Away",
+   "For": 34,
+   "Against": 98,
+   "Margin": -64,
+   "Result": "L"
+  },
+  {
+   "Round": 2,
+   "Opponent": "Euroa",
+   "Venue": "Away",
+   "For": 77,
+   "Against": 49,
+   "Margin": 28,
+   "Result": "W"
+  },
+  {
+   "Round": 3,
+   "Opponent": "Shepparton Swans",
+   "Venue": "Home",
+   "For": 59,
+   "Against": 48,
+   "Margin": 11,
+   "Result": "W"
+  },
+  {
+   "Round": 4,
+   "Opponent": "Mooroopna",
+   "Venue": "Away",
+   "For": 58,
+   "Against": 65,
+   "Margin": -7,
+   "Result": "L"
+  },
+  {
+   "Round": 5,
+   "Opponent": "Mansfield",
+   "Venue": "Home",
+   "For": 79,
+   "Against": 116,
+   "Margin": -37,
+   "Result": "L"
+  },
+  {
+   "Round": 6,
+   "Opponent": "Echuca",
+   "Venue": "Away",
+   "For": 60,
+   "Against": 97,
+   "Margin": -37,
+   "Result": "L"
+  },
+  {
+   "Round": 7,
+   "Opponent": "Tatura",
+   "Venue": "Home",
+   "For": 135,
+   "Against": 36,
+   "Margin": 99,
+   "Result": "W"
+  },
+  {
+   "Round": 8,
+   "Opponent": "Kyabram",
+   "Venue": "Away",
+   "For": 79,
+   "Against": 73,
+   "Margin": 6,
+   "Result": "W"
+  },
+  {
+   "Round": 9,
+   "Opponent": "Benalla",
+   "Venue": "Home",
+   "For": 142,
+   "Against": 40,
+   "Margin": 102,
+   "Result": "W"
+  },
+  {
+   "Round": 10,
+   "Opponent": "Seymour",
+   "Venue": "Home",
+   "For": 46,
+   "Against": 61,
+   "Margin": -15,
+   "Result": "L"
+  },
+  {
+   "Round": 11,
+   "Opponent": "Rochester",
+   "Venue": "Away",
+   "For": 36,
+   "Against": 83,
+   "Margin": -47,
+   "Result": "L"
+  },
+  {
+   "Round": 12,
+   "Opponent": "Euroa",
+   "Venue": "Home",
+   "For": 88,
+   "Against": 52,
+   "Margin": 36,
+   "Result": "W"
+  },
+  {
+   "Round": 13,
+   "Opponent": "Shepparton Bears",
+   "Venue": "Home",
+   "For": 32,
+   "Against": 64,
+   "Margin": -32,
+   "Result": "L"
+  },
+  {
+   "Round": 14,
+   "Opponent": "Shepparton Swans",
+   "Venue": "Away",
+   "For": 126,
+   "Against": 64,
+   "Margin": 62,
+   "Result": "W"
+  },
+  {
+   "Round": 15,
+   "Opponent": "Mooroopna",
+   "Venue": "Home",
+   "For": 60,
+   "Against": 87,
+   "Margin": -27,
+   "Result": "L"
+  },
+  {
+   "Round": 16,
+   "Opponent": "Tatura",
+   "Venue": "Away",
+   "For": 154,
+   "Against": 35,
+   "Margin": 119,
+   "Result": "W"
+  },
+  {
+   "Round": 17,
+   "Opponent": "Echuca",
+   "Venue": "Home",
+   "For": 71,
+   "Against": 171,
+   "Margin": -100,
+   "Result": "L"
+  },
+  {
+   "Round": 18,
+   "Opponent": "Mansfield",
+   "Venue": "Away",
+   "For": 119,
+   "Against": 99,
+   "Margin": 20,
+   "Result": "W"
+  }
+ ],
+ "halves": {
+  "first_W": 5,
+  "second_W": 4,
+  "first_margin": 11.2,
+  "second_margin": 1.8
+ },
+ "vs_top5": {
+  "W": 3,
+  "G": 8,
+  "avg_margin": -21.1
+ },
+ "vs_rest": {
+  "W": 6,
+  "G": 10,
+  "avg_margin": 28.6
+ },
+ "team_rank": {
+  "Ranking points": {
+   "value": 1617.7,
+   "rank": 4,
+   "league_avg": 1572.4
+  },
+  "Disposals": {
+   "value": 349.7,
+   "rank": 4,
+   "league_avg": 339.4
+  },
+  "Kicks": {
+   "value": 224.3,
+   "rank": 3,
+   "league_avg": 209.7
+  },
+  "Handballs": {
+   "value": 125.4,
+   "rank": 8,
+   "league_avg": 129.7
+  },
+  "Contested possessions": {
+   "value": 128.9,
+   "rank": 8,
+   "league_avg": 136.6
+  },
+  "Marks": {
+   "value": 110.4,
+   "rank": 1,
+   "league_avg": 91.8
+  },
+  "Clearances": {
+   "value": 41.8,
+   "rank": 8,
+   "league_avg": 42.3
+  },
+  "Inside 50s": {
+   "value": 48.3,
+   "rank": 7,
+   "league_avg": 47.0
+  },
+  "Goals": {
+   "value": 11.6,
+   "rank": 6,
+   "league_avg": 11.0
+  },
+  "Score involvements": {
+   "value": 84.4,
+   "rank": 5,
+   "league_avg": 76.0
+  },
+  "Intercept possessions": {
+   "value": 68.3,
+   "rank": 8,
+   "league_avg": 70.1
+  },
+  "Tackles": {
+   "value": 55.2,
+   "rank": 10,
+   "league_avg": 62.0
+  },
+  "Hit outs": {
+   "value": 56.2,
+   "rank": 3,
+   "league_avg": 48.6
+  },
+  "Hit outs to advantage": {
+   "value": 11.8,
+   "rank": 4,
+   "league_avg": 11.2
+  },
+  "Groundball gets": {
+   "value": 77.9,
+   "rank": 11,
+   "league_avg": 86.9
+  },
+  "Contested marks": {
+   "value": 14.3,
+   "rank": 4,
+   "league_avg": 13.3
+  },
+  "Uncontested marks": {
+   "value": 96.1,
+   "rank": 1,
+   "league_avg": 78.5
+  },
+  "Intercept marks": {
+   "value": 16.8,
+   "rank": 3,
+   "league_avg": 15.4
+  },
+  "Marks inside 50": {
+   "value": 15.1,
+   "rank": 2,
+   "league_avg": 11.9
+  },
+  "Centre clearances": {
+   "value": 10.0,
+   "rank": 7,
+   "league_avg": 10.2
+  },
+  "Frees for": {
+   "value": 18.2,
+   "rank": 8,
+   "league_avg": 19.0
+  },
+  "One-percenters": {
+   "value": 36.3,
+   "rank": 12,
+   "league_avg": 43.3
+  },
+  "Back-half turnovers": {
+   "value": 5.0,
+   "rank": 5,
+   "league_avg": 5.6
+  },
+  "Midfield turnovers": {
+   "value": 39.0,
+   "rank": 1,
+   "league_avg": 43.7
+  },
+  "Forward-half turnovers": {
+   "value": 24.6,
+   "rank": 7,
+   "league_avg": 24.7
+  },
+  "Pressure acts": {
+   "value": 105.2,
+   "rank": 12,
+   "league_avg": 124.2
+  },
+  "Chases": {
+   "value": 12.7,
+   "rank": 5,
+   "league_avg": 12.3
+  },
+  "Smothers": {
+   "value": 3.2,
+   "rank": 11,
+   "league_avg": 4.3
+  },
+  "Spoils": {
+   "value": 13.7,
+   "rank": 12,
+   "league_avg": 17.7
+  },
+  "Goal accuracy %": {
+   "value": 50.0,
+   "rank": 4,
+   "league_avg": 49.7
+  },
+  "Disposal efficiency %": {
+   "value": 69.0,
+   "rank": 1,
+   "league_avg": 67.0
+  },
+  "Kick efficiency %": {
+   "value": 64.0,
+   "rank": 1,
+   "league_avg": 60.2
+  },
+  "Handball efficiency %": {
+   "value": 77.0,
+   "rank": 9,
+   "league_avg": 77.7
+  },
+  "Inside-50 efficiency %": {
+   "value": 51.0,
+   "rank": 2,
+   "league_avg": 49.4
+  },
+  "Clearance %": {
+   "value": 61.0,
+   "rank": 7,
+   "league_avg": 61.6
+  },
+  "Rebound-50 efficiency %": {
+   "value": 64.0,
+   "rank": 1,
+   "league_avg": 61.2
+  },
+  "Ball-up clearances": {
+   "value": 20.1,
+   "rank": 5,
+   "league_avg": 19.5
+  },
+  "Loose-ball gets": {
+   "value": 49.6,
+   "rank": 12,
+   "league_avg": 56.1
+  },
+  "Hard-ball gets": {
+   "value": 28.4,
+   "rank": 9,
+   "league_avg": 30.8
+  },
+  "Goal assists": {
+   "value": 9.7,
+   "rank": 6,
+   "league_avg": 9.3
+  },
+  "Behinds": {
+   "value": 9.1,
+   "rank": 7,
+   "league_avg": 8.8
+  }
+ },
+ "strengths": [
+  "Midfield turnovers",
+  "Kick efficiency %",
+  "Uncontested marks",
+  "Marks",
+  "Rebound-50 efficiency %",
+  "Disposal efficiency %",
+  "Marks inside 50",
+  "Kicks"
+ ],
+ "weaknesses": [
+  "One-percenters",
+  "Pressure acts",
+  "Spoils",
+  "Loose-ball gets",
+  "Groundball gets",
+  "Smothers",
+  "Tackles",
+  "Contested possessions"
+ ],
+ "for_against": {
+  "Back Turnovers": {
+   "For": 5.0,
+   "Against": 5.6,
+   "Differential": -0.6
+  },
+  "Ball Up Clearances": {
+   "For": 20.1,
+   "Against": 19.2,
+   "Differential": 0.9
+  },
+  "Behinds": {
+   "For": 9.1,
+   "Against": 7.9,
+   "Differential": 1.2
+  },
+  "Centre Clearances": {
+   "For": 10.0,
+   "Against": 10.3,
+   "Differential": -0.3
+  },
+  "Chases": {
+   "For": 12.7,
+   "Against": 13.4,
+   "Differential": -0.7
+  },
+  "Clearances": {
+   "For": 41.8,
+   "Against": 41.6,
+   "Differential": 0.2
+  },
+  "Effective Clearances": {
+   "For": 25.6,
+   "Against": 24.3,
+   "Differential": 1.3
+  },
+  "Clearance %": {
+   "For": 61.0,
+   "Against": 58.0,
+   "Differential": 3.0
+  },
+  "Contested Possessions": {
+   "For": 128.9,
+   "Against": 123.3,
+   "Differential": 5.6
+  },
+  "Contested Marks": {
+   "For": 14.3,
+   "Against": 11.8,
+   "Differential": 2.5
+  },
+  "Disposals": {
+   "For": 349.7,
+   "Against": 317.7,
+   "Differential": 32.0
+  },
+  "Effective Disposals": {
+   "For": 241.3,
+   "Against": 211.7,
+   "Differential": 29.6
+  },
+  "Total Disposal %": {
+   "For": 69.0,
+   "Against": 66.0,
+   "Differential": 3.0
+  },
+  "Forward Turnovers": {
+   "For": 24.6,
+   "Against": 21.6,
+   "Differential": 3.0
+  },
+  "Frees For": {
+   "For": 18.2,
+   "Against": 19.7,
+   "Differential": -1.5
+  },
+  "Gathers": {
+   "For": 50.8,
+   "Against": 44.1,
+   "Differential": 6.7
+  },
+  "Goals": {
+   "For": 11.6,
+   "Against": 10.8,
+   "Differential": 0.8
+  },
+  "Goal Accuracy": {
+   "For": 50.0,
+   "Against": 53.0,
+   "Differential": -3.0
+  },
+  "Total Groundball Gets": {
+   "For": 77.9,
+   "Against": 76.1,
+   "Differential": 1.8
+  },
+  "Handball Receives": {
+   "For": 7.4,
+   "Against": 9.2,
+   "Differential": -1.8
+  },
+  "Handballs": {
+   "For": 125.4,
+   "Against": 118.6,
+   "Differential": 6.8
+  },
+  "Effective Handballs": {
+   "For": 97.0,
+   "Against": 92.5,
+   "Differential": 4.5
+  },
+  "Handball %": {
+   "For": 77.0,
+   "Against": 77.0,
+   "Differential": 0.0
+  },
+  "Hard Ball Gets": {
+   "For": 28.4,
+   "Against": 25.4,
+   "Differential": 3.0
+  },
+  "Hit Outs": {
+   "For": 56.2,
+   "Against": 40.1,
+   "Differential": 16.1
+  },
+  "Hit Outs to Advantage": {
+   "For": 11.8,
+   "Against": 7.6,
+   "Differential": 4.2
+  },
+  "Inside 50s": {
+   "For": 48.3,
+   "Against": 42.3,
+   "Differential": 6.0
+  },
+  "Inside 50s Effective": {
+   "For": 25.0,
+   "Against": 20.4,
+   "Differential": 4.6
+  },
+  "Fwd 50 Entry %": {
+   "For": 51.0,
+   "Against": 48.0,
+   "Differential": 3.0
+  },
+  "Intercept Marks": {
+   "For": 16.8,
+   "Against": 13.2,
+   "Differential": 3.6
+  },
+  "Kicks": {
+   "For": 224.3,
+   "Against": 199.1,
+   "Differential": 25.2
+  },
+  "Effective Kicks": {
+   "For": 144.3,
+   "Against": 119.2,
+   "Differential": 25.1
+  },
+  "Kick Ins": {
+   "For": 9.2,
+   "Against": 11.3,
+   "Differential": -2.1
+  },
+  "KickIns Effective": {
+   "For": 7.6,
+   "Against": 8.4,
+   "Differential": -0.8
+  },
+  "Kick In %": {
+   "For": 82.0,
+   "Against": 75.0,
+   "Differential": 7.0
+  },
+  "Kick %": {
+   "For": 64.0,
+   "Against": 59.0,
+   "Differential": 5.0
+  },
+  "Loose Ball Gets": {
+   "For": 49.6,
+   "Against": 50.6,
+   "Differential": -1.0
+  },
+  "Marks": {
+   "For": 110.4,
+   "Against": 88.2,
+   "Differential": 22.2
+  },
+  "Marks Inside 50": {
+   "For": 15.1,
+   "Against": 11.3,
+   "Differential": 3.8
+  },
+  "Uncontested Marks": {
+   "For": 96.1,
+   "Against": 76.4,
+   "Differential": 19.7
+  },
+  "Midfield Turnovers": {
+   "For": 39.0,
+   "Against": 44.4,
+   "Differential": -5.4
+  },
+  "1%ers": {
+   "For": 36.3,
+   "Against": 42.8,
+   "Differential": -6.5
+  },
+  "Intercept Possessions": {
+   "For": 68.3,
+   "Against": 64.9,
+   "Differential": 3.4
+  },
+  "Pressure Acts": {
+   "For": 34.1,
+   "Against": 40.4,
+   "Differential": -6.3
+  },
+  "Pressure Acts Forward": {
+   "For": 6.0,
+   "Against": 6.9,
+   "Differential": -0.9
+  },
+  "Overall Pressure": {
+   "For": 105.2,
+   "Against": 103.8,
+   "Differential": 1.4
+  },
+  "Ranking Points": {
+   "For": 1617.7,
+   "Against": 1475.9,
+   "Differential": 141.8
+  },
+  "Rebound 50s": {
+   "For": 30.8,
+   "Against": 36.6,
+   "Differential": -5.8
+  },
+  "Effective Rebound 50s": {
+   "For": 19.9,
+   "Against": 21.1,
+   "Differential": -1.2
+  },
+  "Def 50 Exit %": {
+   "For": 64.0,
+   "Against": 58.0,
+   "Differential": 6.0
+  },
+  "Rushed Behinds": {
+   "For": 2.4,
+   "Against": 1.4,
+   "Differential": 1.0
+  },
+  "Behinds From Back Turnovers": {
+   "For": 1.7,
+   "Against": 1.3,
+   "Differential": 0.4
+  },
+  "Ball Ups": {
+   "For": 1.9,
+   "Against": 1.4,
+   "Differential": 0.5
+  },
+  "Behinds From Ball Ups": {
+   "For": 2.9,
+   "Against": 1.8,
+   "Differential": 1.1
+  },
+  "Center Bounces": {
+   "For": 1.2,
+   "Against": 0.8,
+   "Differential": 0.4
+  },
+  "Behinds From Center Bounces": {
+   "For": 0.6,
+   "Against": 0.8,
+   "Differential": -0.2
+  },
+  "Deep Inside50s": {
+   "For": 4.0,
+   "Against": 3.1,
+   "Differential": 0.9
+  },
+  "Behinds From Deep Inside50s": {
+   "For": 3.5,
+   "Against": 2.3,
+   "Differential": 1.2
+  },
+  "F50 Turnovers": {
+   "For": 1.2,
+   "Against": 1.3,
+   "Differential": -0.1
+  },
+  "Behinds From F50 Turnovers": {
+   "For": 1.1,
+   "Against": 0.9,
+   "Differential": 0.2
+  },
+  "Scores From Inside50s": {
+   "For": 11.3,
+   "Against": 10.4,
+   "Differential": 0.9
+  },
+  "Behinds From Inside50s": {
+   "For": 11.1,
+   "Against": 9.1,
+   "Differential": 2.0
+  },
+  "Scores From Kick Ins": {
+   "For": 0.5,
+   "Against": 0.3,
+   "Differential": 0.2
+  },
+  "Behinds From Kick Ins": {
+   "For": 0.4,
+   "Against": 0.4,
+   "Differential": 0.0
+  },
+  "Marks Inside50 Deep": {
+   "For": 3.5,
+   "Against": 1.6,
+   "Differential": 1.9
+  },
+  "Behinds From Marks Inside50 Deep": {
+   "For": 0.7,
+   "Against": 0.6,
+   "Differential": 0.1
+  },
+  "Marks Inside50 Shallow": {
+   "For": 2.5,
+   "Against": 2.4,
+   "Differential": 0.1
+  },
+  "Behinds From Marks Inside 50": {
+   "For": 3.8,
+   "Against": 3.0,
+   "Differential": 0.8
+  },
+  "Mid Turnovers": {
+   "For": 4.7,
+   "Against": 3.8,
+   "Differential": 0.9
+  },
+  "Behinds From Mid Turnovers": {
+   "For": 3.8,
+   "Against": 3.3,
+   "Differential": 0.5
+  },
+  "Shallow Inside50s": {
+   "For": 7.3,
+   "Against": 7.4,
+   "Differential": -0.1
+  },
+  "Behinds From Shallow Inside50s": {
+   "For": 7.6,
+   "Against": 6.8,
+   "Differential": 0.8
+  },
+  "Scores From Stoppages": {
+   "For": 3.9,
+   "Against": 4.1,
+   "Differential": -0.2
+  },
+  "Behinds From Stoppages": {
+   "For": 4.5,
+   "Against": 3.4,
+   "Differential": 1.1
+  },
+  "Throw Ins": {
+   "For": 0.8,
+   "Against": 1.8,
+   "Differential": -1.0
+  },
+  "Behinds From Throw Ins": {
+   "For": 1.0,
+   "Against": 0.8,
+   "Differential": 0.2
+  },
+  "Turnovers": {
+   "For": 7.1,
+   "Against": 6.4,
+   "Differential": 0.7
+  },
+  "Behinds From Turnovers": {
+   "For": 6.6,
+   "Against": 5.5,
+   "Differential": 1.1
+  },
+  "Scoring Efficiency": {
+   "For": 47.0,
+   "Against": 47.0,
+   "Differential": 0.0
+  },
+  "Scoring Shots": {
+   "For": 23.1,
+   "Against": 20.2,
+   "Differential": 2.9
+  },
+  "Smothers": {
+   "For": 3.2,
+   "Against": 4.7,
+   "Differential": -1.5
+  },
+  "Spoils": {
+   "For": 13.7,
+   "Against": 16.9,
+   "Differential": -3.2
+  },
+  "Tackles": {
+   "For": 55.2,
+   "Against": 65.7,
+   "Differential": -10.5
+  },
+  "Back 50 Tackles": {
+   "For": 10.6,
+   "Against": 14.8,
+   "Differential": -4.2
+  },
+  "Tackles Eff": {
+   "For": 43.3,
+   "Against": 49.6,
+   "Differential": -6.3
+  },
+  "Forward 50 Tackles": {
+   "For": 10.2,
+   "Against": 10.5,
+   "Differential": -0.3
+  },
+  "Midfield Tackles": {
+   "For": 34.3,
+   "Against": 40.4,
+   "Differential": -6.1
+  },
+  "Throw In Clearances": {
+   "For": 11.7,
+   "Against": 12.2,
+   "Differential": -0.5
+  }
+ },
+ "margin_drivers": {
+  "Scoring shots": 0.93,
+  "Inside 50s": 0.92,
+  "Ranking points": 0.91,
+  "Disposals": 0.84,
+  "Marks inside 50": 0.81,
+  "Kicks": 0.8,
+  "Handballs": 0.73,
+  "Contested possessions": 0.62,
+  "Marks": 0.6,
+  "Uncontested marks": 0.6,
+  "Groundball gets": 0.51,
+  "Clearances": 0.49,
+  "Centre clearances": 0.44,
+  "Tackles": 0.4,
+  "Frees for": 0.31,
+  "Intercept possessions": 0.25,
+  "Hit outs": 0.11,
+  "Contested marks": 0.09,
+  "Pressure acts": -0.05,
+  "Intercept marks": -0.2,
+  "Turnovers": -0.22,
+  "Rebound 50s": -0.59
+ },
+ "win_vs_loss_for": {
+  "Disposals": [
+   371.1,
+   328.3
+  ],
+  "Kicks": [
+   240.1,
+   208.6
+  ],
+  "Handballs": [
+   131.0,
+   119.8
+  ],
+  "Contested possessions": [
+   131.0,
+   126.9
+  ],
+  "Groundball gets": [
+   77.8,
+   78.1
+  ],
+  "Marks": [
+   123.2,
+   97.7
+  ],
+  "Contested marks": [
+   14.8,
+   13.9
+  ],
+  "Uncontested marks": [
+   108.4,
+   83.8
+  ],
+  "Intercept marks": [
+   17.0,
+   16.7
+  ],
+  "Marks inside 50": [
+   19.1,
+   11.1
+  ],
+  "Clearances": [
+   43.2,
+   40.3
+  ],
+  "Centre clearances": [
+   11.1,
+   8.9
+  ],
+  "Inside 50s": [
+   54.2,
+   42.4
+  ],
+  "Rebound 50s": [
+   29.3,
+   32.2
+  ],
+  "Tackles": [
+   53.8,
+   56.6
+  ],
+  "Pressure acts": [
+   103.7,
+   106.7
+  ],
+  "Turnovers": [
+   66.0,
+   71.2
+  ],
+  "Hit outs": [
+   57.1,
+   55.3
+  ],
+  "Intercept possessions": [
+   65.6,
+   71.1
+  ],
+  "Ranking points": [
+   1778.6,
+   1456.9
+  ],
+  "Frees for": [
+   16.8,
+   19.7
+  ],
+  "Scoring shots": [
+   28.2,
+   17.9
+  ]
+ },
+ "squad_size": 34,
+ "top_players": {
+  "Ranking points": [
+   [
+    "Zavier Maher",
+    145.9,
+    7
+   ],
+   [
+    "Brodie Newman",
+    126.2,
+    16
+   ],
+   [
+    "Angus Hicks",
+    123.3,
+    15
+   ]
+  ],
+  "Disposals": [
+   [
+    "Zavier Maher",
+    29.7,
+    7
+   ],
+   [
+    "Angus Hicks",
+    28.5,
+    15
+   ],
+   [
+    "Joel Serra",
+    26.0,
+    17
+   ]
+  ],
+  "Contested possessions": [
+   [
+    "Zavier Maher",
+    17.0,
+    7
+   ],
+   [
+    "Joel Serra",
+    12.7,
+    17
+   ],
+   [
+    "Angus Hicks",
+    11.4,
+    15
+   ]
+  ],
+  "Clearances": [
+   [
+    "Zavier Maher",
+    10.1,
+    7
+   ],
+   [
+    "Joel Serra",
+    7.1,
+    17
+   ],
+   [
+    "Angus Hicks",
+    6.9,
+    15
+   ]
+  ],
+  "Tackles": [
+   [
+    "Jordan Haynes",
+    6.6,
+    14
+   ],
+   [
+    "Angus Hicks",
+    5.9,
+    15
+   ],
+   [
+    "Zavier Maher",
+    5.9,
+    7
+   ]
+  ],
+  "Goals": [
+   [
+    "Matthew Casey",
+    3.3,
+    18
+   ],
+   [
+    "Liam Serra",
+    1.6,
+    18
+   ],
+   [
+    "Zavier Maher",
+    1.4,
+    7
+   ]
+  ],
+  "Marks": [
+   [
+    "Brodie Newman",
+    11.0,
+    16
+   ],
+   [
+    "Liam Serra",
+    9.6,
+    18
+   ],
+   [
+    "Kaedyn Napier",
+    8.7,
+    18
+   ]
+  ],
+  "Inside 50s": [
+   [
+    "Zavier Maher",
+    8.3,
+    7
+   ],
+   [
+    "Angus Hicks",
+    5.5,
+    15
+   ],
+   [
+    "Jordan Haynes",
+    4.8,
+    14
+   ]
+  ],
+  "Rebound 50s": [
+   [
+    "Brodie Newman",
+    4.1,
+    16
+   ],
+   [
+    "Kaedyn Napier",
+    3.8,
+    18
+   ],
+   [
+    "Fraser Hicks",
+    3.0,
+    14
+   ]
+  ]
+ },
+ "league_players_qualified": 294,
+ "league_ranks": {
+  "Brodie Newman": {
+   "RP": 17,
+   "D": 60,
+   "CP": 85,
+   "Cl": 281,
+   "T": 277,
+   "G": 171,
+   "M": 1,
+   "I50": 213,
+   "R50": 21,
+   "IP": 1
+  },
+  "Angus Hicks": {
+   "RP": 19,
+   "D": 15,
+   "CP": 26,
+   "Cl": 15,
+   "T": 11,
+   "G": 59,
+   "M": 134,
+   "I50": 10,
+   "R50": 101,
+   "IP": 84
+  },
+  "Jordan Haynes": {
+   "RP": 29,
+   "D": 28,
+   "CP": 26,
+   "Cl": 24,
+   "T": 7,
+   "G": 207,
+   "M": 31,
+   "I50": 21,
+   "R50": 80,
+   "IP": 72
+  },
+  "Kaedyn Napier": {
+   "RP": 47,
+   "D": 60,
+   "CP": 113,
+   "Cl": 127,
+   "T": 170,
+   "G": 171,
+   "M": 6,
+   "I50": 133,
+   "R50": 26,
+   "IP": 23
+  },
+  "Joel Serra": {
+   "RP": 50,
+   "D": 27,
+   "CP": 18,
+   "Cl": 13,
+   "T": 70,
+   "G": 148,
+   "M": 148,
+   "I50": 48,
+   "R50": 111,
+   "IP": 49
+  },
+  "Liam Serra": {
+   "RP": 54,
+   "D": 49,
+   "CP": 88,
+   "Cl": 205,
+   "T": 108,
+   "G": 18,
+   "M": 3,
+   "I50": 38,
+   "R50": 238,
+   "IP": 215
+  },
+  "Jensen Dowling": {
+   "RP": 91,
+   "D": 225,
+   "CP": 98,
+   "Cl": 52,
+   "T": 250,
+   "G": 128,
+   "M": 273,
+   "I50": 181,
+   "R50": 181,
+   "IP": 253
+  },
+  "Jesse Cucinotta": {
+   "RP": 93,
+   "D": 53,
+   "CP": 120,
+   "Cl": 86,
+   "T": 96,
+   "G": 207,
+   "M": 40,
+   "I50": 48,
+   "R50": 75,
+   "IP": 35
+  }
+ },
+ "league_top10_rp": [
+  {
+   "Name": "Zac Norris",
+   "Team": "Kyabram",
+   "Games": 20,
+   "RP": 154.7,
+   "D": 24.9,
+   "G": 0.6
+  },
+  {
+   "Name": "Lewis McShane",
+   "Team": "Shepparton Bears",
+   "Games": 20,
+   "RP": 146.9,
+   "D": 32.7,
+   "G": 1.4
+  },
+  {
+   "Name": "Ryley Ferguson",
+   "Team": "Rochester",
+   "Games": 17,
+   "RP": 143.2,
+   "D": 22.4,
+   "G": 0.7
+  },
+  {
+   "Name": "Luke Smith",
+   "Team": "Shepparton Bears",
+   "Games": 22,
+   "RP": 142.4,
+   "D": 28.0,
+   "G": 2.4
+  },
+  {
+   "Name": "Harry Mahoney",
+   "Team": "Mansfield",
+   "Games": 13,
+   "RP": 141.9,
+   "D": 34.3,
+   "G": 0.8
+  },
+  {
+   "Name": "Dylan Cook",
+   "Team": "Seymour",
+   "Games": 18,
+   "RP": 139.4,
+   "D": 30.1,
+   "G": 0.4
+  },
+  {
+   "Name": "Liam Betson",
+   "Team": "Mooroopna",
+   "Games": 19,
+   "RP": 138.9,
+   "D": 20.1,
+   "G": 0.2
+  },
+  {
+   "Name": "Jack Russell",
+   "Team": "Kyabram",
+   "Games": 20,
+   "RP": 137.4,
+   "D": 32.1,
+   "G": 0.8
+  },
+  {
+   "Name": "Mitchell Trewhella",
+   "Team": "Rochester",
+   "Games": 18,
+   "RP": 136.8,
+   "D": 30.1,
+   "G": 0.6
+  },
+  {
+   "Name": "Callum Brown",
+   "Team": "Mansfield",
+   "Games": 15,
+   "RP": 134.6,
+   "D": 30.0,
+   "G": 1.5
+  }
+ ],
+ "match_player_rows": 396,
+ "improvers": [
+  {
+   "Name": "Jensen Dowling",
+   "Games": 18,
+   "RP_first": 71.1,
+   "RP_second": 106.2,
+   "Change": 35.1
+  },
+  {
+   "Name": "Kye Jeffery",
+   "Games": 9,
+   "RP_first": 15.0,
+   "RP_second": 46.6,
+   "Change": 31.6
+  },
+  {
+   "Name": "Sheldon Bogdan",
+   "Games": 18,
+   "RP_first": 66.2,
+   "RP_second": 86.0,
+   "Change": 19.8
+  },
+  {
+   "Name": "Kaedyn Napier",
+   "Games": 18,
+   "RP_first": 98.7,
+   "RP_second": 111.1,
+   "Change": 12.4
+  },
+  {
+   "Name": "Declan Newbound",
+   "Games": 17,
+   "RP_first": 44.9,
+   "RP_second": 55.7,
+   "Change": 10.8
+  }
+ ],
+ "decliners": [
+  {
+   "Name": "Liam Serra",
+   "Games": 18,
+   "RP_first": 114.3,
+   "RP_second": 91.1,
+   "Change": -23.2
+  },
+  {
+   "Name": "Angus Hicks",
+   "Games": 15,
+   "RP_first": 129.8,
+   "RP_second": 115.9,
+   "Change": -13.9
+  },
+  {
+   "Name": "Jesse Cucinotta",
+   "Games": 17,
+   "RP_first": 94.8,
+   "RP_second": 82.3,
+   "Change": -12.4
+  },
+  {
+   "Name": "Jordan Haynes",
+   "Games": 14,
+   "RP_first": 119.7,
+   "RP_second": 109.8,
+   "Change": -9.9
+  },
+  {
+   "Name": "Nicholas Loverso",
+   "Games": 12,
+   "RP_first": 54.0,
+   "RP_second": 48.1,
+   "Change": -5.9
+  }
+ ],
+ "most_consistent": [
+  {
+   "Name": "Jordan Haynes",
+   "Games": 14,
+   "RP": 116.1,
+   "RP_sd": 28.8
+  },
+  {
+   "Name": "Kaedyn Napier",
+   "Games": 18,
+   "RP": 104.9,
+   "RP_sd": 26.0
+  },
+  {
+   "Name": "Brodie Newman",
+   "Games": 16,
+   "RP": 126.2,
+   "RP_sd": 32.9
+  },
+  {
+   "Name": "Joel Serra",
+   "Games": 17,
+   "RP": 103.8,
+   "RP_sd": 28.6
+  },
+  {
+   "Name": "Jesse Cucinotta",
+   "Games": 17,
+   "RP": 88.2,
+   "RP_sd": 25.9
+  }
+ ],
+ "win_lift": {
+  "Matthew Casey": 47.3,
+  "Angus Hicks": 40.7,
+  "Kye Jeffery": 31.2,
+  "Liam Serra": 31.0,
+  "Jordan Loverso": 27.4
+ },
+ "best_single_games": [
+  {
+   "Round": 6,
+   "Name": "Brodie Newman",
+   "RP": 201,
+   "D": 24,
+   "G": 0,
+   "T": 2,
+   "Cl": 0
+  },
+  {
+   "Round": 6,
+   "Name": "Stuart Horner",
+   "RP": 186,
+   "D": 42,
+   "G": 0,
+   "T": 5,
+   "Cl": 11
+  },
+  {
+   "Round": 7,
+   "Name": "Angus Hicks",
+   "RP": 186,
+   "D": 36,
+   "G": 1,
+   "T": 10,
+   "Cl": 10
+  },
+  {
+   "Round": 15,
+   "Name": "Zavier Maher",
+   "RP": 175,
+   "D": 34,
+   "G": 1,
+   "T": 3,
+   "Cl": 11
+  },
+  {
+   "Round": 7,
+   "Name": "Jordan Haynes",
+   "RP": 174,
+   "D": 34,
+   "G": 0,
+   "T": 9,
+   "Cl": 11
+  },
+  {
+   "Round": 16,
+   "Name": "Angus Hicks",
+   "RP": 172,
+   "D": 36,
+   "G": 2,
+   "T": 6,
+   "Cl": 6
+  },
+  {
+   "Round": 7,
+   "Name": "Liam Serra",
+   "RP": 169,
+   "D": 34,
+   "G": 1,
+   "T": 5,
+   "Cl": 1
+  },
+  {
+   "Round": 9,
+   "Name": "Liam Serra",
+   "RP": 167,
+   "D": 31,
+   "G": 6,
+   "T": 3,
+   "Cl": 1
+  }
+ ]
+}
