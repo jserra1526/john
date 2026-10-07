@@ -1,0 +1,12 @@
+relationship 00b6cb48-d0e9-4af0-8d25-72076f52449a
+	fromColumn: Sales.'Order Date'
+	toColumn: Calendar.Date
+
+relationship fe6441f0-7ec2-4ade-bf88-f7496b2fa6bc
+	fromColumn: Sales.'Product ID'
+	toColumn: Products.'Product ID'
+
+relationship d8b3680d-69ac-4a33-80e7-d2f15d06fdc3
+	fromColumn: Sales.'Customer ID'
+	toColumn: Customers.'Customer ID'
+

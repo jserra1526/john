@@ -1,0 +1,7 @@
+expression DataFolder = "C:\PowerBI\SalesReport\data\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: e22f8d1a-76ec-43f9-b359-02cf124abc16
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

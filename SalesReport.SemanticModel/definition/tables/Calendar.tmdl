@@ -1,0 +1,77 @@
+table Calendar
+	dataCategory: Time
+	lineageTag: 2bf0f535-d2f5-47bc-94c4-c8baa5588005
+
+	column 'Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 8d8f194c-2a8c-4fdb-9cee-656d7420431e
+		summarizeBy: none
+		sourceColumn: Date
+		isKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: fa2bc70f-5b1c-4cd7-8dc0-c04ca4ff58a2
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: 43c84b21-7d3f-4e08-968e-83ca3495aef4
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Number'
+		dataType: int64
+		formatString: 0
+		lineageTag: 961d4530-a068-49ed-bfb9-209f9f9905ad
+		summarizeBy: none
+		sourceColumn: Month Number
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: string
+		lineageTag: b908803c-73e0-42cb-85fd-35aa5fa686f0
+		summarizeBy: none
+		sourceColumn: Month
+		sortByColumn: 'Month Number'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Month'
+		dataType: string
+		lineageTag: 8bcf476c-dbf2-4273-8173-4b3300256416
+		summarizeBy: none
+		sourceColumn: Year Month
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Calendar = m
+		mode: import
+		source =
+				let
+				    StartDate = #date(2024, 1, 1),
+				    EndDate = #date(2025, 12, 31),
+				    Dates = List.Dates(StartDate, Duration.Days(EndDate - StartDate) + 1, #duration(1, 0, 0, 0)),
+				    AsTable = Table.FromList(Dates, Splitter.SplitByNothing(), {"Date"}),
+				    Typed = Table.TransformColumnTypes(AsTable, {{"Date", type date}}),
+				    AddYear = Table.AddColumn(Typed, "Year", each Date.Year([Date]), Int64.Type),
+				    AddQuarter = Table.AddColumn(AddYear, "Quarter", each "Q" & Text.From(Date.QuarterOfYear([Date])), type text),
+				    AddMonthNumber = Table.AddColumn(AddQuarter, "Month Number", each Date.Month([Date]), Int64.Type),
+				    AddMonth = Table.AddColumn(AddMonthNumber, "Month", each Date.ToText([Date], "MMM", "en-US"), type text),
+				    AddYearMonth = Table.AddColumn(AddMonth, "Year Month", each Date.ToText([Date], "yyyy-MM", "en-US"), type text)
+				in
+				    AddYearMonth
+
+	annotation PBI_ResultType = Table
+

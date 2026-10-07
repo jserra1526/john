@@ -1,0 +1,126 @@
+table Sales
+	lineageTag: ceef5d5c-dcef-4d32-9cf6-3faeda51db69
+
+	measure 'Total Sales' = SUMX ( Sales, Sales[Quantity] * Sales[Unit Price] * ( 1 - Sales[Discount] ) )
+		formatString: \$#,0
+		displayFolder: Revenue
+		lineageTag: ebed65d4-04f2-49ef-826c-d636e3164f25
+
+	measure 'Total Cost' = SUMX ( Sales, Sales[Quantity] * RELATED ( Products[Unit Cost] ) )
+		formatString: \$#,0
+		displayFolder: Revenue
+		lineageTag: 14941dbd-ff6f-4f21-8e64-a89a374e3e12
+
+	measure 'Gross Profit' = [Total Sales] - [Total Cost]
+		formatString: \$#,0
+		displayFolder: Revenue
+		lineageTag: 7216006c-31ab-4c49-ac81-7e3e666a7861
+
+	measure 'Profit Margin %' = DIVIDE ( [Gross Profit], [Total Sales] )
+		formatString: 0.0%
+		displayFolder: Revenue
+		lineageTag: e35f41db-0a12-4876-874d-e5e3e31896d5
+
+	measure Orders = DISTINCTCOUNT ( Sales[Order ID] )
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: f0fd1ea9-02c2-4f97-af6c-9a3157a9b67f
+
+	measure 'Units Sold' = SUM ( Sales[Quantity] )
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 32c2c61a-9553-407b-8a8c-6e28086c030f
+
+	measure 'Avg Order Value' = DIVIDE ( [Total Sales], [Orders] )
+		formatString: \$#,0
+		displayFolder: Volume
+		lineageTag: d5cb20a3-69cb-4c4e-af4b-c0ce356bf588
+
+	measure 'Sales PY' = CALCULATE ( [Total Sales], SAMEPERIODLASTYEAR ( 'Calendar'[Date] ) )
+		formatString: \$#,0
+		displayFolder: Time Intelligence
+		lineageTag: eab4bce8-40f9-4050-aefc-770975766872
+
+	measure 'Sales YoY %' = DIVIDE ( [Total Sales] - [Sales PY], [Sales PY] )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time Intelligence
+		lineageTag: 394ffcb9-93db-43a5-a071-b6694797fe1e
+
+	column 'Order ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 4754c20a-902d-47cf-a8ef-d75b70c92b33
+		summarizeBy: none
+		sourceColumn: Order ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Order Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: fa986619-6ee8-4e03-b18f-da3fc85336db
+		summarizeBy: none
+		sourceColumn: Order Date
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 015d441f-8e22-4c2d-aa77-19193dddd241
+		summarizeBy: none
+		sourceColumn: Customer ID
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9015144f-f539-4cd5-b8e8-279f8a38ef1d
+		summarizeBy: none
+		sourceColumn: Product ID
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity
+		dataType: int64
+		formatString: #,0
+		lineageTag: c1986cfb-65cf-4236-bdce-8c960852a95e
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Unit Price'
+		dataType: double
+		formatString: \$#,0.00
+		lineageTag: 0f94e2f9-4296-4a4a-9339-8474edfc1ab2
+		summarizeBy: none
+		sourceColumn: Unit Price
+
+		annotation SummarizationSetBy = Automatic
+
+	column Discount
+		dataType: double
+		formatString: 0%
+		lineageTag: 9da3e777-598c-4a48-a187-ab6d28018e89
+		summarizeBy: none
+		sourceColumn: Discount
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Sales = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "Sales.csv"), [Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{"Order ID", Int64.Type}, {"Order Date", type date}, {"Customer ID", Int64.Type}, {"Product ID", Int64.Type}, {"Quantity", Int64.Type}, {"Unit Price", type number}, {"Discount", type number}}, "en-US")
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

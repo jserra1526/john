@@ -1,0 +1,58 @@
+table Customers
+	lineageTag: 1e2cebca-9295-426b-a512-1da228fa0a73
+
+	column 'Customer ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 591a91ea-38e2-4ae3-a33a-d91ad27ebe78
+		summarizeBy: none
+		sourceColumn: Customer ID
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Customer
+		dataType: string
+		lineageTag: f995ae6a-4c68-4609-8c39-de51a6f7b85d
+		summarizeBy: none
+		sourceColumn: Customer
+
+		annotation SummarizationSetBy = Automatic
+
+	column Segment
+		dataType: string
+		lineageTag: 6de28a01-d12d-4d50-902e-ad79c5bc4663
+		summarizeBy: none
+		sourceColumn: Segment
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 6e31c7bd-d498-4e1d-a01c-bf3b0f3b5f06
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 65276d38-73db-42db-ab76-c990b7f156e8
+		summarizeBy: none
+		sourceColumn: Country
+		dataCategory: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Customers = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "Customers.csv"), [Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{"Customer ID", Int64.Type}, {"Customer", type text}, {"Segment", type text}, {"Region", type text}, {"Country", type text}}, "en-US")
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
