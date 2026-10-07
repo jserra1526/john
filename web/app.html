@@ -63,6 +63,8 @@ button, input, select { font: inherit; color: inherit; }
 .num, td.n, th.n { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
 
 .wrap { max-width: 1400px; margin: 0 auto; }
+:root:fullscreen { overflow-y: auto; background: var(--bg); }
+:root:-webkit-full-screen { overflow-y: auto; background: var(--bg); }
 header.top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 24px; padding-block: 20px 14px; border-bottom: 1px solid var(--rule); }
 .brand p { color: var(--ink-2); max-width: 62ch; margin-top: 4px; font-size: .92rem; }
 .status { display: flex; align-items: center; gap: 10px; font-size: .85rem; color: var(--ink-2); }
@@ -175,7 +177,11 @@ table.edit input:focus { background: var(--surface-2); outline: 2px solid var(--
       <h1>Milk Allocation Planner</h1>
       <p>Decides where each month's milk goes, what every plant makes from its fat and protein, and what to stock, so margin is as high as plant capacity allows.</p>
     </div>
-    <div class="status"><span id="status" class="pill busy">Loading solver</span><span id="solveTime" class="num"></span></div>
+    <div class="status"><span id="status" class="pill busy">Loading solver</span><span id="solveTime" class="num"></span>
+      <button class="btn" id="fullscreen" type="button" hidden aria-pressed="false">
+        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" style="vertical-align:-2px;margin-right:6px"><path id="fsIcon" d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span id="fsLabel">Full screen</span>
+      </button>
+    </div>
   </header>
 
   <nav class="tabs" role="tablist">
@@ -763,6 +769,34 @@ const SAMPLE = /*SAMPLE_DATA*/;
   matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", rerender);
   new MutationObserver(rerender).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
   $("resetLevers").addEventListener("click", () => { levers = {}; store.del("milk.levers"); renderLevers(); scheduleSolve(); });
+
+  // ------------------------------------------------------------ full screen
+  // Shown only where the browser allows it; some app views and iPad Safari refuse.
+  const root = document.documentElement;
+  const fsElement = () => document.fullscreenElement || document.webkitFullscreenElement;
+  const fsEnabled = document.fullscreenEnabled || document.webkitFullscreenEnabled;
+  const fsButton = $("fullscreen");
+  const fsSync = () => {
+    const on = !!fsElement();
+    $("fsLabel").textContent = on ? "Exit full screen" : "Full screen";
+    $("fsIcon").setAttribute("d", on ? "M6 2v4H2M14 6h-4V2M10 14v-4h4M2 10h4v4" : "M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4");
+    fsButton.setAttribute("aria-pressed", on);
+    rerender();
+  };
+  if (fsEnabled && (root.requestFullscreen || root.webkitRequestFullscreen)) {
+    fsButton.hidden = false;
+    fsButton.addEventListener("click", async () => {
+      try {
+        if (fsElement()) await (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+        else await (root.requestFullscreen || root.webkitRequestFullscreen).call(root);
+      } catch {
+        fsButton.hidden = true;
+        $("solveTime").textContent = "Full screen isn't available here. Open the page in Safari instead.";
+      }
+    });
+    document.addEventListener("fullscreenchange", fsSync);
+    document.addEventListener("webkitfullscreenchange", fsSync);
+  }
 
   // ------------------------------------------------------------ boot
   renderLevers(); renderTablePick();
