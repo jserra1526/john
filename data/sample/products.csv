@@ -1,0 +1,6 @@
+product,processing_cost_per_t,holding_cost_per_t_month,storage_capacity_t,initial_inventory_t,min_closing_inventory_t,shelf_life_months,fat,protein
+Butter,380,15,12000,1500,1500,9,815,7
+Cheese,650,20,15000,3000,3000,9,340,330
+WMP,420,8,30000,2000,2000,12,265,250
+SMP,400,8,25000,2000,2000,12,8,340
+Cream,120,30,600,0,0,0,400,20

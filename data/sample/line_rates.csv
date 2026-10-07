@@ -1,0 +1,10 @@
+plant,line,product,rate_t_per_hr
+Northgate,Dryer1,WMP,12.0
+Northgate,Dryer1,SMP,13.0
+Northgate,Butter1,Butter,4.0
+Midvale,Cheese1,Cheese,4.5
+Midvale,Butter2,Butter,2.5
+Midvale,Cream1,Cream,6.0
+Southport,Dryer2,WMP,9.0
+Southport,Dryer2,SMP,10.0
+Southport,Cheese2,Cheese,2.5

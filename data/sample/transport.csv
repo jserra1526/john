@@ -1,0 +1,8 @@
+region,plant,cost_per_t
+North,Northgate,12
+North,Midvale,28
+Central,Northgate,26
+Central,Midvale,10
+Central,Southport,30
+South,Midvale,27
+South,Southport,11
