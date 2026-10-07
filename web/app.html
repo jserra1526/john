@@ -83,8 +83,15 @@ nav.tabs button[aria-selected="true"] { background: var(--accent); color: var(--
 
 aside.levers { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); padding: 14px; display: flex; flex-direction: column; gap: 6px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); max-height: calc(100vh - 24px); overflow: auto; }
 @media (max-width: 900px) { aside.levers { position: static; max-height: none; } }
-.levers-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-.levers-head p { font-size: .82rem; color: var(--muted); }
+.layout:has(#scenarioBox:not([open])) { grid-template-columns: minmax(0, 1fr); }
+.layout:has(#scenarioBox:not([open])) aside.levers { position: static; }
+.levers-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; cursor: pointer; list-style: none; min-height: 40px; }
+.levers-head::-webkit-details-marker { display: none; }
+.levers-head::after { content: "Show"; font-size: .8rem; font-weight: 500; border: 1px solid var(--rule); border-radius: var(--radius); padding: 4px 10px; }
+#scenarioBox[open] > .levers-head::after { content: "Hide"; }
+.levers-head .muted { margin-left: auto; }
+.levers-body { display: flex; flex-direction: column; gap: 6px; padding-top: 6px; }
+.levers-bar { display: flex; gap: 12px; align-items: flex-start; justify-content: space-between; }
 details.grp { border-top: 1px solid var(--rule); padding-block: 8px 2px; }
 details.grp > summary { cursor: pointer; font-weight: 600; font-size: .9rem; list-style: none; display: flex; justify-content: space-between; align-items: center; min-height: 32px; }
 details.grp > summary::-webkit-details-marker { display: none; }
@@ -103,8 +110,8 @@ details.grp[open] > summary::after { content: "−"; }
 .btn:disabled { opacity: .5; cursor: default; }
 
 main { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
-.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; }
-.kpi { background: var(--surface); padding: 12px 14px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.kpis { display: flex; flex-wrap: wrap; gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; }
+.kpi { flex: 1 1 140px; background: var(--surface); padding: 12px 14px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .kpi .lbl { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
 .kpi .val { font-family: var(--font-display); font-size: 2rem; font-weight: 600; line-height: 1.05; font-variant-numeric: tabular-nums; }
 .kpi .sub { font-size: .8rem; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
@@ -192,12 +199,16 @@ table.edit input:focus { background: var(--surface-2); outline: 2px solid var(--
 
   <section id="view-plan" class="layout">
     <aside class="levers" aria-label="Scenario levers">
-      <div class="levers-head">
-        <h2>Scenario</h2>
-        <button class="btn" id="resetLevers" type="button">Reset</button>
-      </div>
-      <p class="muted">Adjust against the base data. The plan re-solves as you move a lever.</p>
-      <div id="levers"></div>
+      <details id="scenarioBox" open>
+        <summary class="levers-head"><h2>Scenario</h2><span class="muted" id="leverCount"></span></summary>
+        <div class="levers-body">
+          <div class="levers-bar">
+            <p class="muted">Adjust against the base data. The plan re-solves as you move a lever.</p>
+            <button class="btn" id="resetLevers" type="button">Reset</button>
+          </div>
+          <div id="levers"></div>
+        </div>
+      </details>
     </aside>
 
     <main>
@@ -378,7 +389,7 @@ const SAMPLE = /*SAMPLE_DATA*/;
         const input = w.querySelector("input"), out = w.querySelector("output");
         const show = () => { out.textContent = `${input.value}%`; out.classList.toggle("changed", +input.value !== 100); };
         show();
-        input.addEventListener("input", () => { levers[it.id] = +input.value; show(); store.set("milk.levers", levers); scheduleSolve(); });
+        input.addEventListener("input", () => { levers[it.id] = +input.value; show(); updateLeverCount(); store.set("milk.levers", levers); scheduleSolve(); });
         d.appendChild(w);
       }
       host.appendChild(d);
@@ -387,8 +398,13 @@ const SAMPLE = /*SAMPLE_DATA*/;
     t.className = "toggle";
     t.innerHTML = `<input type="checkbox" id="lv-musttake" ${levers.mustTake === false ? "" : "checked"}>
       <label for="lv-musttake">Must collect all milk. Untick to let the plan leave unprofitable milk uncollected.</label>`;
-    t.querySelector("input").addEventListener("change", (e) => { levers.mustTake = e.target.checked; store.set("milk.levers", levers); scheduleSolve(); });
+    t.querySelector("input").addEventListener("change", (e) => { levers.mustTake = e.target.checked; updateLeverCount(); store.set("milk.levers", levers); scheduleSolve(); });
     host.appendChild(t);
+    updateLeverCount();
+  }
+  function updateLeverCount() {
+    const n = Object.entries(levers).filter(([k, v]) => (k === "mustTake" ? v === false : v !== 100)).length;
+    $("leverCount").textContent = n ? `${n} changed` : "base case";
   }
 
   function applyLevers(data) {
@@ -451,12 +467,22 @@ const SAMPLE = /*SAMPLE_DATA*/;
   // ------------------------------------------------------------ charts
   const NS = "http://www.w3.org/2000/svg";
   const el = (tag, attrs = {}, parent) => { const n = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v); parent && parent.appendChild(n); return n; };
-  // Axis top = 4 round steps, so every gridline label is a round number.
-  function niceMax(v) { if (v <= 0) return 4; const raw = v / 4, p = 10 ** Math.floor(Math.log10(raw)); for (const m of [1, 2, 2.5, 5, 10]) if (m * p >= raw) return 4 * m * p; return 40 * p; }
+  // Axis: 4-6 round steps that just cover the data, so every gridline label is a round number.
+  function niceAxis(v) {
+    if (v <= 0) return { max: 4, steps: 4 };
+    let best = null;
+    const e0 = Math.floor(Math.log10(v)) - 2;
+    for (let e = e0; e <= e0 + 3; e++) for (const m of [1, 2, 2.5, 5]) {
+      const step = m * 10 ** e, n = Math.ceil(v / step - 1e-9);
+      if (n >= 4 && n <= 6 && (!best || n * step < best.max)) best = { max: n * step, steps: n };
+    }
+    return best || { max: v, steps: 4 };
+  }
   function legend(host, items) {
     host.innerHTML = items.map((s) => `<span><i class="${s.line ? "line" : ""}" style="background:${s.color}"></i>${esc(s.name)}</span>`).join("");
   }
-  function frame(host, cats, yMax) {
+  function frame(host, cats, axis) {
+    const yMax = axis.max;
     host.innerHTML = "";
     const W = Math.max(280, host.clientWidth), H = 250;
     const m = { l: 44, r: 8, t: 8, b: 26 };
@@ -464,8 +490,8 @@ const SAMPLE = /*SAMPLE_DATA*/;
     const iw = W - m.l - m.r, ih = H - m.t - m.b;
     const y = (v) => m.t + ih - (v / yMax) * ih;
     const g = el("g", { class: "grid" }, svg);
-    for (let i = 0; i <= 4; i++) {
-      const v = (yMax * i) / 4;
+    for (let i = 0; i <= axis.steps; i++) {
+      const v = (yMax * i) / axis.steps;
       el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v) }, g);
       el("text", { x: m.l - 6, y: y(v) + 4, "text-anchor": "end" }, svg).textContent = fmtKt(v);
     }
@@ -484,8 +510,7 @@ const SAMPLE = /*SAMPLE_DATA*/;
   }
   function stacked(host, cats, ser, extraLine) {
     const totals = cats.map((_, i) => ser.reduce((s, x) => s + x.values[i], 0));
-    const yMax = niceMax(Math.max(...totals, ...(extraLine ? extraLine.values : [0])));
-    const f = frame(host, cats, yMax);
+    const f = frame(host, cats, niceAxis(Math.max(...totals, ...(extraLine ? extraLine.values : [0]))));
     const gap = Math.min(10, f.bw * 0.25), barW = f.bw - gap;
     const marks = el("g", {}, f.svg);
     cats.forEach((c, i) => {
@@ -523,8 +548,7 @@ const SAMPLE = /*SAMPLE_DATA*/;
     hit.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") { hideTip(); hl.setAttribute("opacity", 0); } });
   }
   function lines(host, cats, ser) {
-    const yMax = niceMax(Math.max(1, ...ser.flatMap((s) => s.values)));
-    const f = frame(host, cats, yMax);
+    const f = frame(host, cats, niceAxis(Math.max(1, ...ser.flatMap((s) => s.values))));
     const X = (i) => f.m.l + f.bw * (i + 0.5);
     for (const s of ser) {
       el("polyline", { points: s.values.map((v, i) => `${X(i)},${f.y(v)}`).join(" "), fill: "none", stroke: s.color, "stroke-width": 2, "stroke-linejoin": "round" }, f.svg);
@@ -799,6 +823,9 @@ const SAMPLE = /*SAMPLE_DATA*/;
   }
 
   // ------------------------------------------------------------ boot
+  // In a narrow window (phone, or the Claude app's pop-up) show results first.
+  if (innerWidth <= 900) $("scenarioBox").open = false;
+  $("scenarioBox").addEventListener("toggle", rerender);
   renderLevers(); renderTablePick();
   showError($("dataError"), null);
   Module({ locateFile: (f) => f }).then((h) => { highs = h; runSolve(); })
