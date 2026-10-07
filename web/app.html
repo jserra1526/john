@@ -1,0 +1,773 @@
+<title>Milk Allocation Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: a plant control-room console. Levers rail on the left (stacks on top when narrow),
+   results board on the right: KPI strip, then charts, then constraint heatmaps and tables. */
+:root {
+  --bg: #f3f6f8;          /* cool milk white */
+  --surface: #ffffff;
+  --surface-2: #e9eef2;
+  --ink: #13202b;
+  --ink-2: #485764;
+  --muted: #74828f;
+  --rule: #d6dee5;
+  --accent: #13202b;
+  --accent-ink: #ffffff;
+  --good: #0a7a3d;
+  --warn: #a86400;
+  --bad: #c62f2f;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4;
+  --s6: #008300; --s7: #4a3aa7; --s8: #e34948;
+  --div-neg: #e34948; --div-mid: #f0efec; --div-pos: #2a78d6;
+  --seq-lo: #e6eef7; --seq-hi: #104281;
+  --font-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --radius: 6px;
+  --is-dark: 0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1418; --surface: #151d23; --surface-2: #1d272f; --ink: #edf2f5; --ink-2: #b0bcc6;
+    --muted: #82909c; --rule: #2a353e; --accent: #edf2f5; --accent-ink: #0e1418;
+    --good: #3fb871; --warn: #e0a33a; --bad: #f06b6b;
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181;
+    --s6: #008300; --s7: #9085e9; --s8: #e66767;
+    --div-neg: #e66767; --div-mid: #383835; --div-pos: #3987e5;
+    --seq-lo: #1b2833; --seq-hi: #86b6ef;
+    --is-dark: 1; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1418; --surface: #151d23; --surface-2: #1d272f; --ink: #edf2f5; --ink-2: #b0bcc6;
+  --muted: #82909c; --rule: #2a353e; --accent: #edf2f5; --accent-ink: #0e1418;
+  --good: #3fb871; --warn: #e0a33a; --bad: #f06b6b;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181;
+  --s6: #008300; --s7: #9085e9; --s8: #e66767;
+  --div-neg: #e66767; --div-mid: #383835; --div-pos: #3987e5;
+  --seq-lo: #1b2833; --seq-hi: #86b6ef;
+  --is-dark: 1; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--font-body); padding-inline: 16px; padding-block: 0 48px; -webkit-text-size-adjust: 100%; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: .01em; text-wrap: balance; margin: 0; line-height: 1.1; }
+h1 { font-size: 1.9rem; }
+h2 { font-size: 1.35rem; }
+h3 { font-size: 1.05rem; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-2); }
+p { margin: 0; }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.num, td.n, th.n { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+
+.wrap { max-width: 1400px; margin: 0 auto; }
+header.top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 24px; padding-block: 20px 14px; border-bottom: 1px solid var(--rule); }
+.brand p { color: var(--ink-2); max-width: 62ch; margin-top: 4px; font-size: .92rem; }
+.status { display: flex; align-items: center; gap: 10px; font-size: .85rem; color: var(--ink-2); }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: .8rem; font-weight: 500; border: 1px solid var(--rule); background: var(--surface); white-space: nowrap; }
+.pill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+.pill.ok::before { background: var(--good); }
+.pill.busy::before { background: var(--warn); }
+.pill.err::before { background: var(--bad); }
+
+nav.tabs { display: flex; gap: 4px; padding-block: 12px; overflow-x: auto; }
+nav.tabs button { border: 1px solid transparent; background: none; padding: 8px 14px; border-radius: var(--radius); cursor: pointer; color: var(--ink-2); font-weight: 500; white-space: nowrap; min-height: 40px; }
+nav.tabs button[aria-selected="true"] { background: var(--accent); color: var(--accent-ink); }
+
+.layout { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr); } }
+
+aside.levers { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); padding: 14px; display: flex; flex-direction: column; gap: 6px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); max-height: calc(100vh - 24px); overflow: auto; }
+@media (max-width: 900px) { aside.levers { position: static; max-height: none; } }
+.levers-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.levers-head p { font-size: .82rem; color: var(--muted); }
+details.grp { border-top: 1px solid var(--rule); padding-block: 8px 2px; }
+details.grp > summary { cursor: pointer; font-weight: 600; font-size: .9rem; list-style: none; display: flex; justify-content: space-between; align-items: center; min-height: 32px; }
+details.grp > summary::-webkit-details-marker { display: none; }
+details.grp > summary::after { content: "+"; font-family: var(--font-data); color: var(--muted); }
+details.grp[open] > summary::after { content: "−"; }
+.lever { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 8px; padding-block: 6px; }
+.lever label { font-size: .85rem; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lever output { font-family: var(--font-data); font-size: .8rem; color: var(--ink); text-align: right; }
+.lever output.changed { color: var(--s1); font-weight: 500; }
+.lever input[type=range] { grid-column: 1 / -1; width: 100%; accent-color: var(--ink); height: 28px; }
+.toggle { display: flex; gap: 10px; align-items: flex-start; font-size: .85rem; color: var(--ink-2); padding-block: 6px; }
+.toggle input { width: 20px; height: 20px; accent-color: var(--ink); flex: none; margin-top: 1px; }
+
+.btn { border: 1px solid var(--rule); background: var(--surface); padding: 7px 12px; border-radius: var(--radius); cursor: pointer; font-size: .85rem; font-weight: 500; min-height: 36px; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn:disabled { opacity: .5; cursor: default; }
+
+main { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; }
+.kpi { background: var(--surface); padding: 12px 14px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.kpi .lbl { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.kpi .val { font-family: var(--font-display); font-size: 2rem; font-weight: 600; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.kpi .sub { font-size: .8rem; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.kpi .delta { font-family: var(--font-data); font-size: .78rem; }
+.delta.up { color: var(--good); } .delta.down { color: var(--bad); }
+.flag { display: inline-flex; align-items: center; gap: 4px; font-size: .78rem; font-weight: 500; }
+.flag.good { color: var(--good); } .flag.bad { color: var(--bad); }
+.flag svg { width: 12px; height: 12px; }
+
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+@media (max-width: 1150px) { .grid2 { grid-template-columns: minmax(0, 1fr); } }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); padding: 14px 16px 12px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.card-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; align-items: baseline; }
+.card-head p { font-size: .84rem; color: var(--ink-2); max-width: 70ch; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: .8rem; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.legend i.line { height: 2px; width: 14px; border-radius: 1px; }
+.chart { width: 100%; min-height: 240px; position: relative; touch-action: pan-y; }
+.chart svg { display: block; }
+.chart text { fill: var(--muted); font-family: var(--font-data); font-size: 11px; }
+.chart .grid line { stroke: var(--rule); stroke-width: 1; }
+.chart .axis line { stroke: var(--ink-2); stroke-width: 1; }
+.chart .xhair { stroke: var(--ink-2); stroke-width: 1; stroke-dasharray: 3 3; }
+details.numbers > summary { font-size: .8rem; color: var(--muted); cursor: pointer; min-height: 28px; }
+
+.tip { position: fixed; z-index: 10; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--rule); border-radius: var(--radius); box-shadow: 0 6px 20px rgb(0 0 0 / .15); padding: 8px 10px; font-size: .8rem; min-width: 150px; max-width: 260px; }
+.tip b { font-family: var(--font-display); font-size: .95rem; font-weight: 600; display: block; margin-bottom: 4px; }
+.tip .row { display: flex; justify-content: space-between; gap: 12px; }
+.tip .row span:first-child { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-2); }
+.tip .row span:last-child { font-family: var(--font-data); }
+.tip i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+
+.scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table { border-collapse: collapse; width: 100%; font-size: .82rem; }
+th, td { padding: 5px 8px; text-align: left; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+th { font-weight: 600; color: var(--ink-2); font-size: .74rem; text-transform: uppercase; letter-spacing: .05em; }
+td.n, th.n { text-align: right; }
+tr.total td { font-weight: 600; border-top: 2px solid var(--ink-2); border-bottom: none; }
+td.neg { color: var(--bad); }
+
+table.heat { border-collapse: separate; border-spacing: 2px; }
+table.heat th, table.heat td { border: none; padding: 0; }
+table.heat th { padding: 2px 6px; text-transform: none; letter-spacing: 0; font-size: .74rem; font-weight: 500; }
+table.heat th.row { text-align: right; color: var(--ink-2); }
+table.heat td { height: 30px; min-width: 46px; text-align: center; font-family: var(--font-data); font-size: .72rem; border-radius: 3px; cursor: default; }
+.scale { display: flex; align-items: center; gap: 8px; font-size: .76rem; color: var(--muted); }
+.scale .bar { height: 8px; width: 140px; border-radius: 2px; }
+
+.data-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.data-tools select { border: 1px solid var(--rule); background: var(--surface); padding: 7px 10px; border-radius: var(--radius); min-height: 36px; }
+table.edit td { padding: 0; }
+table.edit input { width: 100%; min-width: 84px; border: 0; background: transparent; padding: 7px 8px; font-family: var(--font-data); font-size: .8rem; text-align: right; }
+table.edit input.txt { text-align: left; font-family: var(--font-body); }
+table.edit input:focus { background: var(--surface-2); outline: 2px solid var(--ink); outline-offset: -2px; }
+.notice { padding: 10px 12px; border-radius: var(--radius); border: 1px solid var(--rule); background: var(--surface-2); font-size: .85rem; }
+.notice.err { border-color: var(--bad); color: var(--bad); background: var(--surface); }
+.notice ul { margin: 6px 0 0; padding-left: 18px; }
+.prose { max-width: 72ch; display: flex; flex-direction: column; gap: 12px; }
+.prose p, .prose li { color: var(--ink-2); }
+.prose h2 { margin-top: 10px; }
+.prose code { font-family: var(--font-data); font-size: .85em; background: var(--surface-2); padding: 1px 4px; border-radius: 3px; }
+.muted { color: var(--muted); font-size: .82rem; }
+@media (prefers-reduced-motion: no-preference) { .chart svg rect, .chart svg path { transition: opacity .15s; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <h1>Milk Allocation Planner</h1>
+      <p>Decides where each month's milk goes, what every plant makes from its fat and protein, and what to stock, so margin is as high as plant capacity allows.</p>
+    </div>
+    <div class="status"><span id="status" class="pill busy">Loading solver</span><span id="solveTime" class="num"></span></div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" id="tab-plan" aria-selected="true" data-tab="plan">Plan</button>
+    <button role="tab" id="tab-data" aria-selected="false" data-tab="data">Data</button>
+    <button role="tab" id="tab-about" aria-selected="false" data-tab="about">How it works</button>
+  </nav>
+
+  <section id="view-plan" class="layout">
+    <aside class="levers" aria-label="Scenario levers">
+      <div class="levers-head">
+        <h2>Scenario</h2>
+        <button class="btn" id="resetLevers" type="button">Reset</button>
+      </div>
+      <p class="muted">Adjust against the base data. The plan re-solves as you move a lever.</p>
+      <div id="levers"></div>
+    </aside>
+
+    <main>
+      <div id="planError" hidden></div>
+      <div class="kpis" id="kpis"></div>
+
+      <div class="grid2">
+        <div class="card">
+          <div class="card-head"><h2>Where the milk goes</h2><p>Tonnes per month by destination.</p></div>
+          <div class="legend" id="lg-milk"></div>
+          <div class="chart" id="ch-milk"></div>
+          <details class="numbers"><summary>Show numbers</summary><div class="scroll" id="tb-milk"></div></details>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Production</h2><p>Tonnes of product made per month.</p></div>
+          <div class="legend" id="lg-prod"></div>
+          <div class="chart" id="ch-prod"></div>
+          <details class="numbers"><summary>Show numbers</summary><div class="scroll" id="tb-prod"></div></details>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Line utilisation</h2><p>Share of available hours used. Tap a cell for the value of one more hour on that line.</p></div>
+        <div class="scale"><span>0%</span><span class="bar" id="seqBar"></span><span>100%</span></div>
+        <div class="scroll" id="hm-lines"></div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <div class="card-head"><h2>Marginal value of milk</h2><p>Margin change from one more tonne in that region and month, after paying for it. Negative means the plants are full.</p></div>
+          <div class="scale"><span>loses money</span><span class="bar" id="divBar"></span><span>adds margin</span></div>
+          <div class="scroll" id="hm-milk"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Stock on hand</h2><p>Closing inventory per month (t). Peak milk is stored to sell in the shoulder months.</p></div>
+          <div class="legend" id="lg-inv"></div>
+          <div class="chart" id="ch-inv"></div>
+          <details class="numbers"><summary>Show numbers</summary><div class="scroll" id="tb-inv"></div></details>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <div class="card-head"><h2>Profit and loss</h2><p>Whole horizon, $.</p></div>
+          <div class="scroll" id="tb-pnl"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Sales against demand</h2><p>Whole horizon, tonnes.</p></div>
+          <div class="scroll" id="tb-sales"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Copy results</h2><p>Copies a result table as CSV, in the same layout as the Python model's output files.</p></div>
+        <div class="data-tools">
+          <select id="resultPick" aria-label="Result table">
+            <option value="flows">flows</option><option value="spot">spot</option><option value="production">production</option>
+            <option value="surplus">surplus</option><option value="sales">sales</option><option value="line_use">line_use</option>
+            <option value="intake">intake</option><option value="milk_value">milk_value</option><option value="pnl">pnl</option>
+          </select>
+          <button class="btn" id="copyResult" type="button">Copy as CSV</button>
+          <span class="muted" id="copyMsg"></span>
+        </div>
+        <textarea id="copyFallback" hidden readonly rows="6" style="width:100%;font-family:var(--font-data);font-size:.75rem"></textarea>
+      </div>
+    </main>
+  </section>
+
+  <section id="view-data" hidden>
+    <div class="card">
+      <div class="card-head"><h2>Base data</h2><p>Edit any cell and the plan re-solves. Load your own CSV files to replace tables; they use the same columns as the Python model.</p></div>
+      <div class="data-tools">
+        <select id="tablePick" aria-label="Table to edit"></select>
+        <label class="btn" for="csvFiles" style="display:inline-flex;align-items:center">Load CSV files</label>
+        <input type="file" id="csvFiles" accept=".csv,text/csv" multiple hidden>
+        <button class="btn" id="copyTable" type="button">Copy table as CSV</button>
+        <button class="btn" id="restoreSample" type="button">Restore sample data</button>
+        <span class="muted" id="dataMsg"></span>
+      </div>
+      <div id="dataError" hidden></div>
+      <p class="muted" id="tableHelp"></p>
+      <div class="scroll" id="tableEdit"></div>
+    </div>
+  </section>
+
+  <section id="view-about" hidden>
+    <div class="card prose">
+      <h2>What the model decides</h2>
+      <p>Every month, milk collected in each region must go somewhere: to a plant, onto the spot market (up to a limit), or, as a last resort, dumped at a heavy penalty. Milk cannot be stored between months.</p>
+      <p>At each plant the milk is treated as its components, fat and protein. Each product consumes a fixed amount of each component per tonne, including process losses. Butter takes almost only fat, skim milk powder takes protein, and cheese and whole milk powder take both. Fat or protein that no product uses is sold as a low-value by-product.</p>
+      <p>Products go into stock and are sold against each month's demand. Sales cannot exceed the market maximum. Missing a contract minimum costs a shortfall penalty.</p>
+      <h2>Limits it respects</h2>
+      <ul>
+        <li><b>Plant intake</b>: tonnes of milk a plant can receive each month.</li>
+        <li><b>Line hours</b>: each line has hours per month and a rate in tonnes per hour for each product it can make. Products on one line share its hours.</li>
+        <li><b>Storage</b>: maximum tonnes of each product in stock.</li>
+        <li><b>Shelf life</b>: stock held must be sellable within its shelf life (zero means no stock, as for fresh cream).</li>
+        <li><b>Closing stock</b>: minimum stock of each product at the end of the horizon.</li>
+      </ul>
+      <h2>Reading the shadow prices</h2>
+      <p>The solver also reports what each limit is worth. A line cell showing <code>$6,110/hr</code> means one more hour on that line in that month would add about $6,110 of margin. A milk value of <code>−$200/t</code> means an extra tonne of milk in that month loses $200 after paying for it, because the plants are already full.</p>
+      <h2>Where this comes from</h2>
+      <p>This page runs the same linear program as the Python package in the <code>milk_opt</code> folder of the repository, solved here in your browser by HiGHS. Nothing is sent anywhere. Your edits and levers are kept in this browser only.</p>
+    </div>
+  </section>
+</div>
+<div class="tip" id="tip" hidden></div>
+
+<script src="https://cdn.jsdelivr.net/npm/highs@1.15.3/build/highs.js"></script>
+<script>
+/*MODEL_JS*/
+</script>
+<script>
+const SAMPLE = /*SAMPLE_DATA*/;
+(function () {
+  "use strict";
+  const M = window.MilkModel;
+  const $ = (id) => document.getElementById(id);
+  const store = {
+    get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+    del(k) { try { localStorage.removeItem(k); } catch {} },
+  };
+  const sampleData = () => Object.fromEntries(Object.entries(SAMPLE).map(([k, v]) => [k, M.parseCSV(v)]));
+
+  let base = store.get("milk.base") || sampleData();
+  if (M.validate(base).length) base = sampleData();
+  let levers = store.get("milk.levers") || {};
+  let highs = null, result = null, baseline = null, solveTimer = null;
+
+  // ------------------------------------------------------------ formatting
+  const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const monthLabel = (m) => { const [y, mm] = m.split("-"); return `${MON[+mm - 1] || mm} ${y.slice(2)}`; };
+  const fmtT = (v) => Math.round(v).toLocaleString("en");
+  const fmt$ = (v) => (v < 0 ? "−" : "") + "$" + Math.round(Math.abs(v)).toLocaleString("en");
+  const fmt$M = (v) => { const a = Math.abs(v); const s = a >= 1e9 ? (a / 1e9).toFixed(2) + "B" : a >= 1e6 ? (a / 1e6).toFixed(1) + "M" : a >= 1e3 ? (a / 1e3).toFixed(0) + "k" : a.toFixed(0); return (v < 0 ? "−$" : "$") + s; };
+  const fmtKt = (v) => Math.abs(v) >= 1e4 ? (v / 1000).toFixed(0) + "k" : Math.abs(v) >= 1000 ? (v / 1000).toFixed(1) + "k" : Math.round(v).toString();
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const series = (i) => css(`--s${(i % 8) + 1}`);
+
+  // ------------------------------------------------------------ levers
+  function leverDefs(data) {
+    const products = data.products.map((p) => p.product);
+    const lines = [...new Map(data.lines.map((l) => [`${l.plant}|${l.line}`, l])).keys()];
+    const plants = [...new Set(data.plant_intake.map((p) => p.plant))].sort();
+    return [
+      { group: "Milk", open: true, items: [
+        { id: "supply", label: "Milk supply volume", min: 50, max: 150 },
+        { id: "milkPrice", label: "Milk price paid", min: 50, max: 150 },
+        { id: "spotPrice", label: "Spot milk price", min: 0, max: 150 },
+        { id: "spotMax", label: "Spot market limit", min: 0, max: 300 },
+      ]},
+      { group: "Product prices", open: true, items: products.map((p) => ({ id: `price|${p}`, label: p, min: 50, max: 150 })) },
+      { group: "Market demand", items: [{ id: "demand", label: "All products, min and max", min: 50, max: 150 },
+        ...products.map((p) => ({ id: `demand|${p}`, label: p, min: 0, max: 200 }))] },
+      { group: "Line hours", items: lines.map((k) => ({ id: `line|${k}`, label: k.replace("|", " · "), min: 0, max: 200 })) },
+      { group: "Plant intake", items: plants.map((p) => ({ id: `intake|${p}`, label: p, min: 0, max: 200 })) },
+    ];
+  }
+  const lv = (id) => levers[id] ?? 100;
+
+  function renderLevers() {
+    const host = $("levers");
+    const openState = Object.fromEntries([...host.querySelectorAll("details")].map((d) => [d.dataset.g, d.open]));
+    host.innerHTML = "";
+    for (const g of leverDefs(base)) {
+      const d = document.createElement("details");
+      d.className = "grp"; d.dataset.g = g.group;
+      d.open = openState[g.group] ?? (!!g.open && (g.group === "Milk" || innerWidth > 900));
+      d.innerHTML = `<summary>${esc(g.group)}</summary>`;
+      for (const it of g.items) {
+        const id = "lv-" + it.id.replace(/[^a-z0-9]/gi, "_");
+        const w = document.createElement("div");
+        w.className = "lever";
+        w.innerHTML = `<label for="${id}">${esc(it.label)}</label><output for="${id}"></output>
+          <input type="range" id="${id}" min="${it.min}" max="${it.max}" step="5" value="${lv(it.id)}">`;
+        const input = w.querySelector("input"), out = w.querySelector("output");
+        const show = () => { out.textContent = `${input.value}%`; out.classList.toggle("changed", +input.value !== 100); };
+        show();
+        input.addEventListener("input", () => { levers[it.id] = +input.value; show(); store.set("milk.levers", levers); scheduleSolve(); });
+        d.appendChild(w);
+      }
+      host.appendChild(d);
+    }
+    const t = document.createElement("div");
+    t.className = "toggle";
+    t.innerHTML = `<input type="checkbox" id="lv-musttake" ${levers.mustTake === false ? "" : "checked"}>
+      <label for="lv-musttake">Must collect all milk. Untick to let the plan leave unprofitable milk uncollected.</label>`;
+    t.querySelector("input").addEventListener("change", (e) => { levers.mustTake = e.target.checked; store.set("milk.levers", levers); scheduleSolve(); });
+    host.appendChild(t);
+  }
+
+  function applyLevers(data) {
+    const d = JSON.parse(JSON.stringify(data));
+    const f = (id) => lv(id) / 100;
+    for (const s of d.supply) {
+      s.volume_t *= f("supply"); s.milk_price_per_t *= f("milkPrice");
+      s.spot_price_per_t *= f("spotPrice"); s.spot_max_t *= f("spotMax");
+    }
+    for (const r of d.demand) {
+      r.price_per_t *= f(`price|${r.product}`);
+      const k = f("demand") * f(`demand|${r.product}`);
+      r.min_t *= k; r.max_t *= k;
+    }
+    for (const l of d.lines) l.hours_available *= f(`line|${l.plant}|${l.line}`);
+    for (const p of d.plant_intake) p.intake_capacity_t *= f(`intake|${p.plant}`);
+    return d;
+  }
+
+  // ------------------------------------------------------------ solve
+  function setStatus(cls, text) { const s = $("status"); s.className = `pill ${cls}`; s.textContent = text; }
+  function scheduleSolve() { clearTimeout(solveTimer); setStatus("busy", "Solving"); solveTimer = setTimeout(runSolve, 200); }
+  function showError(el, msgs) {
+    el.hidden = !msgs; if (!msgs) return;
+    el.innerHTML = `<div class="notice err"><b>The plan could not be solved.</b><ul>${msgs.map((m) => `<li>${esc(m)}</li>`).join("")}</ul></div>`;
+  }
+  function runSolve() {
+    if (!highs) return;
+    const errors = M.validate(base);
+    if (errors.length) { showError($("planError"), errors); setStatus("err", "Data errors"); return; }
+    const t0 = performance.now();
+    try {
+      if (!baseline) baseline = M.solve(highs, base, {});
+      result = M.solve(highs, applyLevers(base), { mustTakeMilk: levers.mustTake !== false });
+      showError($("planError"), null);
+      setStatus("ok", "Optimal plan");
+      $("solveTime").textContent = `${Math.round(performance.now() - t0)} ms`;
+      renderPlan();
+    } catch (e) {
+      showError($("planError"), [e.message]);
+      setStatus("err", "No solution");
+      $("solveTime").textContent = "";
+    }
+  }
+
+  // ------------------------------------------------------------ tooltip
+  const tip = $("tip");
+  function showTip(x, y, html) {
+    tip.innerHTML = html; tip.hidden = false;
+    const r = tip.getBoundingClientRect();
+    let left = x + 14, top = y + 14;
+    if (left + r.width > innerWidth - 8) left = x - r.width - 14;
+    if (top + r.height > innerHeight - 8) top = y - r.height - 14;
+    tip.style.left = Math.max(8, left) + "px"; tip.style.top = Math.max(8, top) + "px";
+  }
+  const hideTip = () => { tip.hidden = true; };
+  document.addEventListener("scroll", hideTip, { passive: true });
+  document.addEventListener("pointerdown", (e) => { if (!e.target.closest(".chart, table.heat")) hideTip(); });
+
+  // ------------------------------------------------------------ charts
+  const NS = "http://www.w3.org/2000/svg";
+  const el = (tag, attrs = {}, parent) => { const n = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v); parent && parent.appendChild(n); return n; };
+  // Axis top = 4 round steps, so every gridline label is a round number.
+  function niceMax(v) { if (v <= 0) return 4; const raw = v / 4, p = 10 ** Math.floor(Math.log10(raw)); for (const m of [1, 2, 2.5, 5, 10]) if (m * p >= raw) return 4 * m * p; return 40 * p; }
+  function legend(host, items) {
+    host.innerHTML = items.map((s) => `<span><i class="${s.line ? "line" : ""}" style="background:${s.color}"></i>${esc(s.name)}</span>`).join("");
+  }
+  function frame(host, cats, yMax) {
+    host.innerHTML = "";
+    const W = Math.max(280, host.clientWidth), H = 250;
+    const m = { l: 44, r: 8, t: 8, b: 26 };
+    const svg = el("svg", { width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: "img" }, host);
+    const iw = W - m.l - m.r, ih = H - m.t - m.b;
+    const y = (v) => m.t + ih - (v / yMax) * ih;
+    const g = el("g", { class: "grid" }, svg);
+    for (let i = 0; i <= 4; i++) {
+      const v = (yMax * i) / 4;
+      el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v) }, g);
+      el("text", { x: m.l - 6, y: y(v) + 4, "text-anchor": "end" }, svg).textContent = fmtKt(v);
+    }
+    const bw = iw / cats.length;
+    const every = bw < 34 ? 3 : bw < 52 ? 2 : 1;
+    cats.forEach((c, i) => {
+      if (i % every) return;
+      el("text", { x: m.l + bw * (i + 0.5), y: H - 8, "text-anchor": "middle" }, svg).textContent = monthLabel(c);
+    });
+    el("line", { x1: m.l, x2: W - m.r, y1: y(0), y2: y(0) }, el("g", { class: "axis" }, svg));
+    return { svg, W, H, m, iw, ih, y, bw };
+  }
+  function tipRows(title, rows, total) {
+    return `<b>${esc(title)}</b>` + rows.map((r) => `<div class="row"><span><i style="background:${r.color}"></i>${esc(r.name)}</span><span>${fmtT(r.v)} t</span></div>`).join("")
+      + (total != null ? `<div class="row" style="border-top:1px solid var(--rule);margin-top:4px;padding-top:4px"><span>Total</span><span>${fmtT(total)} t</span></div>` : "");
+  }
+  function stacked(host, cats, ser, extraLine) {
+    const totals = cats.map((_, i) => ser.reduce((s, x) => s + x.values[i], 0));
+    const yMax = niceMax(Math.max(...totals, ...(extraLine ? extraLine.values : [0])));
+    const f = frame(host, cats, yMax);
+    const gap = Math.min(10, f.bw * 0.25), barW = f.bw - gap;
+    const marks = el("g", {}, f.svg);
+    cats.forEach((c, i) => {
+      let acc = 0;
+      const x = f.m.l + f.bw * i + gap / 2;
+      const visible = ser.filter((s) => s.values[i] > 0.5);
+      visible.forEach((s, j) => {
+        const y0 = f.y(acc), y1 = f.y(acc + s.values[i]);
+        acc += s.values[i];
+        const h = Math.max(0, y0 - y1 - (j < visible.length - 1 ? 2 : 0)); // 2px surface gap between segments
+        const top = y0 - h;
+        if (j === visible.length - 1 && h > 4) {
+          const r = 4; // rounded data end at the top of the stack only
+          el("path", { d: `M${x},${y0}V${top + r}Q${x},${top} ${x + r},${top}H${x + barW - r}Q${x + barW},${top} ${x + barW},${top + r}V${y0}Z`, fill: s.color }, marks);
+        } else el("rect", { x, y: top, width: barW, height: h, fill: s.color }, marks);
+      });
+    });
+    if (extraLine) {
+      const pts = extraLine.values.map((v, i) => `${f.m.l + f.bw * (i + 0.5)},${f.y(v)}`).join(" ");
+      el("polyline", { points: pts, fill: "none", stroke: css("--ink"), "stroke-width": 2, "stroke-dasharray": "5 4" }, f.svg);
+    }
+    const hit = el("rect", { x: f.m.l, y: f.m.t, width: f.iw, height: f.ih, fill: "transparent" }, f.svg);
+    const hl = el("rect", { y: f.m.t, height: f.ih, width: f.bw, fill: css("--ink"), opacity: 0, "pointer-events": "none" }, f.svg);
+    const move = (e) => {
+      const r = f.svg.getBoundingClientRect();
+      const i = Math.floor((e.clientX - r.left - f.m.l) / f.bw);
+      if (i < 0 || i >= cats.length) return hideTip();
+      hl.setAttribute("x", f.m.l + f.bw * i); hl.setAttribute("opacity", 0.06);
+      const rows = ser.filter((s) => s.values[i] > 0.5).map((s) => ({ name: s.name, color: s.color, v: s.values[i] })).reverse();
+      let html = tipRows(monthLabel(cats[i]), rows, totals[i]);
+      if (extraLine) html += `<div class="row"><span>${esc(extraLine.name)}</span><span>${fmtT(extraLine.values[i])} t</span></div>`;
+      showTip(e.clientX, e.clientY, html);
+    };
+    hit.addEventListener("pointermove", move); hit.addEventListener("pointerdown", move);
+    hit.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") { hideTip(); hl.setAttribute("opacity", 0); } });
+  }
+  function lines(host, cats, ser) {
+    const yMax = niceMax(Math.max(1, ...ser.flatMap((s) => s.values)));
+    const f = frame(host, cats, yMax);
+    const X = (i) => f.m.l + f.bw * (i + 0.5);
+    for (const s of ser) {
+      el("polyline", { points: s.values.map((v, i) => `${X(i)},${f.y(v)}`).join(" "), fill: "none", stroke: s.color, "stroke-width": 2, "stroke-linejoin": "round" }, f.svg);
+      const n = s.values.length - 1;
+      el("circle", { cx: X(n), cy: f.y(s.values[n]), r: 4, fill: s.color, stroke: css("--surface"), "stroke-width": 2 }, f.svg);
+    }
+    const xh = el("line", { class: "xhair", y1: f.m.t, y2: f.m.t + f.ih, opacity: 0 }, f.svg);
+    const dots = ser.map((s) => el("circle", { r: 4, fill: s.color, stroke: css("--surface"), "stroke-width": 2, opacity: 0 }, f.svg));
+    const hit = el("rect", { x: f.m.l, y: f.m.t, width: f.iw, height: f.ih, fill: "transparent" }, f.svg);
+    const move = (e) => {
+      const r = f.svg.getBoundingClientRect();
+      const i = Math.floor((e.clientX - r.left - f.m.l) / f.bw);
+      if (i < 0 || i >= cats.length) return hideTip();
+      xh.setAttribute("x1", X(i)); xh.setAttribute("x2", X(i)); xh.setAttribute("opacity", 1);
+      dots.forEach((d, j) => { d.setAttribute("cx", X(i)); d.setAttribute("cy", f.y(ser[j].values[i])); d.setAttribute("opacity", 1); });
+      const rows = ser.map((s) => ({ name: s.name, color: s.color, v: s.values[i] })).sort((a, b) => b.v - a.v);
+      showTip(e.clientX, e.clientY, tipRows(monthLabel(cats[i]), rows));
+    };
+    hit.addEventListener("pointermove", move); hit.addEventListener("pointerdown", move);
+    hit.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") { hideTip(); xh.setAttribute("opacity", 0); dots.forEach((d) => d.setAttribute("opacity", 0)); } });
+  }
+
+  // ------------------------------------------------------------ colour scales
+  const hex = (h) => { h = h.replace("#", ""); return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16)); };
+  const mix = (a, b, t) => { const A = hex(a), B = hex(b); return `rgb(${A.map((v, i) => Math.round(v + (B[i] - v) * t)).join(",")})`; };
+  const lum = (rgb) => { const [r, g, b] = rgb.match(/\d+/g).map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }); return 0.2126 * r + 0.7152 * g + 0.0722 * b; };
+  const inkOn = (bg) => (lum(bg) > 0.35 ? "#13202b" : "#ffffff");
+  const seq = (t) => mix(css("--seq-lo"), css("--seq-hi"), Math.max(0, Math.min(1, t)));
+  const div = (t) => (t < 0 ? mix(css("--div-mid"), css("--div-neg"), Math.min(1, -t)) : mix(css("--div-mid"), css("--div-pos"), Math.min(1, t)));
+
+  function heat(host, rowLabels, months, cell) {
+    let h = `<table class="heat"><thead><tr><th></th>${months.map((m) => `<th class="n">${monthLabel(m)}</th>`).join("")}</tr></thead><tbody>`;
+    rowLabels.forEach((rl, r) => {
+      h += `<tr><th class="row">${esc(rl)}</th>`;
+      months.forEach((m, c) => { const x = cell(r, c); h += `<td style="background:${x.bg};color:${inkOn(x.bg)}" data-r="${r}" data-c="${c}">${x.text}</td>`; });
+      h += "</tr>";
+    });
+    host.innerHTML = h + "</tbody></table>";
+    const tbl = host.querySelector("table");
+    const move = (e) => { const td = e.target.closest("td"); if (!td) return hideTip(); showTip(e.clientX, e.clientY, cell(+td.dataset.r, +td.dataset.c).tip); };
+    tbl.addEventListener("pointermove", move); tbl.addEventListener("pointerdown", move);
+    tbl.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") hideTip(); });
+  }
+
+  function table(host, cols, rows) {
+    host.innerHTML = `<table><thead><tr>${cols.map((c) => `<th class="${c.n ? "n" : ""}">${esc(c.label)}</th>`).join("")}</tr></thead><tbody>${
+      rows.map((r) => `<tr class="${r._cls || ""}">${cols.map((c) => { const v = r[c.key]; return `<td class="${c.n ? "n" : ""} ${c.n && v < -0.5 ? "neg" : ""}">${c.f ? c.f(v) : esc(v)}</td>`; }).join("")}</tr>`).join("")}</tbody></table>`;
+  }
+
+  // ------------------------------------------------------------ plan view
+  const sum = (a, f) => a.reduce((s, x) => s + f(x), 0);
+  const ICON_OK = `<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 6.5l2.5 2.5L10 3.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>`;
+  const ICON_BAD = `<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5v6M6 9.5v1" stroke="currentColor" stroke-width="2"/></svg>`;
+
+  function renderPlan() {
+    if (!result) return;
+    const R = result, months = R.months;
+    const supplyT = sum(applyLevers(base).supply, (s) => s.volume_t);
+    const processed = sum(R.flows, (f) => f.milk_t);
+    const spotT = sum(R.spot, (s) => s.spot_sold_t);
+    const dumpT = sum(R.spot, (s) => s.dumped_t);
+    const shortT = sum(R.sales, (s) => s.shortfall_t);
+    const uncollected = Math.max(0, supplyT - processed - spotT - dumpT);
+    const dm = R.pnl.margin - baseline.pnl.margin;
+    const deltaHtml = Math.abs(dm) < 1 ? `<span class="delta">base case</span>` : `<span class="delta ${dm > 0 ? "up" : "down"}">${dm > 0 ? "+" : "−"}${fmt$M(Math.abs(dm)).replace(/^−?/, "")} vs base</span>`;
+    $("kpis").innerHTML = [
+      { lbl: "Margin", val: fmt$M(R.pnl.margin), sub: deltaHtml },
+      { lbl: "Product revenue", val: fmt$M(R.pnl.product_revenue), sub: `${fmtT(sum(R.sales, (s) => s.sold_t))} t sold` },
+      { lbl: "Milk processed", val: `${supplyT ? Math.round((processed / supplyT) * 100) : 0}%`, sub: `${fmtT(processed)} of ${fmtT(supplyT)} t` },
+      { lbl: "Milk sold on spot", val: `${fmtKt(spotT)} t`, sub: dumpT > 0.5 ? `<span class="flag bad">${ICON_BAD}${fmtT(dumpT)} t dumped</span>` : uncollected > 0.5 ? `${fmtT(uncollected)} t left uncollected` : `<span class="flag good">${ICON_OK}none dumped</span>` },
+      { lbl: "Contract shortfall", val: `${fmtKt(shortT)} t`, sub: shortT > 0.5 ? `<span class="flag bad">${ICON_BAD}minimums missed</span>` : `<span class="flag good">${ICON_OK}all contracts met</span>` },
+    ].map((k) => `<div class="kpi"><span class="lbl">${k.lbl}</span><span class="val">${k.val}</span><span class="sub">${k.sub}</span></div>`).join("");
+
+    // Milk destinations: plants in fixed slots, then spot, then dumped.
+    const byPM = (p, m) => sum(R.flows.filter((f) => f.plant === p && f.month === m), (f) => f.milk_t);
+    const milkSer = R.plants.map((p, i) => ({ name: p, color: series(i), values: months.map((m) => byPM(p, m)) }));
+    milkSer.push({ name: "Spot sale", color: series(R.plants.length), values: months.map((m) => sum(R.spot.filter((s) => s.month === m), (s) => s.spot_sold_t)) });
+    if (dumpT > 0.5) milkSer.push({ name: "Dumped", color: css("--bad"), values: months.map((m) => sum(R.spot.filter((s) => s.month === m), (s) => s.dumped_t)) });
+    const supplyLine = { name: "Milk supplied", values: months.map((m) => sum(applyLevers(base).supply.filter((s) => s.month === m), (s) => s.volume_t)) };
+    legend($("lg-milk"), [...milkSer, ...(levers.mustTake === false ? [{ name: "Milk supplied", color: css("--ink"), line: true }] : [])]);
+    stacked($("ch-milk"), months, milkSer, levers.mustTake === false ? supplyLine : null);
+    numbersTable($("tb-milk"), months, milkSer);
+
+    const prodSer = R.products.map((k, i) => ({ name: k, color: series(i), values: months.map((m) => sum(R.production.filter((p) => p.product === k && p.month === m), (p) => p.made_t)) }));
+    legend($("lg-prod"), prodSer);
+    stacked($("ch-prod"), months, prodSer);
+    numbersTable($("tb-prod"), months, prodSer);
+
+    const invSer = R.products.map((k, i) => ({ name: k, color: series(i), line: true, values: months.map((m) => R.sales.find((s) => s.product === k && s.month === m)?.closing_inv_t || 0) }));
+    legend($("lg-inv"), invSer);
+    lines($("ch-inv"), months, invSer);
+    numbersTable($("tb-inv"), months, invSer);
+
+    // Line utilisation heatmap.
+    const lineKeys = [...new Map(R.line_use.map((l) => [`${l.plant} · ${l.line}`, l])).keys()];
+    const lu = new Map(R.line_use.map((l) => [`${l.plant} · ${l.line}|${l.month}`, l]));
+    $("seqBar").style.background = `linear-gradient(90deg, ${seq(0)}, ${seq(1)})`;
+    heat($("hm-lines"), lineKeys, months, (r, c) => {
+      const l = lu.get(`${lineKeys[r]}|${months[c]}`);
+      if (!l) return { bg: css("--surface-2"), text: "", tip: "No line data" };
+      const off = l.hours_available <= 0;
+      const u = off ? 0 : l.utilisation;
+      return {
+        bg: off ? css("--surface-2") : seq(u),
+        text: off ? "off" : `${Math.round(u * 100)}`,
+        tip: `<b>${esc(lineKeys[r])} · ${monthLabel(months[c])}</b>` +
+          (off ? `<div class="row"><span>Shut for the month</span><span></span></div>` :
+          `<div class="row"><span>Hours used</span><span>${fmtT(l.hours_used)} / ${fmtT(l.hours_available)}</span></div>
+           <div class="row"><span>One more hour</span><span>${l.shadow_price_per_hr > 0.5 ? "+" + fmt$(l.shadow_price_per_hr) : "$0"}</span></div>`),
+      };
+    });
+
+    // Milk value heatmap.
+    const mv = new Map(R.milk_value.map((v) => [`${v.region}|${v.month}`, v.marginal_value_per_t]));
+    const span = Math.max(1, ...R.milk_value.map((v) => Math.abs(v.marginal_value_per_t)));
+    $("divBar").style.background = `linear-gradient(90deg, ${div(-1)}, ${div(0)}, ${div(1)})`;
+    heat($("hm-milk"), R.regions, months, (r, c) => {
+      const v = mv.get(`${R.regions[r]}|${months[c]}`) ?? 0;
+      return { bg: div(v / span), text: Math.round(v).toString().replace("-", "−"),
+        tip: `<b>${esc(R.regions[r])} · ${monthLabel(months[c])}</b><div class="row"><span>One more tonne of milk</span><span>${v >= 0 ? "+" : ""}${fmt$(v)}</span></div>` };
+    });
+
+    // P&L.
+    const P = R.pnl, B = baseline.pnl;
+    const labels = { product_revenue: "Product revenue", spot_milk_revenue: "Spot milk sales", surplus_component_value: "By-product value",
+      milk_cost: "Milk purchased", transport_cost: "Milk freight", processing_cost: "Processing", holding_cost: "Stock holding",
+      shortfall_penalty: "Contract shortfall penalty", dump_penalty: "Dumped milk penalty" };
+    const pnlRows = Object.keys(labels).map((k) => ({ item: labels[k], v: P[k], d: P[k] - B[k] }));
+    pnlRows.push({ item: "Margin", v: P.margin, d: P.margin - B.margin, _cls: "total" });
+    table($("tb-pnl"), [{ key: "item", label: "Item" }, { key: "v", label: "This plan", n: 1, f: fmt$ }, { key: "d", label: "vs base", n: 1, f: (v) => Math.abs(v) < 0.5 ? "–" : (v > 0 ? "+" : "") + fmt$(v) }], pnlRows);
+
+    // Sales vs demand.
+    const dem = applyLevers(base).demand;
+    const salesRows = R.products.map((k) => ({
+      product: k,
+      min: sum(dem.filter((d) => d.product === k), (d) => d.min_t),
+      max: sum(dem.filter((d) => d.product === k), (d) => d.max_t),
+      sold: sum(R.sales.filter((s) => s.product === k), (s) => s.sold_t),
+      short: sum(R.sales.filter((s) => s.product === k), (s) => s.shortfall_t),
+    }));
+    table($("tb-sales"), [{ key: "product", label: "Product" }, { key: "min", label: "Contract min", n: 1, f: fmtT },
+      { key: "sold", label: "Sold", n: 1, f: fmtT }, { key: "max", label: "Market max", n: 1, f: fmtT },
+      { key: "short", label: "Shortfall", n: 1, f: (v) => v > 0.5 ? `<span class="flag bad">${ICON_BAD}${fmtT(v)}</span>` : "–" }], salesRows);
+  }
+
+  function numbersTable(host, months, ser) {
+    const rows = months.map((m, i) => { const o = { month: monthLabel(m) }; ser.forEach((s) => (o[s.name] = s.values[i])); return o; });
+    table(host, [{ key: "month", label: "Month" }, ...ser.map((s) => ({ key: s.name, label: s.name, n: 1, f: fmtT }))], rows);
+  }
+
+  // ------------------------------------------------------------ copy
+  async function copyText(text, msgEl, fallback) {
+    try { await navigator.clipboard.writeText(text); msgEl.textContent = "Copied"; fallback && (fallback.hidden = true); }
+    catch { if (fallback) { fallback.hidden = false; fallback.value = text; fallback.select(); } msgEl.textContent = "Select the text below and copy it"; }
+    setTimeout(() => (msgEl.textContent = ""), 3000);
+  }
+  $("copyResult").addEventListener("click", () => {
+    if (!result) return;
+    const k = $("resultPick").value;
+    const rows = k === "pnl" ? Object.entries(result.pnl).map(([item, value]) => ({ item, value })) : result[k];
+    copyText(M.toCSV(rows), $("copyMsg"), $("copyFallback"));
+  });
+
+  // ------------------------------------------------------------ data view
+  const HELP = {
+    components: "Milk components tracked. Surplus value is what an unused kg earns as a by-product.",
+    supply: "Milk collected per region and month. Component columns are kg per tonne of milk.",
+    transport: "Allowed region-to-plant lanes and freight cost. Remove a row to forbid a lane.",
+    plant_intake: "Tonnes of milk each plant can receive per month. Zero means shut.",
+    lines: "Hours available on each line per month.",
+    line_rates: "Which products each line makes, and how fast.",
+    products: "Costs, storage and shelf life per product. Component columns are kg consumed per tonne of product, including losses.",
+    demand: "Monthly contract minimum, market maximum, price, and penalty per tonne short.",
+  };
+  function renderTablePick() {
+    const pick = $("tablePick");
+    const cur = pick.value || "supply";
+    pick.innerHTML = Object.keys(M.REQUIRED).map((k) => `<option value="${k}">${k}.csv (${base[k].length} rows)</option>`).join("");
+    pick.value = cur;
+  }
+  function renderEditor() {
+    const name = $("tablePick").value;
+    const rows = base[name];
+    $("tableHelp").textContent = HELP[name] || "";
+    const cols = Object.keys(rows[0] || {});
+    const textCol = (c) => typeof rows[0][c] !== "number";
+    let h = `<table class="edit"><thead><tr>${cols.map((c) => `<th class="${textCol(c) ? "" : "n"}">${esc(c)}</th>`).join("")}</tr></thead><tbody>`;
+    rows.forEach((r, i) => {
+      h += "<tr>" + cols.map((c) => `<td><input id="ed-${name}-${i}-${esc(c)}" class="${textCol(c) ? "txt" : ""}" data-i="${i}" data-c="${esc(c)}" value="${esc(r[c])}" ${textCol(c) ? "" : 'inputmode="decimal"'} aria-label="${esc(c)} row ${i + 1}"></td>`).join("") + "</tr>";
+    });
+    $("tableEdit").innerHTML = h + "</tbody></table>";
+  }
+  $("tableEdit").addEventListener("change", (e) => {
+    const inp = e.target; if (!inp.dataset.c) return;
+    const name = $("tablePick").value, row = base[name][+inp.dataset.i], c = inp.dataset.c;
+    if (typeof row[c] === "number") {
+      const v = Number(inp.value);
+      if (inp.value.trim() === "" || isNaN(v)) { inp.value = row[c]; $("dataMsg").textContent = `${c} must be a number`; return; }
+      row[c] = v;
+    } else row[c] = inp.value.trim();
+    afterDataChange();
+  });
+  function afterDataChange() {
+    const errs = M.validate(base);
+    showError($("dataError"), errs.length ? errs : null);
+    store.set("milk.base", base);
+    baseline = null;
+    renderTablePick(); renderLevers(); scheduleSolve();
+  }
+  $("tablePick").addEventListener("change", renderEditor);
+  $("copyTable").addEventListener("click", () => copyText(M.toCSV(base[$("tablePick").value]), $("dataMsg")));
+  $("restoreSample").addEventListener("click", () => {
+    base = sampleData(); levers = {}; store.del("milk.levers");
+    afterDataChange(); renderEditor(); $("dataMsg").textContent = "Sample data restored";
+  });
+  $("csvFiles").addEventListener("change", async (e) => {
+    const files = [...e.target.files]; e.target.value = "";
+    const next = JSON.parse(JSON.stringify(base)), loaded = [], ignored = [];
+    for (const f of files) {
+      const name = f.name.toLowerCase().replace(/\.csv$/, "");
+      if (!(name in M.REQUIRED)) { ignored.push(f.name); continue; }
+      next[name] = M.parseCSV(await f.text()); loaded.push(name);
+    }
+    const errs = M.validate(next);
+    if (errs.length) { showError($("dataError"), [`Nothing was loaded. Fix these and try again:`, ...errs]); return; }
+    base = next; afterDataChange(); renderEditor();
+    $("dataMsg").textContent = `Loaded ${loaded.join(", ") || "nothing"}${ignored.length ? `. Ignored ${ignored.join(", ")} (name must match a table, e.g. supply.csv)` : ""}`;
+  });
+
+  // ------------------------------------------------------------ tabs, resize, theme
+  document.querySelectorAll("nav.tabs button").forEach((b) => b.addEventListener("click", () => {
+    document.querySelectorAll("nav.tabs button").forEach((x) => x.setAttribute("aria-selected", x === b));
+    for (const t of ["plan", "data", "about"]) $(`view-${t}`).hidden = t !== b.dataset.tab;
+    hideTip();
+    if (b.dataset.tab === "plan") renderPlan();
+    if (b.dataset.tab === "data") renderEditor();
+    try { localStorage.setItem("milk.tab", b.dataset.tab); } catch {}
+  }));
+  let rt; const rerender = () => { clearTimeout(rt); rt = setTimeout(renderPlan, 120); };
+  if ("ResizeObserver" in window) new ResizeObserver(rerender).observe($("ch-milk").parentElement);
+  else addEventListener("resize", rerender);
+  matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", rerender);
+  new MutationObserver(rerender).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  $("resetLevers").addEventListener("click", () => { levers = {}; store.del("milk.levers"); renderLevers(); scheduleSolve(); });
+
+  // ------------------------------------------------------------ boot
+  renderLevers(); renderTablePick();
+  showError($("dataError"), null);
+  Module({ locateFile: (f) => f }).then((h) => { highs = h; runSolve(); })
+    .catch((e) => { setStatus("err", "Solver failed to load"); showError($("planError"), [`The solver could not load: ${e.message || e}. Reload the page to try again.`]); });
+})();
+</script>

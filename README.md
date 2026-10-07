@@ -84,3 +84,16 @@ The sample data is illustrative only: three regions with a spring-peak milk curv
 - Linear economics: no minimum run lengths, changeovers or start-up costs (would need integers).
 - Shelf life is an approximation (stock must be coverable by upcoming sales), not batch tracking.
 - Prices and demand are deterministic; scenarios could be added for price/milk uncertainty.
+
+## Browser version (works on iPad)
+
+`web/` holds a single-page version of the same model that solves in the browser with
+[highs-js](https://www.npmjs.com/package/highs). It has scenario sliders, editable data tables,
+CSV upload, charts and shadow-price heatmaps. `web/model.js` is a line-for-line port of
+`milk_opt/model.py` and gives the same margin on the sample data.
+
+```bash
+python web/build.py   # writes web/dist/milk-planner.html (inlines model.js and the sample CSVs)
+```
+
+Serve the built page with `highs.wasm` (from the `highs@1.15.3` npm package) in the same folder.
