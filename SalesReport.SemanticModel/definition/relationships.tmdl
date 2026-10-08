@@ -1,12 +1,32 @@
-relationship 00b6cb48-d0e9-4af0-8d25-72076f52449a
+relationship 2344f207-f0a1-4255-a71e-bf8e979bc54c
 	fromColumn: Sales.'Order Date'
 	toColumn: Calendar.Date
 
-relationship fe6441f0-7ec2-4ade-bf88-f7496b2fa6bc
+relationship 29a7f041-2d51-4614-842a-584a6f8cd15f
 	fromColumn: Sales.'Product ID'
 	toColumn: Products.'Product ID'
 
-relationship d8b3680d-69ac-4a33-80e7-d2f15d06fdc3
+relationship 7a3f4573-f16a-4857-9a68-990e2412e47e
 	fromColumn: Sales.'Customer ID'
 	toColumn: Customers.'Customer ID'
+
+relationship 130f0872-966f-4d47-8321-4b1455928cd5
+	fromColumn: Customers.Region
+	toColumn: Regions.Region
+
+relationship b506aa35-cfa8-4cc8-8dab-44287303f483
+	fromColumn: Plan.Month
+	toColumn: Calendar.Date
+
+relationship e245ed74-e9d5-4e55-bee6-6950e1b340ee
+	fromColumn: Plan.'Product ID'
+	toColumn: Products.'Product ID'
+
+relationship 5dcf19aa-bb3d-451c-b893-dae943ab6168
+	fromColumn: Plan.Region
+	toColumn: Regions.Region
+
+relationship 1af0bb95-21c3-40e2-aa8f-37c74432dbd9
+	fromColumn: Plan.Scenario
+	toColumn: Scenario.Scenario
 

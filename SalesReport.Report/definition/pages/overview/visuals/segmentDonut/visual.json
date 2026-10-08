@@ -3,10 +3,10 @@
   "name": "segmentDonut",
   "position": {
     "x": 812,
-    "y": 204,
+    "y": 192,
     "z": 11,
     "width": 444,
-    "height": 250,
+    "height": 262,
     "tabOrder": 11
   },
   "visual": {

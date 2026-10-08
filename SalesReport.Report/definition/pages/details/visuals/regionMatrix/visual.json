@@ -20,13 +20,13 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Customers"
+                      "Entity": "Regions"
                     }
                   },
                   "Property": "Region"
                 }
               },
-              "queryRef": "Customers.Region",
+              "queryRef": "Regions.Region",
               "nativeQueryRef": "Region"
             },
             {

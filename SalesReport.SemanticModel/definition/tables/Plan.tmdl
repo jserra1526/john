@@ -1,0 +1,182 @@
+table Plan
+	lineageTag: 31d46873-c29d-4b1c-8fcb-6df2c5e3b186
+
+	measure 'Selected Version' = SELECTEDVALUE ( Scenario[Scenario], "Budget" )
+		displayFolder: Comparison
+		lineageTag: be007552-f3d6-45c7-9455-213bf1867d89
+
+	measure 'Comparison Sales' =
+			VAR SelectedVersion = [Selected Version]
+			RETURN
+			    CALCULATE ( SUM ( Plan[Sales] ), Scenario[Scenario] = SelectedVersion )
+		formatString: \$#,0
+		displayFolder: Comparison
+		lineageTag: d586ff50-7002-4916-a112-8e82969c8d45
+
+	measure 'Comparison Units' =
+			VAR SelectedVersion = [Selected Version]
+			RETURN
+			    CALCULATE ( SUM ( Plan[Units] ), Scenario[Scenario] = SelectedVersion )
+		formatString: #,0
+		displayFolder: Comparison
+		lineageTag: e7270909-0500-4955-94d7-1e4a13149627
+
+	measure 'Comparison Sales YTD' = CALCULATE ( [Comparison Sales], KEEPFILTERS ( 'Calendar'[Period Type] = "Actual" ) )
+		formatString: \$#,0
+		displayFolder: Comparison
+		lineageTag: 6ecf4ff1-6f97-480c-8bcb-b729b0646038
+
+	measure 'Comparison Units YTD' = CALCULATE ( [Comparison Units], KEEPFILTERS ( 'Calendar'[Period Type] = "Actual" ) )
+		formatString: #,0
+		displayFolder: Comparison
+		lineageTag: 63d2b7c6-ab1f-4327-a59a-5f4ef8f218d0
+
+	measure 'Sales Variance' = [Total Sales] - [Comparison Sales YTD]
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: Variance
+		lineageTag: 12e63e97-178f-4dd7-84c7-b9766c0d8d97
+
+	measure 'Sales Variance %' = DIVIDE ( [Sales Variance], [Comparison Sales YTD] )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Variance
+		lineageTag: 649ad218-a5b5-4511-a7ad-3be20356b6fe
+
+	measure 'Volume Variance' =
+			SUMX (
+			    VALUES ( Products[Product ID] ),
+			    VAR ActualUnits = [Units Sold]
+			    VAR ActualSales = [Total Sales]
+			    VAR PlanUnits = [Comparison Units YTD]
+			    VAR PlanSales = [Comparison Sales YTD]
+			    VAR PlanPrice = IF ( PlanUnits > 0, PlanSales / PlanUnits, DIVIDE ( ActualSales, ActualUnits ) )
+			    RETURN
+			        ( ActualUnits - PlanUnits ) * PlanPrice
+			)
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: Variance
+		lineageTag: de14b989-4c91-472f-9ef7-c9e1ea882491
+
+	measure 'Price Variance' =
+			SUMX (
+			    VALUES ( Products[Product ID] ),
+			    VAR ActualUnits = [Units Sold]
+			    VAR ActualSales = [Total Sales]
+			    VAR PlanUnits = [Comparison Units YTD]
+			    VAR PlanSales = [Comparison Sales YTD]
+			    VAR PlanPrice = IF ( PlanUnits > 0, PlanSales / PlanUnits, DIVIDE ( ActualSales, ActualUnits ) )
+			    RETURN
+			        IF ( ActualUnits > 0, ActualSales - ActualUnits * PlanPrice )
+			)
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: Variance
+		lineageTag: b43e9061-171d-481d-b57e-526c1627999a
+
+	measure 'Bridge Value' =
+			SWITCH (
+			    SELECTEDVALUE ( 'Variance Bridge'[Sort Order] ),
+			    1, [Comparison Sales YTD],
+			    2, [Volume Variance],
+			    3, [Price Variance]
+			)
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: Variance
+		lineageTag: f14dfb3e-fe3c-4361-a44d-9a28d739a70f
+
+	measure 'Budget Sales' = CALCULATE ( SUM ( Plan[Sales] ), Scenario[Scenario] = "Budget" )
+		formatString: \$#,0
+		displayFolder: Versions
+		lineageTag: 0067eaa6-483d-453a-bc9d-b77e398c31c0
+
+	measure 'Q1 Forecast Sales' = CALCULATE ( SUM ( Plan[Sales] ), Scenario[Scenario] = "Q1 Forecast" )
+		formatString: \$#,0
+		displayFolder: Versions
+		lineageTag: 52ed2487-8aa9-439a-b26f-f6fdcec98bf1
+
+	measure 'Q2 Forecast Sales' = CALCULATE ( SUM ( Plan[Sales] ), Scenario[Scenario] = "Q2 Forecast" )
+		formatString: \$#,0
+		displayFolder: Versions
+		lineageTag: d164d651-9d36-4ea0-a619-484819bf0f3b
+
+	measure 'Latest Estimate Sales' = CALCULATE ( SUM ( Plan[Sales] ), Scenario[Scenario] = "Latest Estimate" )
+		formatString: \$#,0
+		displayFolder: Versions
+		lineageTag: 44d44eca-976b-4158-aa93-26f6ec221123
+
+	measure 'LE vs Budget' = [Latest Estimate Sales] - [Budget Sales]
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: Versions
+		lineageTag: 0abdbcd1-782c-4fec-9e5d-78a1c5bdb495
+
+	measure 'LE vs Budget %' = DIVIDE ( [LE vs Budget], [Budget Sales] )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Versions
+		lineageTag: 5e065732-03d9-4317-9d7c-24ce85d5bed9
+
+	column Scenario
+		dataType: string
+		lineageTag: 33ca11ee-8c59-4d00-ab70-d4d56e0db295
+		summarizeBy: none
+		sourceColumn: Scenario
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 60bf684e-240d-483a-8dd0-64e34b50c34d
+		summarizeBy: none
+		sourceColumn: Month
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9089bcfd-9145-4617-b9c1-f1b288c79c98
+		summarizeBy: none
+		sourceColumn: Product ID
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 636f1e3d-28c8-40b1-a7be-e26e9f30418c
+		summarizeBy: none
+		sourceColumn: Region
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Units
+		dataType: int64
+		formatString: #,0
+		lineageTag: 03f2ffe0-c8ef-482f-b588-73899b5ffa2d
+		summarizeBy: sum
+		sourceColumn: Units
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sales
+		dataType: double
+		formatString: \$#,0
+		lineageTag: 6ef68419-8a39-4869-bbec-a80c87280662
+		summarizeBy: sum
+		sourceColumn: Sales
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Plan = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "Plan.csv"), [Delimiter=",", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{"Scenario", type text}, {"Month", type date}, {"Product ID", Int64.Type}, {"Region", type text}, {"Units", Int64.Type}, {"Sales", type number}}, "en-US")
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

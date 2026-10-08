@@ -1,21 +1,21 @@
 Product ID,Product,Category,Unit Price,Unit Cost
-101,Road Bike,Bikes,1450,900
-102,Mountain Bike,Bikes,1200,720
-103,Hybrid Bike,Bikes,850,510
-104,Kids Bike,Bikes,320,180
-105,E-Bike,Bikes,2600,1750
-106,Helmet,Accessories,75,32
-107,Bike Lock,Accessories,45,18
-108,Water Bottle,Accessories,12,4
-109,Bike Light Set,Accessories,55,22
-110,Pump,Accessories,35,14
-111,Jersey,Clothing,65,26
-112,Cycling Shorts,Clothing,70,30
-113,Gloves,Clothing,28,10
-114,Rain Jacket,Clothing,120,55
-115,Socks,Clothing,14,5
-116,Tire,Components,48,22
-117,Chain,Components,38,16
-118,Brake Pads,Components,25,9
-119,Saddle,Components,85,38
-120,Pedals,Components,60,25
+101,Road Bike,Bikes,1537.0,900
+102,Mountain Bike,Bikes,1272.0,720
+103,Hybrid Bike,Bikes,901.0,510
+104,Kids Bike,Bikes,339.2,180
+105,E-Bike,Bikes,2756.0,1750
+106,Helmet,Accessories,76.5,32
+107,Bike Lock,Accessories,45.9,18
+108,Water Bottle,Accessories,12.24,4
+109,Bike Light Set,Accessories,56.1,22
+110,Pump,Accessories,35.7,14
+111,Jersey,Clothing,67.6,26
+112,Cycling Shorts,Clothing,72.8,30
+113,Gloves,Clothing,29.12,10
+114,Rain Jacket,Clothing,124.8,55
+115,Socks,Clothing,14.56,5
+116,Tire,Components,47.04,22
+117,Chain,Components,37.24,16
+118,Brake Pads,Components,24.5,9
+119,Saddle,Components,83.3,38
+120,Pedals,Components,58.8,25

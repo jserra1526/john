@@ -1,0 +1,32 @@
+table 'Variance Bridge'
+	lineageTag: cc1791f8-ac48-4aa4-8ab4-1a8218b8f130
+
+	column Step
+		dataType: string
+		lineageTag: 250801c0-8d2a-4e18-a51d-7a23d5b483b6
+		summarizeBy: none
+		sourceColumn: Step
+		sortByColumn: 'Sort Order'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sort Order'
+		dataType: int64
+		formatString: 0
+		lineageTag: b67819ff-9bca-4ac2-9786-e4b747c3c3cc
+		summarizeBy: none
+		sourceColumn: Sort Order
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Variance Bridge' = m
+		mode: import
+		source =
+				let
+				    Source = #table(type table [Step = text, #"Sort Order" = Int64.Type], {{"Comparison version", 1}, {"Volume variance", 2}, {"Price variance", 3}})
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

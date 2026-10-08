@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "name": "kpi5",
+  "position": {
+    "x": 853.3333333333334,
+    "y": 80,
+    "z": 7,
+    "width": 195.33333333333334,
+    "height": 100,
+    "tabOrder": 7
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Plan"
+                    }
+                  },
+                  "Property": "Volume Variance"
+                }
+              },
+              "queryRef": "Plan.Volume Variance",
+              "nativeQueryRef": "Volume Variance"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

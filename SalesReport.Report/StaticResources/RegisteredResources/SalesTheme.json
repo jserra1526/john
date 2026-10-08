@@ -38,6 +38,29 @@
         ]
       }
     },
+    "waterfallChart": {
+      "*": {
+        "sentimentColors": [
+          {
+            "increaseFill": {
+              "solid": {
+                "color": "#10B981"
+              }
+            },
+            "decreaseFill": {
+              "solid": {
+                "color": "#EF4444"
+              }
+            },
+            "totalFill": {
+              "solid": {
+                "color": "#2563EB"
+              }
+            }
+          }
+        ]
+      }
+    },
     "*": {
       "*": {
         "border": [

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "name": "kpi4",
+  "position": {
+    "x": 646.0,
+    "y": 80,
+    "z": 5,
+    "width": 195.33333333333334,
+    "height": 100,
+    "tabOrder": 5
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Plan"
+                    }
+                  },
+                  "Property": "Latest Estimate Sales"
+                }
+              },
+              "queryRef": "Plan.Latest Estimate Sales",
+              "nativeQueryRef": "Latest Estimate Sales"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,10 +1,10 @@
 table Customers
-	lineageTag: 1e2cebca-9295-426b-a512-1da228fa0a73
+	lineageTag: 13d94ad0-d809-4e6d-b41a-d2c25ceef79c
 
 	column 'Customer ID'
 		dataType: int64
 		formatString: 0
-		lineageTag: 591a91ea-38e2-4ae3-a33a-d91ad27ebe78
+		lineageTag: 6086a5f3-e594-4c30-b458-30d691c0e6c0
 		summarizeBy: none
 		sourceColumn: Customer ID
 		isHidden
@@ -13,7 +13,7 @@ table Customers
 
 	column Customer
 		dataType: string
-		lineageTag: f995ae6a-4c68-4609-8c39-de51a6f7b85d
+		lineageTag: 3c9b7cd1-983e-4d3b-b176-6ffc05fbd075
 		summarizeBy: none
 		sourceColumn: Customer
 
@@ -21,7 +21,7 @@ table Customers
 
 	column Segment
 		dataType: string
-		lineageTag: 6de28a01-d12d-4d50-902e-ad79c5bc4663
+		lineageTag: 16440645-f17a-4355-85b3-f11620629446
 		summarizeBy: none
 		sourceColumn: Segment
 
@@ -29,15 +29,16 @@ table Customers
 
 	column Region
 		dataType: string
-		lineageTag: 6e31c7bd-d498-4e1d-a01c-bf3b0f3b5f06
+		lineageTag: b39844f4-e194-4b21-ae7e-2fbc21f8b225
 		summarizeBy: none
 		sourceColumn: Region
+		isHidden
 
 		annotation SummarizationSetBy = Automatic
 
 	column Country
 		dataType: string
-		lineageTag: 65276d38-73db-42db-ab76-c990b7f156e8
+		lineageTag: 745d8729-5bc7-4822-bcfe-06e3c395899e
 		summarizeBy: none
 		sourceColumn: Country
 		dataCategory: Country

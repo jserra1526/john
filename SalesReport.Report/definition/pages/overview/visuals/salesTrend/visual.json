@@ -3,10 +3,10 @@
   "name": "salesTrend",
   "position": {
     "x": 24,
-    "y": 204,
+    "y": 192,
     "z": 10,
     "width": 776,
-    "height": 250,
+    "height": 262,
     "tabOrder": 10
   },
   "visual": {

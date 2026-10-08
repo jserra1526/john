@@ -6,12 +6,16 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
-annotation PBI_QueryOrder = ["DataFolder", "Sales", "Products", "Customers", "Calendar"]
+annotation PBI_QueryOrder = ["DataFolder", "Sales", "Plan", "Products", "Customers", "Regions", "Calendar", "Scenario", "Variance Bridge"]
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
 ref table Sales
+ref table Plan
 ref table Products
 ref table Customers
+ref table Regions
 ref table Calendar
+ref table Scenario
+ref table 'Variance Bridge'
 
