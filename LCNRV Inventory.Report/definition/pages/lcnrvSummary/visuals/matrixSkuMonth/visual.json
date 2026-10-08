@@ -1,0 +1,180 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "matrixSkuMonth",
+  "position": {
+    "x": 16,
+    "y": 420,
+    "z": 9,
+    "width": 1248,
+    "height": 288,
+    "tabOrder": 9
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Products"
+                    }
+                  },
+                  "Property": "Category"
+                }
+              },
+              "queryRef": "Products.Category",
+              "nativeQueryRef": "Category"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Products"
+                    }
+                  },
+                  "Property": "SKU"
+                }
+              },
+              "queryRef": "Products.SKU",
+              "nativeQueryRef": "SKU"
+            }
+          ]
+        },
+        "Columns": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Months"
+                    }
+                  },
+                  "Property": "Month"
+                }
+              },
+              "queryRef": "Months.Month",
+              "nativeQueryRef": "Month"
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Inventory"
+                    }
+                  },
+                  "Property": "Volume"
+                }
+              },
+              "queryRef": "Inventory.Volume",
+              "nativeQueryRef": "Volume"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Inventory"
+                    }
+                  },
+                  "Property": "Unit Cost"
+                }
+              },
+              "queryRef": "Inventory.Unit Cost",
+              "nativeQueryRef": "Unit Cost"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Inventory"
+                    }
+                  },
+                  "Property": "Total Cost"
+                }
+              },
+              "queryRef": "Inventory.Total Cost",
+              "nativeQueryRef": "Total Cost"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Inventory"
+                    }
+                  },
+                  "Property": "NRV per Unit"
+                }
+              },
+              "queryRef": "Inventory.NRV per Unit",
+              "nativeQueryRef": "NRV per Unit"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Inventory"
+                    }
+                  },
+                  "Property": "LCNRV Value"
+                }
+              },
+              "queryRef": "Inventory.LCNRV Value",
+              "nativeQueryRef": "LCNRV Value"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Inventory"
+                    }
+                  },
+                  "Property": "Write-down"
+                }
+              },
+              "queryRef": "Inventory.Write-down",
+              "nativeQueryRef": "Write-down"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Volume, cost and LCNRV by SKU and month'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

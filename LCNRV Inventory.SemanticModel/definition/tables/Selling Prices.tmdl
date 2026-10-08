@@ -1,0 +1,76 @@
+/// Month-end expected selling prices and costs to complete / sell, one row per month x SKU.
+table 'Selling Prices'
+	lineageTag: 9e8eccce-8b3a-4507-acb5-ed5843abb5bc
+
+	column MonthEnd
+		dataType: dateTime
+		formatString: dd-mmm-yyyy
+		lineageTag: 4a9550e3-ef58-4a02-a000-a3411e339520
+		summarizeBy: none
+		sourceColumn: MonthEnd
+
+		annotation SummarizationSetBy = Automatic
+
+	column SKU
+		dataType: string
+		lineageTag: e6666c07-ab25-4d37-82b8-f29e351f8321
+		summarizeBy: none
+		sourceColumn: SKU
+
+		annotation SummarizationSetBy = Automatic
+
+	column SellingPrice
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 2dd8e723-960c-4297-9c46-5e8fbae7ce05
+		summarizeBy: none
+		sourceColumn: SellingPrice
+
+		annotation SummarizationSetBy = User
+
+	column CostToComplete
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 8d518c05-dc46-4e3e-8552-27f0911b8669
+		summarizeBy: none
+		sourceColumn: CostToComplete
+
+		annotation SummarizationSetBy = User
+
+	column SellingCostPct
+		dataType: double
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 1f96b927-fc9b-4f6d-a5fb-ad1970192aeb
+		summarizeBy: none
+		sourceColumn: SellingCostPct
+
+		annotation SummarizationSetBy = User
+
+	/// NRV per unit = SellingPrice x (1 - SellingCostPct) - CostToComplete
+	column NRVPerUnit
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 2dfbd140-b62b-4670-9092-35fa92d1392b
+		summarizeBy: none
+		sourceColumn: NRVPerUnit
+
+		annotation SummarizationSetBy = User
+
+	partition 'Selling Prices' = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents(DataWorkbook), null, true),
+				    Data = Source{[Item = "tblPrices", Kind = "Table"]}[Data],
+				    Typed = Table.TransformColumnTypes(Data, {{"MonthEnd", type date}, {"SKU", type text}, {"SellingPrice", type number}, {"CostToComplete", type number}, {"SellingCostPct", type number}}),
+				    Cleaned = Table.TransformColumns(Typed, {{"MonthEnd", Date.EndOfMonth, type date}, {"SKU", Text.Trim, type text}}),
+				    NoBlanks = Table.SelectRows(Cleaned, each [MonthEnd] <> null and [SKU] <> null and [SellingPrice] <> null),
+				    DefaultCosts = Table.ReplaceValue(NoBlanks, null, 0, Replacer.ReplaceValue, {"CostToComplete", "SellingCostPct"}),
+				    // One price per month x SKU; a duplicate would double-count inventory in the merge
+				    Distinct = Table.Distinct(DefaultCosts, {"MonthEnd", "SKU"}),
+				    AddNRV = Table.AddColumn(Distinct, "NRVPerUnit", each [SellingPrice] * (1 - [SellingCostPct]) - [CostToComplete], type number)
+				in
+				    AddNRV
+
+	annotation PBI_ResultType = Table
+

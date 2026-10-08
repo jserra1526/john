@@ -1,0 +1,301 @@
+/// Month-end inventory holdings (month x SKU x location) with the LCNRV test applied per line.
+table Inventory
+	lineageTag: 12df9adc-e045-4cfc-8eeb-41b41d5eec60
+
+	/// Closing units on hand at the last month in context.
+	measure Volume =
+			VAR _month = MAX ( Months[MonthEnd] )
+			RETURN
+			    CALCULATE ( SUM ( Inventory[Quantity] ), Months[MonthEnd] = _month )
+		formatString: #,##0
+		displayFolder: 1. Volume & Cost
+		lineageTag: 953db39f-d1fb-4e8a-aad4-96f3b50eb5f5
+
+	/// Closing inventory at cost (Quantity x Unit Cost) at the last month in context.
+	measure 'Total Cost' =
+			VAR _month = MAX ( Months[MonthEnd] )
+			RETURN
+			    CALCULATE ( SUM ( Inventory[ExtendedCost] ), Months[MonthEnd] = _month )
+		formatString: \$#,##0;(\$#,##0);\$0
+		displayFolder: 1. Volume & Cost
+		lineageTag: 8f0d30c3-c4af-4360-8842-ebb0ca98da59
+
+	/// Weighted-average cost per unit.
+	measure 'Unit Cost' = DIVIDE ( [Total Cost], [Volume] )
+		formatString: \$#,##0.00;(\$#,##0.00);\$0.00
+		displayFolder: 1. Volume & Cost
+		lineageTag: f1378780-f9ed-47ac-be9c-58eed232d2bf
+
+	/// Units that have a selling price for the month (NRV can be tested).
+	measure 'Priced Volume' =
+			VAR _month = MAX ( Months[MonthEnd] )
+			RETURN
+			    CALCULATE ( SUM ( Inventory[PricedQuantity] ), Months[MonthEnd] = _month )
+		formatString: #,##0
+		isHidden
+		displayFolder: 2. NRV
+		lineageTag: f245563b-0de9-4cb3-9209-4c50462823fa
+
+	/// Weighted-average expected selling price per unit.
+	measure 'Selling Price' =
+			VAR _month = MAX ( Months[MonthEnd] )
+			VAR _sales =
+			    CALCULATE ( SUM ( Inventory[ExtendedSellingPrice] ), Months[MonthEnd] = _month )
+			RETURN
+			    DIVIDE ( _sales, [Priced Volume] )
+		formatString: \$#,##0.00;(\$#,##0.00);\$0.00
+		displayFolder: 2. NRV
+		lineageTag: 6f8d2a65-a9ff-4448-99cf-31b5ca08c477
+
+	/// Total net realisable value of priced units: Quantity x NRV per unit.
+	measure 'Total NRV' =
+			VAR _month = MAX ( Months[MonthEnd] )
+			RETURN
+			    CALCULATE ( SUM ( Inventory[ExtendedNRV] ), Months[MonthEnd] = _month )
+		formatString: \$#,##0;(\$#,##0);\$0
+		displayFolder: 2. NRV
+		lineageTag: 4d61637b-7554-4dbb-8c72-ab8cd71bcc22
+
+	/// Weighted-average NRV per unit (selling price less costs to complete and sell).
+	measure 'NRV per Unit' = DIVIDE ( [Total NRV], [Priced Volume] )
+		formatString: \$#,##0.00;(\$#,##0.00);\$0.00
+		displayFolder: 2. NRV
+		lineageTag: df5458ed-b04c-4bf1-8844-de7ed98a817e
+
+	/// Inventory carrying value: Quantity x MIN(Unit Cost, NRV per unit), tested line by line.
+	measure 'LCNRV Value' =
+			VAR _month = MAX ( Months[MonthEnd] )
+			RETURN
+			    CALCULATE ( SUM ( Inventory[CarryingValue] ), Months[MonthEnd] = _month )
+		formatString: \$#,##0;(\$#,##0);\$0
+		displayFolder: 3. LCNRV
+		lineageTag: afb72f2a-0e6f-4819-ae2d-d2428516072e
+
+	/// Carrying value per unit after the LCNRV test.
+	measure 'LCNRV Unit Value' = DIVIDE ( [LCNRV Value], [Volume] )
+		formatString: \$#,##0.00;(\$#,##0.00);\$0.00
+		displayFolder: 3. LCNRV
+		lineageTag: 93b8257e-19dc-4ed2-b7b2-91a31e83d28c
+
+	/// Write-down to NRV (provision balance): Total Cost - LCNRV Value.
+	measure 'Write-down' =
+			VAR _month = MAX ( Months[MonthEnd] )
+			RETURN
+			    CALCULATE ( SUM ( Inventory[WriteDown] ), Months[MonthEnd] = _month )
+		formatString: \$#,##0;(\$#,##0);\$0
+		displayFolder: 3. LCNRV
+		lineageTag: b926cae9-d8bc-46c3-936b-7bcd17b797b3
+
+	measure 'Write-down %' = DIVIDE ( [Write-down], [Total Cost] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 3. LCNRV
+		lineageTag: 9650c62d-74ae-4bda-9ea0-1f5e4030b47e
+
+	/// Write-down balance at the previous month-end.
+	measure 'Write-down Prior Month' =
+			VAR _prior = EOMONTH ( MAX ( Months[MonthEnd] ), -1 )
+			RETURN
+			    CALCULATE ( [Write-down], REMOVEFILTERS ( Months ), Months[MonthEnd] = _prior )
+		formatString: \$#,##0;(\$#,##0);\$0
+		displayFolder: 3. LCNRV
+		lineageTag: ca99d323-3207-400e-9209-6ca2c7a3c0c8
+
+	/// Change in the write-down vs prior month: positive = additional charge to COGS, negative = release.
+	measure 'Write-down Movement' =
+			IF (
+			    NOT ISBLANK ( [Write-down] ) || NOT ISBLANK ( [Write-down Prior Month] ),
+			    [Write-down] - [Write-down Prior Month]
+			)
+		formatString: \$#,##0;(\$#,##0);\$0
+		displayFolder: 3. LCNRV
+		lineageTag: 7e765065-c7a7-4655-875a-cb108d01bd68
+
+	/// Inventory lines (SKU x location) where NRV is below cost at the last month in context.
+	measure 'Lines Written Down' =
+			VAR _month = MAX ( Months[MonthEnd] )
+			RETURN
+			    CALCULATE ( COUNTROWS ( Inventory ), Months[MonthEnd] = _month, Inventory[WriteDown] > 0 )
+		formatString: #,##0
+		displayFolder: 4. Checks
+		lineageTag: 195d42c7-66ca-4898-8b8f-9b9162688072
+
+	/// Inventory lines with no selling price for the month; these are held at cost (no NRV test).
+	measure 'Lines Missing Price' =
+			VAR _month = MAX ( Months[MonthEnd] )
+			RETURN
+			    CALCULATE ( COUNTROWS ( Inventory ), Months[MonthEnd] = _month, Inventory[HasPrice] = FALSE () )
+		formatString: #,##0
+		displayFolder: 4. Checks
+		lineageTag: 5effefb7-70c6-4b92-af9a-96c9a4a09a45
+
+	column MonthEnd
+		dataType: dateTime
+		formatString: dd-mmm-yyyy
+		isHidden
+		lineageTag: fcceb2fa-f4b9-4d40-8158-2c06f758dd6b
+		summarizeBy: none
+		sourceColumn: MonthEnd
+
+		annotation SummarizationSetBy = Automatic
+
+	column SKU
+		dataType: string
+		isHidden
+		lineageTag: f4f06c5c-7125-4f93-b353-419a2cd6e8bf
+		summarizeBy: none
+		sourceColumn: SKU
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: 166714d8-8d1b-4c44-8770-8c0e231e9ba3
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Units on hand at month-end.
+	column Quantity
+		dataType: double
+		formatString: #,##0
+		lineageTag: aa6a4409-e7c0-454c-b0ad-893cb8e696f0
+		summarizeBy: none
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Cost per unit (COGS / weighted-average cost).
+	column UnitCost
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: b2b71b7a-f24a-487b-96f2-d0555477b9ac
+		summarizeBy: none
+		sourceColumn: UnitCost
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Expected selling price for the month, from Selling Prices.
+	column SellingPrice
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: dbfb63bb-12bd-4ebf-9f01-64f243429111
+		summarizeBy: none
+		sourceColumn: SellingPrice
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Selling price less costs to complete and sell. Blank when no price exists.
+	column NRVPerUnit
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: cf245e2d-7525-464f-9bdd-f939116d96ca
+		summarizeBy: none
+		sourceColumn: NRVPerUnit
+
+		annotation SummarizationSetBy = Automatic
+
+	column HasPrice
+		dataType: boolean
+		isHidden
+		lineageTag: 7633fbf5-deec-4e10-a151-2270c1d9111d
+		summarizeBy: none
+		sourceColumn: HasPrice
+
+		annotation SummarizationSetBy = Automatic
+
+	/// MIN(UnitCost, NRVPerUnit floored at zero); UnitCost when there is no price.
+	column LCNRVUnitValue
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 79e08688-d064-45a3-9374-412bde1caa7a
+		summarizeBy: none
+		sourceColumn: LCNRVUnitValue
+
+		annotation SummarizationSetBy = Automatic
+
+	column PricedQuantity
+		dataType: double
+		formatString: #,##0
+		isHidden
+		lineageTag: 9ff893e7-bcf9-40dd-8c46-53771d6c792a
+		summarizeBy: none
+		sourceColumn: PricedQuantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExtendedCost
+		dataType: double
+		formatString: #,##0.00
+		isHidden
+		lineageTag: dc62c23a-d948-4f3d-a7fc-75f554979e2e
+		summarizeBy: none
+		sourceColumn: ExtendedCost
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExtendedSellingPrice
+		dataType: double
+		formatString: #,##0.00
+		isHidden
+		lineageTag: 0da349aa-967f-4795-9cc4-5b9d815939f4
+		summarizeBy: none
+		sourceColumn: ExtendedSellingPrice
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExtendedNRV
+		dataType: double
+		formatString: #,##0.00
+		isHidden
+		lineageTag: dcca139c-8dc6-48c6-81ae-52f6a20f386a
+		summarizeBy: none
+		sourceColumn: ExtendedNRV
+
+		annotation SummarizationSetBy = Automatic
+
+	column CarryingValue
+		dataType: double
+		formatString: #,##0.00
+		isHidden
+		lineageTag: 13db878a-834f-4bf6-a238-fc8a9c96d481
+		summarizeBy: none
+		sourceColumn: CarryingValue
+
+		annotation SummarizationSetBy = Automatic
+
+	column WriteDown
+		dataType: double
+		formatString: #,##0.00
+		isHidden
+		lineageTag: 243ce81c-d8d6-4aec-996b-de6f50c4aabb
+		summarizeBy: none
+		sourceColumn: WriteDown
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Inventory = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents(DataWorkbook), null, true),
+				    Data = Source{[Item = "tblInventory", Kind = "Table"]}[Data],
+				    Typed = Table.TransformColumnTypes(Data, {{"MonthEnd", type date}, {"SKU", type text}, {"Location", type text}, {"Quantity", type number}, {"UnitCost", type number}}),
+				    Cleaned = Table.TransformColumns(Typed, {{"MonthEnd", Date.EndOfMonth, type date}, {"SKU", Text.Trim, type text}}),
+				    NoBlanks = Table.SelectRows(Cleaned, each [MonthEnd] <> null and [SKU] <> null and [Quantity] <> null and [UnitCost] <> null),
+				    Merged = Table.NestedJoin(NoBlanks, {"MonthEnd", "SKU"}, #"Selling Prices", {"MonthEnd", "SKU"}, "Price", JoinKind.LeftOuter),
+				    Expanded = Table.ExpandTableColumn(Merged, "Price", {"SellingPrice", "NRVPerUnit"}, {"SellingPrice", "NRVPerUnit"}),
+				    AddHasPrice = Table.AddColumn(Expanded, "HasPrice", each [NRVPerUnit] <> null, type logical),
+				    // Lower of cost and NRV per unit. NRV is floored at zero; lines without a price stay at cost.
+				    AddLCNRVUnit = Table.AddColumn(AddHasPrice, "LCNRVUnitValue", each if [HasPrice] then List.Min({[UnitCost], List.Max({[NRVPerUnit], 0})}) else [UnitCost], type number),
+				    AddPricedQty = Table.AddColumn(AddLCNRVUnit, "PricedQuantity", each if [HasPrice] then [Quantity] else 0, type number),
+				    AddExtCost = Table.AddColumn(AddPricedQty, "ExtendedCost", each [Quantity] * [UnitCost], type number),
+				    AddExtPrice = Table.AddColumn(AddExtCost, "ExtendedSellingPrice", each if [HasPrice] then [Quantity] * [SellingPrice] else null, type number),
+				    AddExtNRV = Table.AddColumn(AddExtPrice, "ExtendedNRV", each if [HasPrice] then [Quantity] * [NRVPerUnit] else null, type number),
+				    AddCarrying = Table.AddColumn(AddExtNRV, "CarryingValue", each [Quantity] * [LCNRVUnitValue], type number),
+				    AddWriteDown = Table.AddColumn(AddCarrying, "WriteDown", each [ExtendedCost] - [CarryingValue], type number)
+				in
+				    AddWriteDown
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,9 @@
+/// Full path to the Excel workbook holding tblProducts, tblInventory and tblPrices.
+/// Change it in Power BI Desktop: Transform data > Edit parameters.
+expression DataWorkbook = "C:\LCNRV\data\LCNRV_Data.xlsx" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: a9aaa08a-2696-4cb2-a998-719237bbcf7b
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

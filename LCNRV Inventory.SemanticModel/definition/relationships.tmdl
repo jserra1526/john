@@ -1,0 +1,16 @@
+relationship ac7828e3-441c-4a6e-9918-9050a47c1ff4
+	fromColumn: Inventory.SKU
+	toColumn: Products.SKU
+
+relationship 86fd48a2-77f3-4e88-9bc4-4f7b1bb5e5e2
+	fromColumn: Inventory.MonthEnd
+	toColumn: Months.MonthEnd
+
+relationship fa72861d-ee3d-4294-8138-1a849bfa629b
+	fromColumn: 'Selling Prices'.SKU
+	toColumn: Products.SKU
+
+relationship cdeae353-9ef9-49d2-b8d8-32293d62f7dd
+	fromColumn: 'Selling Prices'.MonthEnd
+	toColumn: Months.MonthEnd
+

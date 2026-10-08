@@ -1,0 +1,43 @@
+table Products
+	lineageTag: da678fa3-05c1-4ab8-a75e-8df5b22c37bf
+
+	column SKU
+		dataType: string
+		isKey
+		lineageTag: 55ebec47-c73b-4711-9b5a-b1b2696b801a
+		summarizeBy: none
+		sourceColumn: SKU
+
+		annotation SummarizationSetBy = Automatic
+
+	column Description
+		dataType: string
+		lineageTag: edbe75d4-dce5-4d28-b343-719453dd14b5
+		summarizeBy: none
+		sourceColumn: Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 9748aa7e-734b-4af6-8c48-def25ca925dc
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Products = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents(DataWorkbook), null, true),
+				    Data = Source{[Item = "tblProducts", Kind = "Table"]}[Data],
+				    Typed = Table.TransformColumnTypes(Data, {{"SKU", type text}, {"Description", type text}, {"Category", type text}}),
+				    Trimmed = Table.TransformColumns(Typed, {{"SKU", Text.Trim, type text}}),
+				    NoBlanks = Table.SelectRows(Trimmed, each [SKU] <> null and [SKU] <> ""),
+				    Distinct = Table.Distinct(NoBlanks, {"SKU"})
+				in
+				    Distinct
+
+	annotation PBI_ResultType = Table
+

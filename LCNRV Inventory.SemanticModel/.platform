@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "LCNRV Inventory"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "6c7d078a-7e2f-4d1c-9696-6c9163069604"
+  }
+}

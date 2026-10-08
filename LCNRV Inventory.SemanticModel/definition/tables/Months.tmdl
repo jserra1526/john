@@ -1,0 +1,54 @@
+/// One row per inventory month-end.
+table Months
+	lineageTag: 98d6a572-41a5-4c0c-8f94-eef55e4886f9
+
+	column MonthEnd
+		dataType: dateTime
+		isKey
+		formatString: dd-mmm-yyyy
+		lineageTag: aa448dfe-0cfe-4f05-8666-32b011016583
+		summarizeBy: none
+		sourceColumn: MonthEnd
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: string
+		lineageTag: 9cd61175-b3d1-4a49-aa47-f2da2418078f
+		summarizeBy: none
+		sourceColumn: Month
+		sortByColumn: MonthEnd
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 96f3173a-216a-4123-a90d-4289752ec5e8
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: f2fc0181-d2d7-4a4e-9a14-e90358958e6c
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Months = m
+		mode: import
+		source =
+				let
+				    MonthEnds = List.Sort(List.Distinct(Inventory[MonthEnd])),
+				    AsTable = Table.FromList(MonthEnds, Splitter.SplitByNothing(), type table [MonthEnd = date]),
+				    AddMonth = Table.AddColumn(AsTable, "Month", each Date.ToText([MonthEnd], [Format = "MMM yyyy", Culture = "en-US"]), type text),
+				    AddYear = Table.AddColumn(AddMonth, "Year", each Date.Year([MonthEnd]), Int64.Type),
+				    AddQuarter = Table.AddColumn(AddYear, "Quarter", each Text.From(Date.Year([MonthEnd])) & " Q" & Text.From(Date.QuarterOfYear([MonthEnd])), type text)
+				in
+				    AddQuarter
+
+	annotation PBI_ResultType = Table
+
