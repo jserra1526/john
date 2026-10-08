@@ -1,7 +1,7 @@
 # Sales Report — Power BI Desktop project
 
 A ready-to-open Power BI report saved in the **Power BI Project (`.pbip`)** format,
-with a star-schema semantic model and two report pages, built on the sample
+with a star-schema semantic model and four report pages, built on the sample
 bike-shop sales data in [`data/`](data/): actuals from January 2025 to September 2026,
 plus four FY2026 plan versions (Budget, Q1 Forecast, Q2 Forecast, Latest Estimate).
 
