@@ -1,0 +1,554 @@
+<title>Dairy Blend Optimiser</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: plant control sheet. Header band, status strip, then inputs (left) beside batch recipes (right) on wide screens; stacked on narrow. */
+:root {
+  --bg: #f3f6f8;
+  --panel: #ffffff;
+  --ink: #12222e;
+  --muted: #5b6b77;
+  --line: #d9e1e7;
+  --soft: #e9eff3;
+  --accent: #1d5c9a;
+  --accent-ink: #ffffff;
+  --ok: #217a4b;
+  --ok-bg: #e2f3e9;
+  --warn: #9a5b00;
+  --warn-bg: #fbefd9;
+  --bad: #b3261e;
+  --bad-bg: #fbe4e2;
+  --c1: #3f7fc1; --c2: #e0a526; --c3: #5aa78a; --c4: #a8659f; --c5: #8c9aa6; --c6: #d9704f;
+  --f-display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --r: 6px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e161c; --panel: #152029; --ink: #e3ebf0; --muted: #93a3ae; --line: #26343f; --soft: #1b2833;
+    --accent: #6aa8e6; --accent-ink: #0b1620;
+    --ok: #6ccf98; --ok-bg: #16352a; --warn: #f0b860; --warn-bg: #3a2c14; --bad: #f28b82; --bad-bg: #3d1c1a;
+    --c1: #6aa8e6; --c2: #e8b84a; --c3: #74c2a3; --c4: #c58cbd; --c5: #9aa8b3; --c6: #ea8b6c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e161c; --panel: #152029; --ink: #e3ebf0; --muted: #93a3ae; --line: #26343f; --soft: #1b2833;
+  --accent: #6aa8e6; --accent-ink: #0b1620;
+  --ok: #6ccf98; --ok-bg: #16352a; --warn: #f0b860; --warn-bg: #3a2c14; --bad: #f28b82; --bad-bg: #3d1c1a;
+  --c1: #6aa8e6; --c2: #e8b84a; --c3: #74c2a3; --c4: #c58cbd; --c5: #9aa8b3; --c6: #ea8b6c;
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 15px/1.5 var(--f-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 48px;
+}
+.wrap { max-width: 1320px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; letter-spacing: 0.005em; }
+h1 { font-size: 1.9rem; font-weight: 700; line-height: 1.15; }
+h2 { font-size: 1.2rem; font-weight: 600; }
+h3 { font-size: 1.05rem; font-weight: 600; }
+p { margin: 0; }
+.label { font: 600 0.72rem/1.2 var(--f-body); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+
+header.top { padding-block: 28px 4px; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: flex-end; justify-content: space-between; }
+header.top .intro { display: flex; flex-direction: column; gap: 6px; max-width: 62ch; }
+header.top .intro p { color: var(--muted); }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+button {
+  font: 500 0.9rem/1 var(--f-body); color: var(--ink); background: var(--panel);
+  border: 1px solid var(--line); border-radius: var(--r); padding: 9px 12px; cursor: pointer;
+}
+button:hover { border-color: var(--accent); }
+button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+button.ghost { background: transparent; border-color: transparent; color: var(--muted); padding: 6px 8px; }
+button.ghost:hover { color: var(--bad); border-color: transparent; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+.strip > div { background: var(--panel); padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.strip .big { font: 500 1.45rem/1.2 var(--f-mono); font-variant-numeric: tabular-nums; }
+.strip .sub { color: var(--muted); font-size: 0.85rem; }
+
+.pill { display: inline-flex; align-items: center; gap: 6px; font: 600 0.78rem/1 var(--f-body); padding: 5px 9px; border-radius: 999px; width: fit-content; }
+.pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.pill.ok { color: var(--ok); background: var(--ok-bg); }
+.pill.warn { color: var(--warn); background: var(--warn-bg); }
+.pill.bad { color: var(--bad); background: var(--bad-bg); }
+
+.grid { display: grid; grid-template-columns: 1fr; gap: 20px; align-items: start; }
+@media (min-width: 1180px) { .grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); } }
+.col { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+
+section.panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 18px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.panel-head { display: flex; flex-wrap: wrap; gap: 8px 16px; justify-content: space-between; align-items: baseline; }
+.panel-head p { color: var(--muted); font-size: 0.88rem; }
+
+.table-scroll { overflow-x: auto; margin-inline: -4px; padding-inline: 4px; }
+table { border-collapse: collapse; width: 100%; }
+th { text-align: left; font: 600 0.72rem/1.25 var(--f-body); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); padding: 6px 6px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; vertical-align: bottom; }
+th small { display: block; text-transform: none; letter-spacing: 0; font-weight: 400; }
+td { padding: 5px 6px; border-bottom: 1px solid var(--soft); vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+td.r, th.r { text-align: right; }
+.inputs input { width: 100%; min-width: 84px; font: 400 0.9rem/1.2 var(--f-mono); font-variant-numeric: tabular-nums; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 7px 8px; text-align: right; }
+.inputs input.name { font-family: var(--f-body); text-align: left; min-width: 140px; }
+.inputs input::placeholder { color: var(--muted); opacity: 0.7; }
+.inputs input:hover { border-color: var(--muted); }
+.swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; flex: none; }
+.namecell { display: flex; align-items: center; gap: 8px; }
+
+.note { color: var(--muted); font-size: 0.85rem; }
+.settings { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.settings label { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+.settings input { width: 64px; font: 400 0.9rem var(--f-mono); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 6px 8px; }
+
+.alert { border-radius: var(--r); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.alert.bad { background: var(--bad-bg); color: var(--ink); border: 1px solid color-mix(in srgb, var(--bad) 40%, transparent); }
+.alert.warn { background: var(--warn-bg); color: var(--ink); border: 1px solid color-mix(in srgb, var(--warn) 40%, transparent); }
+.alert ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; }
+
+.recipe { display: flex; flex-direction: column; gap: 10px; padding-block: 14px; border-top: 1px solid var(--line); }
+.recipe:first-child { border-top: none; padding-top: 0; }
+.recipe-head { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; justify-content: space-between; }
+.recipe-head .meta { color: var(--muted); font-size: 0.88rem; }
+.bar { display: flex; height: 14px; border-radius: 3px; overflow: hidden; background: var(--soft); }
+.bar > span { display: block; height: 100%; }
+.bar > span + span { box-shadow: inset 1px 0 0 var(--panel); }
+.specs { display: flex; flex-wrap: wrap; gap: 8px; }
+.spec { display: flex; align-items: baseline; gap: 8px; border: 1px solid var(--line); border-radius: var(--r); padding: 6px 10px; font-size: 0.85rem; }
+.spec b { font: 500 0.95rem var(--f-mono); font-variant-numeric: tabular-nums; }
+.spec .tgt { color: var(--muted); }
+.spec .tick { color: var(--ok); font-weight: 600; }
+
+.usage { display: flex; flex-direction: column; gap: 12px; }
+.use-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: baseline; }
+.use-row .track { grid-column: 1 / -1; height: 8px; border-radius: 4px; background: var(--soft); overflow: hidden; }
+.use-row .track > span { display: block; height: 100%; border-radius: 4px; }
+.use-row .vals { color: var(--muted); font-size: 0.85rem; }
+
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 9px 14px; border-radius: var(--r); font-size: 0.9rem; z-index: 20; }
+textarea.fallback { width: 100%; height: 140px; font: 0.8rem var(--f-mono); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 8px; }
+footer { color: var(--muted); font-size: 0.85rem; max-width: 80ch; display: flex; flex-direction: column; gap: 6px; }
+@media (prefers-reduced-motion: no-preference) { .bar > span, .use-row .track > span { transition: width 0.25s ease; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="intro">
+      <span class="label">Milk standardisation</span>
+      <h1>Dairy Blend Optimiser</h1>
+      <p>Enter the components in your silos and the products you need to fill. The optimiser finds the lowest-cost blend that puts every batch inside its fat and protein spec without using more of any component than you have.</p>
+    </div>
+    <div class="actions">
+      <button type="button" id="copyCsv" class="primary">Copy recipes as CSV</button>
+      <button type="button" id="resetBtn">Load example plant</button>
+    </div>
+  </header>
+
+  <div class="strip" id="strip"></div>
+
+  <div class="grid">
+    <div class="col">
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Components available</h2>
+          <p>Leave “Available” blank for unlimited supply.</p>
+        </div>
+        <div class="table-scroll inputs">
+          <table>
+            <thead><tr>
+              <th>Component</th>
+              <th class="r">Fat<small>% w/w</small></th>
+              <th class="r">Protein<small>% w/w</small></th>
+              <th class="r">Cost<small id="costUnit">per kg</small></th>
+              <th class="r">Available<small>kg</small></th>
+              <th><span class="label" hidden>Remove</span></th>
+            </tr></thead>
+            <tbody id="ingBody"></tbody>
+          </table>
+        </div>
+        <div><button type="button" id="addIng">Add component</button></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Products to make</h2>
+          <p>Blank min or max means no limit on that side.</p>
+        </div>
+        <div class="table-scroll inputs">
+          <table>
+            <thead><tr>
+              <th>Product</th>
+              <th class="r">Batch<small>kg</small></th>
+              <th class="r">Fat min<small>%</small></th>
+              <th class="r">Fat max<small>%</small></th>
+              <th class="r">Prot. min<small>%</small></th>
+              <th class="r">Prot. max<small>%</small></th>
+              <th class="r">Price<small>per kg</small></th>
+              <th><span class="label" hidden>Remove</span></th>
+            </tr></thead>
+            <tbody id="prodBody"></tbody>
+          </table>
+        </div>
+        <div><button type="button" id="addProd">Add product</button></div>
+      </section>
+
+      <section class="panel">
+        <h2>Settings</h2>
+        <div class="settings">
+          <label for="currency">Currency symbol <input id="currency" type="text" maxlength="3"></label>
+        </div>
+        <p class="note">Your inputs are kept in this browser so they are here next time you open the page.</p>
+      </section>
+    </div>
+
+    <div class="col">
+      <section class="panel" id="resultsPanel">
+        <div class="panel-head">
+          <h2>Batch recipes</h2>
+          <p>Kilograms of each component to meter into each batch.</p>
+        </div>
+        <div id="diagnosis"></div>
+        <div id="recipes"></div>
+        <div id="csvFallback"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Component usage</h2>
+          <p>A full bar means that stock is the limit on cost.</p>
+        </div>
+        <div class="usage" id="usage"></div>
+      </section>
+    </div>
+  </div>
+
+  <footer>
+    <p>How it works: each batch is a weighted mix of components, so its fat and protein are the kg-weighted averages of what goes in. The page solves this as a linear programme (two-phase simplex) that minimises total component cost, subject to each batch hitting its kg, staying inside its fat and protein limits, and total use of each component staying within stock.</p>
+    <p>Check results against your local labelling rules. In the UK and EU, for example, protein standardisation of drinking milk may only use milk retentate, permeate or lactose.</p>
+  </footer>
+</div>
+
+<script src="solver.js"></script>
+<script>
+(function () {
+  const STORE = 'dairy-blend-optimiser-v1';
+  const EXAMPLE = {
+    currency: '£',
+    ingredients: [
+      { name: 'Raw whole milk', fat: 4.10, protein: 3.35, cost: 0.40, avail: 30000 },
+      { name: 'Cream (separated)', fat: 40.0, protein: 2.05, cost: 1.60, avail: 3000 },
+      { name: 'Skim milk', fat: 0.06, protein: 3.50, cost: 0.22, avail: 12000 },
+      { name: 'UF permeate', fat: 0.05, protein: 0.25, cost: 0.05, avail: 4000 },
+      { name: 'Skim milk powder', fat: 1.0, protein: 34.0, cost: 2.60, avail: 500 }
+    ],
+    products: [
+      { name: 'Whole milk', qty: 12000, fatMin: 3.45, fatMax: 3.55, protMin: 3.20, protMax: 3.40, price: 0.62 },
+      { name: 'Semi-skimmed milk', qty: 9000, fatMin: 1.65, fatMax: 1.75, protMin: 3.20, protMax: 3.40, price: 0.58 },
+      { name: 'Skimmed milk', qty: 4000, fatMin: '', fatMax: 0.10, protMin: 3.20, protMax: 3.50, price: 0.55 },
+      { name: 'Single cream', qty: 800, fatMin: 18.0, fatMax: 19.0, protMin: '', protMax: '', price: 2.10 },
+      { name: 'Whipping cream', qty: 300, fatMin: 36.0, fatMax: 37.0, protMin: '', protMax: '', price: 3.40 }
+    ]
+  };
+
+  let state = load();
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORE);
+      if (raw) {
+        const s = JSON.parse(raw);
+        if (s && Array.isArray(s.ingredients) && Array.isArray(s.products)) return s;
+      }
+    } catch (e) { /* storage unavailable */ }
+    return structuredClone(EXAMPLE);
+  }
+  function save() {
+    try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) { /* storage unavailable */ }
+  }
+
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const num = v => (v === '' || v === null || v === undefined || isNaN(+v)) ? null : +v;
+  const colour = i => `var(--c${(i % 6) + 1})`;
+  const cur = () => state.currency || '';
+  const fmtKg = v => v >= 100 ? Math.round(v).toLocaleString() : v.toLocaleString(undefined, { maximumFractionDigits: 1 });
+  const fmtMoney = v => (v < 0 ? '−' : '') + cur() + Math.abs(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const fmtPct = v => v.toFixed(2) + '%';
+
+  // ---------- input tables ----------
+  function renderInputs() {
+    $('currency').value = state.currency;
+    $('costUnit').textContent = cur() + ' per kg';
+    $('ingBody').innerHTML = state.ingredients.map((g, i) => `
+      <tr>
+        <td><div class="namecell"><span class="swatch" style="background:${colour(i)}"></span>
+          <input class="name" id="ing-${i}-name" data-t="ingredients" data-i="${i}" data-k="name" value="${esc(g.name)}" aria-label="Component name"></div></td>
+        ${['fat', 'protein', 'cost', 'avail'].map(k => `<td><input id="ing-${i}-${k}" type="number" step="any" min="0" inputmode="decimal"
+          data-t="ingredients" data-i="${i}" data-k="${k}" value="${g[k] ?? ''}" ${k === 'avail' ? 'placeholder="unlimited"' : ''} aria-label="${esc(g.name)} ${k}"></td>`).join('')}
+        <td><button type="button" class="ghost" data-del="ingredients" data-i="${i}" aria-label="Remove ${esc(g.name)}">✕</button></td>
+      </tr>`).join('');
+    $('prodBody').innerHTML = state.products.map((p, i) => `
+      <tr>
+        <td><input class="name" id="prod-${i}-name" data-t="products" data-i="${i}" data-k="name" value="${esc(p.name)}" aria-label="Product name"></td>
+        ${['qty', 'fatMin', 'fatMax', 'protMin', 'protMax', 'price'].map(k => `<td><input id="prod-${i}-${k}" type="number" step="any" min="0" inputmode="decimal"
+          data-t="products" data-i="${i}" data-k="${k}" value="${p[k] ?? ''}" placeholder="${k === 'price' ? 'optional' : (k === 'qty' ? '' : '—')}" aria-label="${esc(p.name)} ${k}"></td>`).join('')}
+        <td><button type="button" class="ghost" data-del="products" data-i="${i}" aria-label="Remove ${esc(p.name)}">✕</button></td>
+      </tr>`).join('');
+  }
+
+  document.addEventListener('input', e => {
+    const t = e.target;
+    if (t.id === 'currency') { state.currency = t.value; $('costUnit').textContent = cur() + ' per kg'; }
+    else if (t.dataset.t) {
+      const row = state[t.dataset.t][+t.dataset.i];
+      row[t.dataset.k] = t.dataset.k === 'name' ? t.value : (t.value === '' ? '' : +t.value);
+    } else return;
+    save(); schedule();
+  });
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-del]');
+    if (!b) return;
+    state[b.dataset.del].splice(+b.dataset.i, 1);
+    save(); renderInputs(); solveAndRender();
+  });
+  $('addIng').onclick = () => {
+    state.ingredients.push({ name: 'New component', fat: 0, protein: 0, cost: 0, avail: '' });
+    save(); renderInputs(); solveAndRender();
+    $(`ing-${state.ingredients.length - 1}-name`).select();
+  };
+  $('addProd').onclick = () => {
+    state.products.push({ name: 'New product', qty: 1000, fatMin: '', fatMax: '', protMin: '', protMax: '', price: '' });
+    save(); renderInputs(); solveAndRender();
+    $(`prod-${state.products.length - 1}-name`).select();
+  };
+  $('resetBtn').onclick = () => { state = structuredClone(EXAMPLE); save(); renderInputs(); solveAndRender(); toast('Example plant loaded'); };
+
+  let timer;
+  function schedule() { clearTimeout(timer); timer = setTimeout(solveAndRender, 150); }
+
+  // ---------- model ----------
+  // Variable x[p*nI + i] = kg of ingredient i in product p.
+  function clean() {
+    const ings = state.ingredients.map(g => ({ name: g.name || 'Unnamed', fat: num(g.fat) ?? 0, protein: num(g.protein) ?? 0, cost: num(g.cost) ?? 0, avail: num(g.avail) }));
+    const prods = state.products.map(p => ({
+      name: p.name || 'Unnamed', qty: num(p.qty) ?? 0, fatMin: num(p.fatMin), fatMax: num(p.fatMax),
+      protMin: num(p.protMin), protMax: num(p.protMax), price: num(p.price)
+    })).filter(p => p.qty > 0);
+    return { ings, prods };
+  }
+
+  // scale: if true, batch sizes become qty·λ and we maximise λ ≤ 1 (used for "how much of the plan fits").
+  function build(ings, prods, opts = {}) {
+    const nI = ings.length, nP = prods.length, nX = nI * nP;
+    const nV = nX + (opts.scale ? 1 : 0);
+    const L = nX; // λ index
+    const rows = [];
+    const zero = () => new Array(nV).fill(0);
+    prods.forEach((p, k) => {
+      const mass = zero();
+      ings.forEach((g, i) => { mass[k * nI + i] = 1; });
+      if (opts.scale) { mass[L] = -p.qty; rows.push({ a: mass, op: '=', b: 0 }); }
+      else rows.push({ a: mass, op: '=', b: p.qty });
+      const limit = (attr, bound, op) => {
+        if (bound === null) return;
+        // Σ x_i·(c_i − bound) op 0  ⇔  blend % op bound
+        const a = zero();
+        ings.forEach((g, i) => { a[k * nI + i] = g[attr] - bound; });
+        rows.push({ a, op, b: 0 });
+      };
+      limit('fat', p.fatMin, '>='); limit('fat', p.fatMax, '<=');
+      limit('protein', p.protMin, '>='); limit('protein', p.protMax, '<=');
+    });
+    if (!opts.unlimited) ings.forEach((g, i) => {
+      if (g.avail === null) return;
+      const a = zero();
+      prods.forEach((p, k) => { a[k * nI + i] = 1; });
+      rows.push({ a, op: '<=', b: g.avail });
+    });
+    let c;
+    if (opts.scale) {
+      const a = zero(); a[L] = 1; rows.push({ a, op: '<=', b: 1 });
+      c = zero(); c[L] = -1;
+    } else {
+      c = zero();
+      prods.forEach((p, k) => ings.forEach((g, i) => { c[k * nI + i] = g.cost; }));
+    }
+    return { c, rows };
+  }
+
+  function diagnose(ings, prods) {
+    const issues = [];
+    prods.forEach(p => {
+      const r = solveLP(build(ings, [p], { unlimited: true }));
+      if (r.status !== 'optimal') {
+        const fats = ings.map(g => g.fat), prots = ings.map(g => g.protein);
+        const range = (lo, hi, label, vals) => {
+          const mn = Math.min(...vals), mx = Math.max(...vals);
+          if (lo !== null && lo > mx) return `${label} min ${lo}% is above your richest component (${mx}%).`;
+          if (hi !== null && hi < mn) return `${label} max ${hi}% is below your leanest component (${mn}%).`;
+          if (lo !== null && hi !== null && lo > hi) return `${label} min is higher than ${label.toLowerCase()} max.`;
+          return null;
+        };
+        const why = range(p.fatMin, p.fatMax, 'Fat', fats) || range(p.protMin, p.protMax, 'Protein', prots)
+          || 'No mix of these components gives that fat and protein together. Add a component that moves the blend in the right direction, or widen the spec.';
+        issues.push({ kind: 'spec', text: `<b>${esc(p.name)}</b> can’t be made to spec with these components. ${why}` });
+      }
+    });
+    if (issues.length) return { issues };
+    prods.forEach(p => {
+      if (solveLP(build(ings, [p])).status !== 'optimal')
+        issues.push({ kind: 'stock', text: `<b>${esc(p.name)}</b> alone needs more stock than you have. Reduce the batch or add supply.` });
+    });
+    const sc = solveLP(build(ings, prods, { scale: true }));
+    const frac = sc.status === 'optimal' ? sc.x[sc.x.length - 1] : 0;
+    if (!issues.length) issues.push({ kind: 'stock', text: 'Each product can be made on its own, but together they need more stock than you have.' });
+    let limiting = [];
+    if (sc.status === 'optimal' && frac > 0) {
+      const nI = ings.length;
+      ings.forEach((g, i) => {
+        if (g.avail === null) return;
+        let used = 0; prods.forEach((p, k) => { used += sc.x[k * nI + i]; });
+        if (used >= g.avail * 0.999) limiting.push(g.name);
+      });
+    }
+    return { issues, frac, limiting };
+  }
+
+  let lastResult = null;
+
+  function solveAndRender() {
+    const { ings, prods } = clean();
+    const res = { ings, prods, status: 'empty' };
+    if (ings.length && prods.length) {
+      const r = solveLP(build(ings, prods));
+      res.status = r.status;
+      if (r.status === 'optimal') res.x = r.x.map(v => Math.max(0, v));
+      else res.diag = diagnose(ings, prods);
+    }
+    lastResult = res;
+    renderResults(res);
+  }
+
+  // ---------- output ----------
+  function renderResults(res) {
+    const { ings, prods } = res;
+    const nI = ings.length;
+    const ok = res.status === 'optimal';
+    const totalKg = prods.reduce((a, p) => a + p.qty, 0);
+    let totalCost = 0, revenue = 0, hasPrice = prods.some(p => p.price !== null);
+    const per = prods.map((p, k) => {
+      const kg = ings.map((g, i) => ok ? res.x[k * nI + i] : 0);
+      const cost = kg.reduce((a, v, i) => a + v * ings[i].cost, 0);
+      const fat = p.qty ? kg.reduce((a, v, i) => a + v * ings[i].fat, 0) / p.qty : 0;
+      const prot = p.qty ? kg.reduce((a, v, i) => a + v * ings[i].protein, 0) / p.qty : 0;
+      totalCost += cost; if (p.price !== null) revenue += p.price * p.qty;
+      return { p, kg, cost, fat, prot };
+    });
+
+    // status strip
+    let pill;
+    if (res.status === 'empty') pill = '<span class="pill warn">Add components and products</span>';
+    else if (ok) pill = '<span class="pill ok">Plan feasible · lowest cost</span>';
+    else if (res.diag && res.diag.issues.some(i => i.kind === 'spec')) pill = '<span class="pill bad">Spec out of reach</span>';
+    else pill = '<span class="pill bad">Not enough stock</span>';
+    const tiles = [
+      `<div><span class="label">Status</span>${pill}<span class="sub">${prods.length} product${prods.length === 1 ? '' : 's'}, ${nI} component${nI === 1 ? '' : 's'}</span></div>`,
+      `<div><span class="label">Total to fill</span><span class="big">${fmtKg(totalKg)} kg</span><span class="sub">across all batches</span></div>`,
+      `<div><span class="label">Component cost</span><span class="big">${ok ? fmtMoney(totalCost) : '—'}</span><span class="sub">${ok && totalKg ? fmtMoney(totalCost / totalKg) + ' per kg average' : 'no feasible blend'}</span></div>`
+    ];
+    if (hasPrice) tiles.push(`<div><span class="label">Margin over components</span><span class="big">${ok ? fmtMoney(revenue - totalCost) : '—'}</span><span class="sub">${ok && revenue ? ((revenue - totalCost) / revenue * 100).toFixed(1) + '% of sales value' : 'priced products only'}</span></div>`);
+    $('strip').innerHTML = tiles.join('');
+
+    // diagnosis
+    const d = res.diag;
+    if (!ok && d) {
+      let extra = '';
+      if (d.frac !== undefined && !d.issues.some(i => i.kind === 'spec')) {
+        extra = `<p>With current stock you can make <b>${(d.frac * 100).toFixed(1)}%</b> of every batch.${d.limiting.length ? ' Limiting stock: ' + d.limiting.map(esc).join(', ') + '.' : ''}</p>`;
+      }
+      $('diagnosis').innerHTML = `<div class="alert bad"><h3>No blend meets every requirement</h3><ul>${d.issues.map(i => `<li>${i.text}</li>`).join('')}</ul>${extra}</div>`;
+    } else $('diagnosis').innerHTML = '';
+
+    // recipes
+    if (!ok) {
+      $('recipes').innerHTML = res.status === 'empty' ? '<p class="note">Add at least one component and one product with a batch size.</p>' : '';
+    } else {
+      $('recipes').innerHTML = per.map(r => {
+        const parts = r.kg.map((v, i) => ({ v, i })).filter(o => o.v > 0.005);
+        const specChip = (label, val, lo, hi) => {
+          const tgt = lo !== null && hi !== null ? `${lo}–${hi}%` : lo !== null ? `≥ ${lo}%` : hi !== null ? `≤ ${hi}%` : 'no limit';
+          return `<div class="spec"><span>${label}</span><b>${fmtPct(val)}</b><span class="tgt">spec ${tgt}</span>${lo !== null || hi !== null ? '<span class="tick" aria-label="in spec">✓</span>' : ''}</div>`;
+        };
+        const margin = r.p.price !== null ? ` · margin ${fmtMoney(r.p.price * r.p.qty - r.cost)}` : '';
+        return `<div class="recipe">
+          <div class="recipe-head"><h3>${esc(r.p.name)}</h3><span class="meta num">${fmtKg(r.p.qty)} kg · ${fmtMoney(r.cost)} · ${fmtMoney(r.cost / r.p.qty)}/kg${margin}</span></div>
+          <div class="bar" role="img" aria-label="Blend proportions">${parts.map(o => `<span style="width:${o.v / r.p.qty * 100}%;background:${colour(o.i)}" title="${esc(ings[o.i].name)}"></span>`).join('')}</div>
+          <div class="table-scroll"><table>
+            <thead><tr><th>Component</th><th class="r">kg</th><th class="r">Share</th><th class="r">Cost</th></tr></thead>
+            <tbody>${parts.map(o => `<tr><td><div class="namecell"><span class="swatch" style="background:${colour(o.i)}"></span>${esc(ings[o.i].name)}</div></td>
+              <td class="r num">${fmtKg(o.v)}</td><td class="r num">${(o.v / r.p.qty * 100).toFixed(1)}%</td><td class="r num">${fmtMoney(o.v * ings[o.i].cost)}</td></tr>`).join('')}</tbody>
+          </table></div>
+          <div class="specs">${specChip('Fat', r.fat, r.p.fatMin, r.p.fatMax)}${specChip('Protein', r.prot, r.p.protMin, r.p.protMax)}</div>
+        </div>`;
+      }).join('');
+    }
+
+    // usage
+    $('usage').innerHTML = ings.map((g, i) => {
+      const used = ok ? per.reduce((a, r) => a + r.kg[i], 0) : 0;
+      const share = g.avail ? Math.min(1, used / g.avail) : (used > 0 ? 1 : 0);
+      const full = ok && g.avail !== null && used >= g.avail * 0.999 && g.avail > 0;
+      const vals = g.avail === null ? `${fmtKg(used)} kg used · unlimited` : `${fmtKg(used)} of ${fmtKg(g.avail)} kg · ${fmtKg(Math.max(0, g.avail - used))} left`;
+      return `<div class="use-row">
+        <div class="namecell"><span class="swatch" style="background:${colour(i)}"></span><span>${esc(g.name)}</span>${full ? '<span class="pill warn">Fully used</span>' : ''}</div>
+        <span class="vals num">${ok ? vals : '—'}</span>
+        <div class="track"><span style="width:${(g.avail === null ? (used > 0 ? 100 : 0) : share * 100)}%;background:${colour(i)};opacity:${g.avail === null ? 0.45 : 1}"></span></div>
+      </div>`;
+    }).join('') || '<p class="note">No components yet.</p>';
+    $('csvFallback').innerHTML = '';
+  }
+
+  // ---------- CSV ----------
+  $('copyCsv').onclick = () => {
+    const res = lastResult;
+    if (!res || res.status !== 'optimal') { toast('Nothing to copy until the plan is feasible'); return; }
+    const q = s => /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+    const nI = res.ings.length;
+    const lines = ['Product,Component,kg,Share %,Cost'];
+    res.prods.forEach((p, k) => res.ings.forEach((g, i) => {
+      const v = res.x[k * nI + i];
+      if (v > 0.005) lines.push([q(p.name), q(g.name), v.toFixed(2), (v / p.qty * 100).toFixed(2), (v * g.cost).toFixed(2)].join(','));
+    }));
+    const text = lines.join('\n');
+    const fallback = () => {
+      $('csvFallback').innerHTML = '<p class="note">Copying is blocked here. Select the text below and copy it.</p><textarea class="fallback" id="csvText" readonly></textarea>';
+      $('csvText').value = text; $('csvText').select();
+    };
+    try {
+      navigator.clipboard.writeText(text).then(() => toast('Recipes copied as CSV'), fallback);
+    } catch (e) { fallback(); }
+  };
+
+  let toastTimer;
+  function toast(msg) {
+    let el = document.querySelector('.toast');
+    if (!el) { el = document.createElement('div'); el.className = 'toast'; el.setAttribute('role', 'status'); document.body.appendChild(el); }
+    el.textContent = msg; el.hidden = false;
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => { el.hidden = true; }, 2200);
+  }
+
+  renderInputs();
+  solveAndRender();
+})();
+</script>
