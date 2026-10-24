@@ -313,8 +313,8 @@ transfer_types = pd.DataFrame(
     [
         # type, description, source, dest, whole_milk, fat min/max, protein min/max, la min/max
         ("MILK", "Whole milk (standardised within a normal milk range)", "MILK", "MILK", 1, 38, 47, 31, 37, 55, 59),
-        ("CREAM", "Cream ~40% fat", "MILK", "MILK", 0, 380, 420, 18, 22, 30, 36),
-        ("PERMEATE", "UF permeate, RO-concentrated to ~18% solids", "MILK", "MILK", 0, 0, 1, 4, 8, 170, 190),
+        ("CREAM", "Cream 40% fat (~396 kg fat/kL at 0.99 kg/L)", "MILK", "MILK", 0, 390, 400, 18, 22, 30, 36),
+        ("PERMEATE", "UF permeate concentrated to 18% solids (~193 kg solids/kL at 1.07 kg/L)", "MILK", "MILK", 0, 0, 1, 4, 8, 182, 190),
     ],
     columns=[
         "transfer_type", "description", "source_stream", "dest_stream", "whole_milk",

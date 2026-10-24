@@ -70,8 +70,8 @@ component, which keeps the model linear:
 | Type | fat kg/kL | protein kg/kL | la kg/kL | Notes |
 |---|---|---|---|---|
 | Milk | 38–47 | 31–37 | 55–59 | Standardised within a normal milk range; counts toward the receiving site's intake |
-| Cream | 380–420 | 18–22 | 30–36 | ~40% fat |
-| Permeate | 0–1 | 4–8 | 170–190 | Assumed RO‑concentrated to ~18% solids |
+| Cream | 390–400 | 18–22 | 30–36 | 40% fat (confirmed) |
+| Permeate | 0–1 | 4–8 | 182–190 | Shipped at 18% solids (confirmed) |
 
 Surplus solids that nothing uses are **disposed** at a per‑stream value: whey to stockfeed
 at +$0.02/kg, while dumping milk solids costs −$5/kg as a last resort.
@@ -170,7 +170,7 @@ and week)
 | # | Simplification | Likely refinement |
 |---|---|---|
 | 1 | Separation/UF is free and unlimited within a factory | Add separator and UF capacity and cost; cream and skim as explicit streams |
-| 2 | Transfers: milk, cream and permeate only, with fixed composition ranges and made‑up costs/limits; no skim or whey | Real costs and limits; add other streams if relevant |
+| 2 | Transfers: milk, cream (40% fat) and permeate (18% solids) only; costs and limits made up; no skim or whey | Real costs and limits; add other streams if relevant |
 | 3 | Stock and sales are national, not by factory or warehouse | Stock per site; freight to port or customer |
 | 4 | Plants switch products freely within a week | Campaign/changeover limits (integer variables) |
 | 5 | Fixed cheese yields | Yield depending on milk composition (e.g. Van Slyke formula) |
@@ -217,7 +217,7 @@ insight the model gives.
 ## 11. Open questions
 
 1. Which Boreas dryer is the MPC dryer (D3 assumed), and what are the real rates? Lactoferrin recovery, plant capacity and price?
-2. Transfers: real cost per kL and weekly limits per route; is permeate shipped liquid or concentrated; is the cream ~40% fat?
+2. Transfers: real cost per kL and weekly limits per route.
 3. Which sales are contracted (minimum volumes) versus open commodity sales?
 4. Is the farmgate price paid on fat and protein only, or is there a volume charge?
 5. How is end‑of‑season stock valued?
