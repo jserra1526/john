@@ -180,30 +180,29 @@ and week)
 | 9 | Prices are deterministic | Scenarios (price/supply), sensitivity runs |
 | 10 | Farmgate price flat over the season | Monthly step‑ups / incentives (reporting only unless spot milk is affected) |
 
-## 9. What the run on made‑up data shows
+## 9. What the run on sample data shows
 
-The run solves in about 3 seconds (≈14k variables, ≈18k constraints). Results, all from
-invented data:
+**Milk volumes are confirmed:** State A 500 ML a season (split across zones 1–3), State B
+40 ML, State C 100 ML, for 640 ML in total. Everything else is still made up. Plant rates,
+intake, spot, sales and transfer limits were first sized for a 2,500 ML pool and have been
+scaled down in proportion (`CAPACITY_SCALE` in `scripts/make_sample_data.py`) until real
+figures are available.
 
+The run solves in about 3 seconds (≈14k variables, ≈18k constraints):
+
+- **Cygnus depends on State A milk.** State B only supplies 40 ML, so Cygnus brings in
+  about 56 ML from zone 2 and receives cream from Atlas. The Atlas→Cygnus cream route is at
+  its weekly limit for most of the season.
 - **Milk value moves with the season.** An extra kL of milk is worth least in the spring
-  flush (≈$520) and most in autumn/winter (≈$840). That is the information you need to
-  decide spot milk trades and farm incentive payments.
-- **Transfers between sites add ≈$55m of contribution for ≈$3.5m of tanker cost.** Atlas
-  has no butter plant, so it sends cream to Cygnus (≈25 ML, often at the 500 kL/week route
-  limit) and Boreas, and dries the skim as SMP. Cygnus butter goes from 30% to 100%
-  utilisation, and the weekly milk‑solids dumping at Cygnus disappears.
-- **Small permeate flows** change direction during the season to balance protein and
-  lactose as milk composition shifts. No milk transfers are chosen, because cream is
-  cheaper to move per kg of value.
-- **Spot milk:** about 65 ML is sold and 110 ML bought.
-- **Lactoferrin** (≈90 t at a made-up $600k/t) pulls more milk into Atlas and Boreas.
-- **Bottlenecks:** Boreas butter (≈$14k per extra hour) is the tightest plant, then Boreas
-  dryer 1 and Atlas dryer 3. Cream cheese, Cygnus butter and the Cygnus cheese plants run
-  full.
-- The profit figure excludes fixed costs (labour, overheads, depreciation), so it should
-  be read as contribution rather than net profit.
+  flush (≈$510) and most in autumn/winter (≈$840).
+- **Transfers:** cream goes from Atlas, which has no butter plant, to Cygnus and Boreas.
+  Small permeate flows change direction during the season.
+- **Bottlenecks:** Boreas butter is the tightest plant, then Boreas dryer 1 and Atlas
+  dryer 3. Cream cheese, Cygnus butter and the Cygnus cheese plants run full.
+- **Contribution is ≈$622m**, or ≈$145m after the fixed farmgate milk cost. That excludes
+  fixed costs (labour, overheads, depreciation).
 
-These conclusions only reflect the made‑up numbers. They are here to show the type of
+These conclusions mostly reflect made‑up numbers. They are here to show the type of
 insight the model gives.
 
 ## 10. Roadmap (proposed)

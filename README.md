@@ -7,7 +7,7 @@ components (fat, protein, lactose+ash), so protein standardisation is included.
 The network has five collection zones across three states supplying three factories.
 All zone, state and factory names are code names.
 
-**Status:** v0 prototype running on **made-up data**. Read [`docs/design.md`](docs/design.md)
+**Status:** v0 prototype. Milk volumes by state are real (640 ML/season); all other data is **made up**. Read [`docs/design.md`](docs/design.md)
 for the scope, formulation, simplifications and roadmap.
 
 ## Quick start

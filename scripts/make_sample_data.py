@@ -62,14 +62,15 @@ BASE_MONTHLY_INDEX = {
     "Jan": 1.04, "Feb": 0.92, "Mar": 0.86, "Apr": 0.80, "May": 0.72, "Jun": 0.66,
 }
 
+# Annual supply (confirmed by state): State A 500 ML (split across zones 1-3), State B 40 ML, State C 100 ML.
 # zone: (name, state, annual ML, seasonality vs base curve (1 = same, 0 = flat), base fat %, base protein %,
 #        spot sell max kL/wk)
 ZONES = {
-    "Z1": ("Zone 1", "State A", 900, 1.00, 4.30, 3.45, 5000),
-    "Z2": ("Zone 2", "State A", 550, 0.95, 4.35, 3.50, 4000),
-    "Z3": ("Zone 3", "State A", 500, 0.80, 4.05, 3.35, 3000),
-    "Z4": ("Zone 4", "State B", 230, 0.55, 4.25, 3.45, 1500),
-    "Z5": ("Zone 5", "State C", 320, 0.75, 4.15, 3.40, 2500),
+    "Z1": ("Zone 1", "State A", 230, 1.00, 4.30, 3.45, 5000),
+    "Z2": ("Zone 2", "State A", 140, 0.95, 4.35, 3.50, 4000),
+    "Z3": ("Zone 3", "State A", 130, 0.80, 4.05, 3.35, 3000),
+    "Z4": ("Zone 4", "State B", 40, 0.55, 4.25, 3.45, 1500),
+    "Z5": ("Zone 5", "State C", 100, 0.75, 4.15, 3.40, 2500),
 }
 
 zones = pd.DataFrame(
@@ -335,6 +336,28 @@ transfer_routes = pd.DataFrame(
     ],
     columns=["transfer_type", "from_factory", "to_factory", "distance_km", "cost_per_kL", "max_kL_per_week"],
 )
+
+# --------------------------------------------------------------------------
+# Scale made-up capacities to the milk pool
+# --------------------------------------------------------------------------
+# The plant, intake, spot, sales and transfer figures above were first sized for a 2,500 ML pool.
+# The confirmed pool is 640 ML, so scale them down together. Replace with real figures when available.
+CAPACITY_SCALE = 640 / 2500
+
+
+def _scale(df: pd.DataFrame, cols: list[str], decimals: int = 0) -> None:
+    for c in cols:
+        df[c] = (df[c] * CAPACITY_SCALE).round(decimals)
+        if decimals == 0:
+            df[c] = df[c].astype("Int64")
+
+
+_scale(factories, ["intake_kL_per_week", "spot_buy_max_kL_per_week"])
+_scale(zones, ["spot_sell_max_kL_per_week"])
+_scale(processes, ["rate_t_per_h"], 4)
+_scale(market, ["min_sales_t", "max_sales_t"])
+_scale(products, ["opening_stock_t", "closing_stock_min_t", "max_stock_t"])
+_scale(transfer_routes, ["max_kL_per_week"])
 
 # --------------------------------------------------------------------------
 # README sheet
