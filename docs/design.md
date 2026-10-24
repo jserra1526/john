@@ -51,7 +51,7 @@ At each factory, every **stream** is a pool of components (kg):
 
 | Stream | Fed by | Used by |
 |---|---|---|
-| `MILK` | Tankered and spot milk | All milk products |
+| `MILK` | Tankered and spot milk; milk, cream and permeate transferred in | All milk products; transfers out |
 | `WHEY` | Cheese making (by‑product) | D40, whey cream into butter |
 | `ACID_WHEY` | Cream cheese (by‑product) | Acid whey powder |
 
@@ -61,6 +61,17 @@ ultrafiltration (retentate/permeate) are available with no cost or capacity limi
 This is how protein standardisation is represented. For example, MPC takes protein out
 of the pool, and the lactose left behind goes into SMP/WMP (down to 34% protein in SNF)
 or into permeate powder.
+
+**Transfers between sites.** Milk, cream and permeate can be tankered between factories
+(`Transfer_Types`, `Transfer_Routes`). Each transfer takes components out of the source
+factory's `MILK` pool and adds them to the destination's. Each type has a kg/kL range per
+component, which keeps the model linear:
+
+| Type | fat kg/kL | protein kg/kL | la kg/kL | Notes |
+|---|---|---|---|---|
+| Milk | 38–47 | 31–37 | 55–59 | Standardised within a normal milk range; counts toward the receiving site's intake |
+| Cream | 380–420 | 18–22 | 30–36 | ~40% fat |
+| Permeate | 0–1 | 4–8 | 170–190 | Assumed RO‑concentrated to ~18% solids |
 
 Surplus solids that nothing uses are **disposed** at a per‑stream value: whey to stockfeed
 at +$0.02/kg, while dumping milk solids costs −$5/kg as a last resort.
@@ -96,19 +107,22 @@ A *process* (l, p) is a plant that can make a product.
 | make[l,p,w] | t | Production |
 | draw[l,p,s,c,w] | kg | Component drawn from a stream into a process |
 | dispose[f,s,c,w] | kg | Surplus component disposed |
+| transfer[g,a,b,w] | kL | Transfer of type g (milk/cream/permeate) from site a to site b |
+| tcomp[g,a,b,c,w] | kg | Component carried by that transfer |
 | sell[p,w], inv[p,w], short[p,w] | t | Sales, closing stock, unmet commitments |
 
 **Constraints:**
 
 1. **Collect all milk:** Σ_f x[z,f,w] + sell_spot[z,w] = supply[z,w]
-2. **Intake capacity:** Σ_z x[z,f,w] + buy_spot[f,w] ≤ intake[f]
+2. **Intake capacity:** Σ_z x[z,f,w] + buy_spot[f,w] + milk transferred in ≤ intake[f]
+   - **Transfer composition:** min[g,c] × transfer ≤ tcomp ≤ max[g,c] × transfer; transfer ≤ route limit
 3. **Component balance** for each factory, stream, component and week:
-   milk in × density × component % + by‑products generated = Σ draws + dispose
+   milk in × density × component % + by‑products + transfers in = Σ draws + transfers out + dispose
 4. **Recipes/specs:** for each process and week, with U_c = Σ_s draw[l,p,s,c,w]:
    - fixed: U_c = recipe_c × make
    - spec: min_c × make ≤ U_c ≤ max_c × make, and Σ_c U_c = dairy_solids × make
    - standardisation: U_protein ≥ protein_snf_min × (U_protein + U_la)
-5. **Extraction limit:** 1000 × Σ_l make[l,p,w] at factory f ≤ max_kg_per_kL_milk[p] × milk intake[f,w]
+5. **Extraction limit:** 1000 × Σ_l make[l,p,w] at factory f ≤ max_kg_per_kL_milk[p] × (milk received − whole milk sent away)[f,w]
 6. **Plant hours:** Σ_p make[l,p,w] / rate[l,p] ≤ hours[l,w] (0 hours = shutdown)
 7. **Stock:** inv[p,w] = inv[p,w−1] + Σ_l make[l,p,w] − sell[p,w]; inv ≤ max stock;
    closing stock ≥ target
@@ -118,7 +132,7 @@ A *process* (l, p) is a plant that can make a product.
 
 ```
   product revenue + spot milk sales − spot milk purchases + disposal value
-  − processing & purchased‑ingredient cost − tanker freight − stock holding
+  − processing & purchased‑ingredient cost − tanker freight − site transfers − stock holding
   − shortfall penalty
 ```
 
@@ -138,14 +152,15 @@ One workbook, one sheet per table, long format (one row per item per week) so it
 to filter, pivot and paste into:
 
 `Settings · Weeks · Zones · Supply · Factories · Routes · Streams · Products ·
-Product_Inputs · Byproducts · Plants · Processes · Plant_Hours · Market · Spot`
+Product_Inputs · Byproducts · Plants · Processes · Plant_Hours · Market · Spot ·
+Transfer_Types · Transfer_Routes`
 
 The `README` sheet in `data/sample_inputs.xlsx` describes each one. **All sample data is
 made up.**
 
 ## 7. Outputs (Excel)
 
-`Summary` (P&L) · `Milk_Allocation` · `Spot_Milk` · `Production` (including achieved
+`Summary` (P&L) · `Milk_Allocation` · `Spot_Milk` · `Transfers` · `Production` (including achieved
 composition) · `Plant_Utilisation` (including value of an extra hour) · `Sales_Stock` ·
 `Disposals` · `Marginal_Values` (milk by zone and week) · `Component_Values` (by factory
 and week)
@@ -155,7 +170,7 @@ and week)
 | # | Simplification | Likely refinement |
 |---|---|---|
 | 1 | Separation/UF is free and unlimited within a factory | Add separator and UF capacity and cost; cream and skim as explicit streams |
-| 2 | No transfers between factories (cream, skim, concentrate, whey) | Add tanker transfers of streams between sites |
+| 2 | Transfers: milk, cream and permeate only, with fixed composition ranges and made‑up costs/limits; no skim or whey | Real costs and limits; add other streams if relevant |
 | 3 | Stock and sales are national, not by factory or warehouse | Stock per site; freight to port or customer |
 | 4 | Plants switch products freely within a week | Campaign/changeover limits (integer variables) |
 | 5 | Fixed cheese yields | Yield depending on milk composition (e.g. Van Slyke formula) |
@@ -165,25 +180,26 @@ and week)
 | 9 | Prices are deterministic | Scenarios (price/supply), sensitivity runs |
 | 10 | Farmgate price flat over the season | Monthly step‑ups / incentives (reporting only unless spot milk is affected) |
 
-## 9. What the first run on made‑up data shows
+## 9. What the run on made‑up data shows
 
-The run solves in about 2 seconds (≈10k variables, ≈12k constraints). Results, all
-from invented data:
+The run solves in about 3 seconds (≈14k variables, ≈18k constraints). Results, all from
+invented data:
 
-- **Milk value moves with the season.** The marginal value of an extra kL is about $510–560
-  in the spring flush and about $770–800 in winter and autumn. That is the information
-  you need to decide spot milk trades and farm incentive payments.
-- **Spot milk:** about 140 ML is sold, in the flush when plants are full and in autumn when
-  dryers are shut for maintenance. About 100 ML is bought in winter and summer to fill
-  spare capacity.
-- **Lactoferrin** (≈80 t at a made-up $600k/t) pulls more milk into Atlas and Boreas,
-  because each extra kL taken in allows a little more lactoferrin.
-- **Bottlenecks:** Boreas butter (≈$11k per extra hour), Atlas cream cheese and the Cygnus
-  cheese plants run at 100%. Atlas dryers have spare capacity (62–89%).
-- **Cygnus disposes a small amount of milk solids every week** (≈$6m a season). Its fixed
-  cheese recipes can't absorb the seasonal change in milk composition, and it has no
-  skim/cream outlet. This is the main argument for adding **stream transfers between
-  factories** (item 2 in section 8).
+- **Milk value moves with the season.** An extra kL of milk is worth least in the spring
+  flush (≈$520) and most in autumn/winter (≈$840). That is the information you need to
+  decide spot milk trades and farm incentive payments.
+- **Transfers between sites add ≈$55m of contribution for ≈$3.5m of tanker cost.** Atlas
+  has no butter plant, so it sends cream to Cygnus (≈25 ML, often at the 500 kL/week route
+  limit) and Boreas, and dries the skim as SMP. Cygnus butter goes from 30% to 100%
+  utilisation, and the weekly milk‑solids dumping at Cygnus disappears.
+- **Small permeate flows** change direction during the season to balance protein and
+  lactose as milk composition shifts. No milk transfers are chosen, because cream is
+  cheaper to move per kg of value.
+- **Spot milk:** about 65 ML is sold and 110 ML bought.
+- **Lactoferrin** (≈90 t at a made-up $600k/t) pulls more milk into Atlas and Boreas.
+- **Bottlenecks:** Boreas butter (≈$14k per extra hour) is the tightest plant, then Boreas
+  dryer 1 and Atlas dryer 3. Cream cheese, Cygnus butter and the Cygnus cheese plants run
+  full.
 - The profit figure excludes fixed costs (labour, overheads, depreciation), so it should
   be read as contribution rather than net profit.
 
@@ -192,16 +208,16 @@ insight the model gives.
 
 ## 10. Roadmap (proposed)
 
-1. **v0 (this):** single LP, 52 weeks, 3 factories, made‑up data, Excel in/out.
+1. **v0 (this):** single LP, 52 weeks, 3 factories, transfers of milk/cream/permeate, made‑up data, Excel in/out.
 2. **v1:** replace sample data with real data, validate against a past season.
-3. **v2:** stream transfers between factories; separator/UF capacity; stock by site.
+3. **v2:** separator/UF capacity; stock by site.
 4. **v3:** campaign/changeover logic (MIP), composition‑dependent cheese yields, maturation.
 5. **v4:** scenario manager and a simple user interface (e.g. web front end or Excel add‑in).
 
 ## 11. Open questions
 
 1. Which Boreas dryer is the MPC dryer (D3 assumed), and what are the real rates? Lactoferrin recovery, plant capacity and price?
-2. Can cream, skim or whey be transferred between sites today, and at what cost?
+2. Transfers: real cost per kL and weekly limits per route; is permeate shipped liquid or concentrated; is the cream ~40% fat?
 3. Which sales are contracted (minimum volumes) versus open commodity sales?
 4. Is the farmgate price paid on fat and protein only, or is there a volume charge?
 5. How is end‑of‑season stock valued?

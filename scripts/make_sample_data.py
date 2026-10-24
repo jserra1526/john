@@ -306,6 +306,37 @@ spot = pd.DataFrame(
 )
 
 # --------------------------------------------------------------------------
+# Transfers between sites: milk, cream and permeate
+# --------------------------------------------------------------------------
+# Composition ranges in kg per kL shipped. The range lets the optimiser standardise what it sends.
+transfer_types = pd.DataFrame(
+    [
+        # type, description, source, dest, whole_milk, fat min/max, protein min/max, la min/max
+        ("MILK", "Whole milk (standardised within a normal milk range)", "MILK", "MILK", 1, 38, 47, 31, 37, 55, 59),
+        ("CREAM", "Cream ~40% fat", "MILK", "MILK", 0, 380, 420, 18, 22, 30, 36),
+        ("PERMEATE", "UF permeate, RO-concentrated to ~18% solids", "MILK", "MILK", 0, 0, 1, 4, 8, 170, 190),
+    ],
+    columns=[
+        "transfer_type", "description", "source_stream", "dest_stream", "whole_milk",
+        "fat_min_kg_per_kL", "fat_max_kg_per_kL", "protein_min_kg_per_kL", "protein_max_kg_per_kL",
+        "la_min_kg_per_kL", "la_max_kg_per_kL",
+    ],
+)
+
+# Made-up one-way km between sites and weekly limits by transfer type
+SITE_DISTANCES = {("ATL", "BOR"): 310, ("ATL", "CYG"): 540, ("BOR", "CYG"): 820}
+TRANSFER_MAX = {"MILK": 3000, "CREAM": 500, "PERMEATE": 1000}
+transfer_routes = pd.DataFrame(
+    [
+        (g, a, b, km, round(km * freight_rate, 2), TRANSFER_MAX[g])
+        for g in TRANSFER_MAX
+        for (x, y), km in SITE_DISTANCES.items()
+        for a, b in ((x, y), (y, x))
+    ],
+    columns=["transfer_type", "from_factory", "to_factory", "distance_km", "cost_per_kL", "max_kL_per_week"],
+)
+
+# --------------------------------------------------------------------------
 # README sheet
 # --------------------------------------------------------------------------
 readme = pd.DataFrame(
@@ -325,6 +356,8 @@ readme = pd.DataFrame(
         ("Plant_Hours", "Available operating hours per plant per week (0 = shutdown)"),
         ("Market", "Weekly price, minimum (committed) and maximum sales per product"),
         ("Spot", "Weekly spot milk buy and sell prices ($/kL)"),
+        ("Transfer_Types", "What can be moved between sites (milk, cream, permeate) and its kg/kL composition range"),
+        ("Transfer_Routes", "Allowed site-to-site transfers, cost $/kL and weekly limit"),
         ("", ""),
         ("NOTE", "All data in this workbook is made up for demonstration purposes."),
     ],
@@ -339,6 +372,7 @@ def main(out: Path) -> None:
         "Factories": factories, "Routes": routes, "Streams": streams, "Products": products,
         "Product_Inputs": product_inputs, "Byproducts": byproducts, "Plants": plants,
         "Processes": processes, "Plant_Hours": plant_hours, "Market": market, "Spot": spot,
+        "Transfer_Types": transfer_types, "Transfer_Routes": transfer_routes,
     }
     with pd.ExcelWriter(out, engine="openpyxl") as xw:
         for name, df in sheets.items():

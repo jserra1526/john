@@ -31,6 +31,8 @@ class ModelData:
     plant_hours: pd.DataFrame  # index: (plant, week)
     market: pd.DataFrame  # index: (product, week)
     spot: pd.DataFrame  # index: week
+    transfer_types: pd.DataFrame  # index: transfer_type (empty if no transfers)
+    transfer_routes: pd.DataFrame  # index: (transfer_type, from_factory, to_factory)
 
     def product_streams(self, product: str) -> list[str]:
         return [s.strip() for s in str(self.products.at[product, "input_streams"]).split(";") if s.strip()]
@@ -58,6 +60,13 @@ def _sheet(xl: pd.ExcelFile, name: str, index: list[str] | str | None = None) ->
     return df
 
 
+def _optional_sheet(xl: pd.ExcelFile, name: str, index: list[str] | str, columns: list[str]) -> pd.DataFrame:
+    """Sheets added after v0 are optional so older workbooks still load."""
+    if name in xl.sheet_names:
+        return _sheet(xl, name, index)
+    return pd.DataFrame(columns=columns).set_index(index)
+
+
 def load_workbook(path: str | Path) -> ModelData:
     xl = pd.ExcelFile(path)
     settings_df = _sheet(xl, "Settings")
@@ -77,6 +86,15 @@ def load_workbook(path: str | Path) -> ModelData:
         plant_hours=_sheet(xl, "Plant_Hours", ["plant", "week"]),
         market=_sheet(xl, "Market", ["product", "week"]),
         spot=_sheet(xl, "Spot", "week"),
+        transfer_types=_optional_sheet(
+            xl, "Transfer_Types", "transfer_type",
+            ["transfer_type", "source_stream", "dest_stream", "whole_milk"]
+            + [f"{c}_{m}_kg_per_kL" for c in COMPONENTS for m in ("min", "max")],
+        ),
+        transfer_routes=_optional_sheet(
+            xl, "Transfer_Routes", ["transfer_type", "from_factory", "to_factory"],
+            ["transfer_type", "from_factory", "to_factory", "cost_per_kL", "max_kL_per_week"],
+        ),
     )
     validate(data)
     return data
@@ -106,6 +124,20 @@ def validate(d: ModelData) -> None:
     check_refs(d.byproducts.index.get_level_values("product"), d.products.index, "Byproducts products")
     check_refs(d.market.index.get_level_values("product"), d.products.index, "Market products")
     check_refs(d.plant_hours.index.get_level_values("plant"), d.plants.index, "Plant_Hours plants")
+
+    tt = d.transfer_types
+    check_refs(tt["source_stream"], d.streams.index, "Transfer_Types source_stream")
+    check_refs(tt["dest_stream"], d.streams.index, "Transfer_Types dest_stream")
+    for g in tt.index:
+        for c in COMPONENTS:
+            if tt.at[g, f"{c}_min_kg_per_kL"] > tt.at[g, f"{c}_max_kg_per_kL"]:
+                errors.append(f"Transfer_Types: min > max for ({g}, {c})")
+    tr = d.transfer_routes.index
+    check_refs(tr.get_level_values("transfer_type"), tt.index, "Transfer_Routes transfer_type")
+    check_refs(tr.get_level_values("from_factory"), d.factories.index, "Transfer_Routes from_factory")
+    check_refs(tr.get_level_values("to_factory"), d.factories.index, "Transfer_Routes to_factory")
+    if any(a == b for _, a, b in tr):
+        errors.append("Transfer_Routes: from_factory and to_factory must differ")
 
     for p in d.products.index:
         check_refs(d.product_streams(p), d.streams.index, f"Products '{p}' input_streams")

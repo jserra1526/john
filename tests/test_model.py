@@ -114,3 +114,26 @@ def test_lactoferrin_limited_by_milk_intake(data, results):
     spot.index.names = ["factory", "week"]
     intake = milk.add(spot, fill_value=0)
     assert (lf * 1000 <= cap * intake.reindex(lf.index) + 1e-6).all()
+
+
+def test_transfers_within_composition_and_limits(data, results):
+    tr = results.tables["Transfers"].query("kL > 1e-3")
+    assert len(tr) > 0
+    for r in tr.itertuples():
+        tt = data.transfer_types.loc[r.transfer_type]
+        for c in ["fat", "protein", "la"]:
+            v = getattr(r, f"{c}_kg_per_kL")
+            assert tt[f"{c}_min_kg_per_kL"] - 1e-4 <= v <= tt[f"{c}_max_kg_per_kL"] + 1e-4
+        assert r.kL <= data.transfer_routes.at[(r.transfer_type, r.from_factory, r.to_factory), "max_kL_per_week"] + 1e-6
+
+
+def test_workbook_without_transfer_sheets_still_runs(sample_path, tmp_path):
+    sheets = pd.read_excel(sample_path, sheet_name=None)
+    old = tmp_path / "no_transfers.xlsx"
+    with pd.ExcelWriter(old) as xw:
+        for name, df in sheets.items():
+            if not name.startswith("Transfer"):
+                df.to_excel(xw, sheet_name=name, index=False)
+    res = MilkModel(load_workbook(old)).solve()
+    assert res.status == "Optimal"
+    assert res.tables["Transfers"].empty

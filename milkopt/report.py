@@ -36,6 +36,12 @@ def print_summary(res: Results) -> None:
     spot = res.tables["Spot_Milk"].groupby("direction")["kL"].sum() / 1000
     print(f"\nSpot milk: sold {spot.get('sell', 0):.0f} ML, bought {spot.get('buy', 0):.0f} ML")
 
+    tr = res.tables.get("Transfers")
+    if tr is not None and tr["kL"].sum() > 1e-3:
+        print("\nTransfers between sites (ML/season)")
+        print((tr.pivot_table(index=["from_factory", "to_factory"], columns="transfer_type", values="kL",
+                              aggfunc="sum", fill_value=0) / 1000).round(1).to_string())
+
     prod = res.tables["Production"]
     print("\nProduction (t/season)")
     print(prod.pivot_table(index="product", columns="factory", values="tonnes", aggfunc="sum", fill_value=0)

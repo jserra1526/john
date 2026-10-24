@@ -56,6 +56,24 @@ class MilkModel:
             [(pl, p, s, c, w) for pl, p in procs for s in d.product_streams(p) for c in COMPONENTS for w in W],
             lowBound=0,
         )
+        tt, troutes = d.transfer_types, list(d.transfer_routes.index)  # (type, from, to)
+        self.transfer = {  # kL moved between factories
+            (g, a, b, w): pulp.LpVariable(f"transfer_{g}_{a}_{b}_{w}", 0, _lim(d.transfer_routes.at[(g, a, b), "max_kL_per_week"]))
+            for g, a, b in troutes for w in W
+        }
+        self.tcomp = V(  # kg component carried by a transfer
+            "tcomp", [(g, a, b, c, w) for g, a, b in troutes for c in COMPONENTS for w in W], lowBound=0
+        )
+        whole_milk = {g for g in tt.index if bool(tt.at[g, "whole_milk"])}
+
+        def milk_received(f, w):
+            """Whole milk arriving at a factory: tankered from farms, spot bought, transferred in."""
+            return (
+                pulp.lpSum(self.x[z, f, w] for z, ff in d.routes.index if ff == f)
+                + self.spot_buy[f, w]
+                + pulp.lpSum(self.transfer[g, a, b, w] for g, a, b in troutes if b == f and g in whole_milk)
+            )
+
         pools = [(f, s) for f in d.factories.index for s in d.streams.index]
         self.dispose = V("dispose", [(f, s, c, w) for f, s in pools for c in COMPONENTS for w in W], lowBound=0)
         self.sell = {}
@@ -85,10 +103,19 @@ class MilkModel:
         # --- 2. factory intake capacity ---
         for f in d.factories.index:
             for w in W:
-                prob += (
-                    pulp.lpSum(self.x[z, ff, w] for z, ff in d.routes.index if ff == f) + self.spot_buy[f, w]
-                    <= float(d.factories.at[f, "intake_kL_per_week"])
-                ), f"intake_{f}_{w}"
+                prob += milk_received(f, w) <= float(d.factories.at[f, "intake_kL_per_week"]), f"intake_{f}_{w}"
+
+        # --- 2b. transfer composition: each transfer type has a kg/kL range for every component ---
+        for g, a, b in troutes:
+            for c in COMPONENTS:
+                lo, hi = float(tt.at[g, f"{c}_min_kg_per_kL"]), float(tt.at[g, f"{c}_max_kg_per_kL"])
+                for w in W:
+                    v, kl = self.tcomp[g, a, b, c, w], self.transfer[g, a, b, w]
+                    if lo == hi:
+                        prob += v == lo * kl, f"tcomp_{c}_{g}_{a}_{b}_{w}"
+                    else:
+                        prob += v >= lo * kl, f"tcomp_min_{c}_{g}_{a}_{b}_{w}"
+                        prob += v <= hi * kl, f"tcomp_max_{c}_{g}_{a}_{b}_{w}"
 
         # --- 3. component balance for every stream pool at every factory ---
         for f, s in pools:
@@ -107,7 +134,11 @@ class MilkModel:
                         for pl, p in fprocs
                         if d.products.at[p, "byproduct_stream"] == s and (p, c) in d.byproducts.index
                     ]
+                    inflow += [self.tcomp[g, a, b, c, w] for g, a, b in troutes
+                               if b == f and tt.at[g, "dest_stream"] == s]
                     outflow = [self.draw[pl, p, s, c, w] for pl, p in fprocs if s in d.product_streams(p)]
+                    outflow += [self.tcomp[g, a, b, c, w] for g, a, b in troutes
+                                if a == f and tt.at[g, "source_stream"] == s]
                     con = pulp.lpSum(inflow) == pulp.lpSum(outflow) + self.dispose[f, s, c, w]
                     prob += con, f"pool_{f}_{s}_{c}_{w}"
                     self.con_pool[f, s, c, w] = con
@@ -144,7 +175,10 @@ class MilkModel:
                 if not fprocs:
                     continue
                 for w in W:
-                    milk_in = pulp.lpSum(self.x[z, f, w] for z, ff in d.routes.index if ff == f) + self.spot_buy[f, w]
+                    # whole milk sent away leaves before extraction
+                    milk_in = milk_received(f, w) - pulp.lpSum(
+                        self.transfer[g, a, b, w] for g, a, b in troutes if a == f and g in whole_milk
+                    )
                     prob += (
                         pulp.lpSum(self.make[pl, p, w] for pl, _ in fprocs) * 1000 <= cap * milk_in
                     ), f"extract_{p}_{f}_{w}"
@@ -183,6 +217,9 @@ class MilkModel:
         freight = pulp.lpSum(
             self.x[z, f, w] * float(d.routes.at[(z, f), "freight_per_kL"]) for z, f in d.routes.index for w in W
         )
+        transfer_cost = pulp.lpSum(
+            v * float(d.transfer_routes.at[(g, a, b), "cost_per_kL"]) for (g, a, b, w), v in self.transfer.items()
+        )
         spot = pulp.lpSum(
             self.spot_sell[z, w] * float(d.spot.at[w, "sell_price_per_kL"]) for z, w in self.spot_sell
         ) - pulp.lpSum(self.spot_buy[f, w] * float(d.spot.at[w, "buy_price_per_kL"]) for f, w in self.spot_buy)
@@ -201,6 +238,7 @@ class MilkModel:
             "Disposal value": disposal,
             "Processing & ingredient cost": -proc_cost,
             "Tanker freight": -freight,
+            "Transfers between sites": -transfer_cost,
             "Stock holding cost": -holding,
             "Shortfall penalty": -shortfall,
         }
@@ -259,6 +297,16 @@ class MilkModel:
             pd.DataFrame([("buy", f, w, v.value(), float(d.spot.at[w, "buy_price_per_kL"]))
                           for (f, w), v in self.spot_buy.items()], columns=["direction", "location", "week", "kL", "price_per_kL"]),
         ])
+
+        t["Transfers"] = pd.DataFrame(
+            [(g, a, b, w, v.value() or 0.0,
+              *((self.tcomp[g, a, b, c, w].value() or 0.0) / v.value() if (v.value() or 0) > 1e-6 else None
+                for c in COMPONENTS),
+              (v.value() or 0.0) * float(d.transfer_routes.at[(g, a, b), "cost_per_kL"]))
+             for (g, a, b, w), v in self.transfer.items()],
+            columns=["transfer_type", "from_factory", "to_factory", "week", "kL",
+                     "fat_kg_per_kL", "protein_kg_per_kL", "la_kg_per_kL", "cost_AUD"],
+        )
 
         prod_rows = []
         for (pl, p, w), v in self.make.items():
