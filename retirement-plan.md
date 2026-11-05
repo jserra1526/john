@@ -81,6 +81,55 @@ Use the interactive calculator to try your own numbers.
 
 ---
 
+## 3a. Part-time work, long service leave and inheritance
+
+These are the three biggest levers besides the business sale. All of them are optional; the base case above assumes none of them.
+
+### Part-time work from 60 to 64
+
+You don't have to stop work completely to access your super. **After 60, ending any employment arrangement counts as a condition of release**, even if you start a new part-time job afterwards. The super you had when that job ended becomes fully accessible. So you can sell or step away from the florist business, start your super pensions, and still work part-time. That could include working a few days for the new owner as part of the handover.
+
+Part-time work helps in three ways:
+1. Every dollar earned is a dollar you don't take out of super while markets are still compounding it.
+2. Your employer pays super guarantee (12%) on the wages, and you can add salary-sacrifice contributions within the $30k cap.
+3. It eases the shift from running a business to full retirement, which many small business owners find hard.
+
+**Tax:** your super pension income is tax-free after 60 and doesn't count towards your tax bracket. Only the wages are taxed. Each person has an $18,200 tax-free threshold, so modest part-time pay attracts little tax.
+
+**Alternative if you keep working longer hours:** a *transition to retirement* pension lets you draw 4–10% of your super a year while still working. It's less tax-effective than a full retirement pension, because earnings in a transition to retirement pension are taxed at 15%.
+
+### Long service leave
+
+- If one of you is an employee, long service leave is paid out on termination and taxed as ordinary income (with concessional rates for any leave accrued before August 1993).
+- **Timing matters.** Taking the leave *before* you resign, as paid leave, spreads the income and keeps you on the payroll (with super guarantee paid on it). A lump sum all in one year can push you into a higher tax bracket. Check your award or state long service leave act: rules differ between states.
+- Self-employed florists don't accrue long service leave unless they're employed by their own company under an award. Your accountant can confirm whether this applies.
+- In the calculator, enter the **after-tax** amount and the age it's paid. It's added to your shares portfolio. You could instead contribute part of it to super as a personal deductible contribution, if you have cap room, and reduce the tax on it.
+
+### Inheritance
+
+- There's no inheritance tax in Australia. However, if you inherit **assets** (shares or property other than the deceased's home), their capital gains carry over to you, and you pay CGT when you sell them.
+- Inherited **super** paid to an adult child usually has up to 17% tax deducted from the taxable component.
+- If you're on the Age Pension when it arrives, the inheritance counts under the assets and income tests straight away. You must tell Centrelink within 14 days.
+- Up to $120,000 per person a year (or $360,000 using the bring-forward rule) can go into super as non-concessional contributions, where earnings in pension phase are tax-free.
+- **Don't count on it.** Inheritances often arrive later, or are smaller, than expected because of aged care costs. Make sure the plan works without it, and treat it as a buffer or an estate top-up.
+
+### What they add (base case, $95k a year spending, no business sale)
+
+| Scenario | Money lasts | Left at 90 (today's $) | Age Pension starts |
+|---|---|---|---|
+| Base case (none of these) | Age 94 | $152k | 72 |
+| Part-time $30k a year, 60–64 | Past 95 | $298k | 76 |
+| Part-time $50k a year, 60–64 | Past 95 | $396k | 78 |
+| Long service leave $40k at 60 | Age 95 | $193k | 73 |
+| Inheritance $250k at 70 | Past 95 | $341k | 77 |
+| Part-time $30k + long service leave $40k + inheritance $250k | Past 95 | $538k | 82 |
+
+*Part-time income is after tax; super guarantee on it isn't counted, so the results are slightly conservative.*
+
+**Takeaway:** $30k a year of part-time work for just five years does more for the plan than a $250k inheritance at 70, and it's within your control.
+
+---
+
 ## 4. The four-year action plan
 
 ### Year 1 (age 56–57): set up and get the facts
@@ -110,6 +159,7 @@ Use the interactive calculator to try your own numbers.
 
 ### Year 4 (age 59–60): transition
 
+- [ ] **Decide on part-time work** from 60–64 (for example, a handover role with the business buyer) and on when to take any long service leave.
 - [ ] **Build a cash buffer:** 12–24 months of spending ($100k–$200k) in a high-interest account or the cash option in your super. It means you never have to sell shares in a downturn.
 - [ ] **Settle the sale.** Consider staying on for a short handover period, and agree it in the contract.
 - [ ] **At 60, after you stop work:** advise your fund you've met a condition of release, then start an **account-based pension** each. Earnings in pension phase are tax-free, and withdrawals after 60 are tax-free.

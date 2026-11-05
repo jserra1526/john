@@ -104,6 +104,16 @@ footer{font-size:12.5px;color:var(--muted);max-width:90ch;display:grid;gap:6px}
         <div class="field"><label for="biz">Net sale proceeds into super <output id="biz-o"></output></label><input id="biz" type="range" min="0" max="1500000" step="25000" value="0"><span class="hint">Added at retirement. With the small business CGT concessions this can go in via the CGT cap.</span></div>
       </fieldset>
       <fieldset>
+        <legend>Work and windfalls</legend>
+        <div class="field"><label for="ptIncome">Part-time income per year, after tax <output id="ptIncome-o"></output></label><input id="ptIncome" type="range" min="0" max="100000" step="2500" value="30000"><span class="hint">Combined take-home pay. It reduces what you draw from super in those years. Any extra is saved into shares.</span></div>
+        <div class="field"><label for="ptStart">Part-time from age <output id="ptStart-o"></output></label><input id="ptStart" type="range" min="58" max="70" step="1" value="60"></div>
+        <div class="field"><label for="ptEnd">Part-time until age <output id="ptEnd-o"></output></label><input id="ptEnd" type="range" min="58" max="72" step="1" value="64"><span class="hint">Includes the year you turn this age. Only counts from your retirement age; before that you're working full time.</span></div>
+        <div class="field"><label for="lsl">Long service leave payout, after tax <output id="lsl-o"></output></label><input id="lsl" type="range" min="0" max="200000" step="5000" value="0"><span class="hint">Lump sum paid when you finish the job. Added to shares.</span></div>
+        <div class="field"><label for="lslAge">Long service leave paid at age <output id="lslAge-o"></output></label><input id="lslAge" type="range" min="56" max="70" step="1" value="60"></div>
+        <div class="field"><label for="inh">Expected inheritance <output id="inh-o"></output></label><input id="inh" type="range" min="0" max="2000000" step="25000" value="0"><span class="hint">In today's dollars. Added to shares in the year received. It isn't guaranteed, so test the plan without it too.</span></div>
+        <div class="field"><label for="inhAge">Inheritance received at age <output id="inhAge-o"></output></label><input id="inhAge" type="range" min="56" max="90" step="1" value="70"></div>
+      </fieldset>
+      <fieldset>
         <legend>Retirement spending</legend>
         <div class="field"><label for="spend">Base spending per year <output id="spend-o"></output></label><input id="spend" type="range" min="50000" max="160000" step="2500" value="95000"><span class="hint">ASFA "comfortable" for a homeowning couple is about $76k.</span></div>
         <div class="field"><label for="goGoExtra">Extra in the active years <output id="goGoExtra-o"></output></label><input id="goGoExtra" type="range" min="0" max="50000" step="2500" value="15000"></div>
@@ -154,7 +164,7 @@ footer{font-size:12.5px;color:var(--muted);max-width:90ch;display:grid;gap:6px}
   </div>
 
   <footer>
-    <p class="note"><strong>How this works.</strong> Each year, super grows at the chosen return and receives contributions less 15% tax. From retirement it moves to an account-based pension: earnings are untaxed and at least the legal minimum (4% under 65, 5% from 65, rising with age) is drawn. Spending is paid from super first, then shares. Any minimum drawdown you don't need is reinvested in shares. From 67 the Age Pension is estimated for a homeowning couple using the lower of the assets test (full below $481,500, $3 a fortnight less per $1,000 above) and the income test with deeming (0.75% / 2.75%). Thresholds are September 2025 values, indexed to inflation. $30k of cars and contents is counted as assets.</p>
+    <p class="note"><strong>How this works.</strong> Each year, super grows at the chosen return and receives contributions less 15% tax. From retirement it moves to an account-based pension: earnings are untaxed and at least the legal minimum (4% under 65, 5% from 65, rising with age) is drawn. Spending is paid from part-time income first, then super, then shares. Part-time income above your spending is saved into shares. Long service leave and inheritance are added to shares in the year received. No super guarantee is counted on part-time pay, so the results are slightly conservative. Any minimum drawdown you don't need is reinvested in shares. From 67 the Age Pension is estimated for a homeowning couple using the lower of the assets test (full below $481,500, $3 a fortnight less per $1,000 above) and the income test with deeming (0.75% / 2.75%). Thresholds are September 2025 values, indexed to inflation. $30k of cars and contents is counted as assets.</p>
     <p class="note">General information only, not financial advice. Centrelink and super rules change often. Confirm figures with Services Australia, the ATO and a licensed adviser.</p>
   </footer>
 </div>
@@ -164,7 +174,9 @@ function simulate(p){
   const rows=[]; let sup=p.super, sh=p.shares, depletedAge=null;
   for(let i=0;i<=p.endAge-p.age;i++){
     const age=p.age+i, infl=Math.pow(1+p.inflation,i);
-    let pension=0, spend=0;
+    let pension=0, spend=0, work=0;
+    if(age===p.lslAge) sh+=p.lsl*infl;
+    if(age===p.inhAge) sh+=p.inh*infl;
     if(age<p.retireAge){
       sup=sup*(1+p.retAccum)+p.contrib*0.85;
       sh=sh*(1+p.retShares)+p.extraSave;
@@ -180,7 +192,9 @@ function simulate(p){
         pension=Math.min(byAssets,byIncome);
       }
       const minRate=age<65?0.04:age<75?0.05:age<80?0.06:age<85?0.07:age<90?0.09:age<95?0.11:0.14;
-      let need=Math.max(0,spend-pension);
+      if(age>=p.ptStart&&age<=p.ptEnd) work=p.ptIncome*infl;
+      let need=spend-pension-work;
+      if(need<0){ sh+=-need; need=0; }
       const fromSuper=Math.min(sup,Math.max(need,sup*minRate));
       sup-=fromSuper;
       if(fromSuper>need){ sh+=fromSuper-need; need=0; } else need-=fromSuper;
@@ -188,15 +202,15 @@ function simulate(p){
       if(need>1&&depletedAge===null) depletedAge=age;
       sup*=1+p.retPension; sh*=1+p.retPension;
     }
-    rows.push({age,sup,sh,infl,spend,pension});
+    rows.push({age,sup,sh,infl,spend,pension,work});
   }
   return {rows,depletedAge};
 }
 const FIXED={endAge:95,apMax:46202,apLower:481500,deemThresh:103800,deemLow:0.0075,deemHigh:0.0275,incomeFree:9880,otherAssets:30000};
-const ids=["age","retireAge","super","shares","contrib","extraSave","biz","spend","goGoExtra","goGoYears","retAccum","retPension","inflation"];
+const ids=["age","retireAge","super","shares","contrib","extraSave","biz","ptIncome","ptStart","ptEnd","lsl","lslAge","inh","inhAge","spend","goGoExtra","goGoYears","retAccum","retPension","inflation"];
 const money=n=>{const a=Math.abs(n);return (n<0?"-":"")+(a>=1e6?"$"+(a/1e6).toFixed(2)+"m":a>=1e3?"$"+Math.round(a/1e3)+"k":"$"+Math.round(a));};
 const pct=n=>(n*100).toFixed(2).replace(/0$/,"").replace(/\.0$/,"")+"%";
-const fmt={age:v=>v,retireAge:v=>v,goGoYears:v=>v+" yrs",retAccum:pct,retPension:pct,inflation:pct};
+const fmt={age:v=>v,retireAge:v=>v,ptStart:v=>v,ptEnd:v=>v,lslAge:v=>v,inhAge:v=>v,goGoYears:v=>v+" yrs",retAccum:pct,retPension:pct,inflation:pct};
 let real=true;
 function params(){const p={...FIXED};ids.forEach(id=>p[id]=+document.getElementById(id).value);p.retShares=p.retAccum-0.005;return p;}
 
@@ -238,11 +252,16 @@ function drawChart(rows,p,adj){
   for(let v=0;v<=top+1;v+=step){g+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-width="1"/><text x="${m.l-8}" y="${y(v)+4}" text-anchor="end">${money(v)}</text>`;}
   for(let v=0;v<=apTop;v+=apTop/5){g+=`<text x="${W-m.r+8}" y="${y2(v)+4}" style="fill:var(--pension)">${money(v)}</text>`;}
   for(let a=Math.ceil(rows[0].age/5)*5;a<=95;a+=5){g+=`<text x="${x(a)}" y="${H-10}" text-anchor="middle">${a}</text>`;}
+  g+=`<path d="${area(v=>0,v=>v.sup)}" fill="var(--super)" fill-opacity=".85"/>`;
+  g+=`<path d="${area(v=>v.sup,v=>v.sup+v.sh)}" fill="var(--shares)" fill-opacity=".85"/>`;
+  const ps=Math.max(p.ptStart,p.retireAge), pe=Math.min(p.ptEnd+1,95);
+  if(p.ptIncome>0&&pe>ps){g+=`<rect x="${x(ps)}" y="${m.t}" width="${x(pe)-x(ps)}" height="${ih}" fill="var(--super)" fill-opacity=".08"/><text x="${(x(ps)+x(pe))/2}" y="${m.t+ih-8}" text-anchor="middle" style="fill:var(--surface);font-weight:600">part-time</text>`;}
+  const ev=(age,label,dy)=>{if(age<rows[0].age||age>95)return;const ex=x(age);g+=`<line x1="${ex}" x2="${ex}" y1="${m.t+40+dy}" y2="${m.t+ih}" stroke="var(--shares)" stroke-dasharray="2 3" stroke-width="1.5"/><text x="${ex+5}" y="${m.t+52+dy}" style="fill:var(--ink)">${label}</text>`;};
+  if(p.inh>0) ev(p.inhAge,"Inheritance "+money(p.inh),0);
+  if(p.lsl>0) ev(p.lslAge,"LSL "+money(p.lsl),18);
   const rx=x(p.retireAge);
   g+=`<line x1="${rx}" x2="${rx}" y1="${m.t}" y2="${m.t+ih}" stroke="var(--ink)" stroke-dasharray="3 4" stroke-width="1"/><text x="${rx+6}" y="${m.t+12}" style="fill:var(--ink)">Retire ${p.retireAge}</text>`;
   if(p.retireAge!==67&&67>rows[0].age){const ax=x(67);g+=`<line x1="${ax}" x2="${ax}" y1="${m.t}" y2="${m.t+ih}" stroke="var(--pension)" stroke-dasharray="2 4" stroke-width="1"/><text x="${ax+6}" y="${m.t+26}" style="fill:var(--pension)">Age Pension age</text>`;}
-  g+=`<path d="${area(v=>0,v=>v.sup)}" fill="var(--super)" fill-opacity=".85"/>`;
-  g+=`<path d="${area(v=>v.sup,v=>v.sup+v.sh)}" fill="var(--shares)" fill-opacity=".85"/>`;
   g+=`<path d="M${vals.map(v=>x(v.age)+","+y2(v.ap)).join("L")}" fill="none" stroke="var(--pension)" stroke-width="2.5"/>`;
   g+=`<line x1="${m.l}" x2="${W-m.r}" y1="${m.t+ih}" y2="${m.t+ih}" stroke="var(--muted)" stroke-width="1"/>`;
   document.getElementById("chart").innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" style="min-width:520px" role="img" aria-label="Projected super and shares by age, with Age Pension">${g}</svg>`;
@@ -258,10 +277,10 @@ function drawGrid(p){
   document.getElementById("grid").innerHTML=h+"</tbody>";
 }
 function drawMilestones(rows,p,adj){
-  const ages=[...new Set([p.retireAge,65,67,70,75,80,85,90,95])].filter(a=>a>=rows[0].age).sort((a,b)=>a-b);
-  let h="<thead><tr><th>Age</th><th>Super</th><th>Shares</th><th>Total</th><th>Spending/yr</th><th>Age Pension/yr</th></tr></thead><tbody>";
+  const ages=[...new Set([p.retireAge,p.ptEnd,p.ptEnd+1,65,67,70,75,80,85,90,95])].filter(a=>a>=rows[0].age).sort((a,b)=>a-b);
+  let h="<thead><tr><th>Age</th><th>Super</th><th>Shares</th><th>Total</th><th>Spending/yr</th><th>Work income/yr</th><th>Age Pension/yr</th></tr></thead><tbody>";
   for(const a of ages){const x=rows.find(r=>r.age===a);if(!x)continue;const k=adj(x);
-    h+=`<tr><td>${a}</td><td>${money(x.sup*k)}</td><td>${money(x.sh*k)}</td><td>${money((x.sup+x.sh)*k)}</td><td>${x.spend?money(x.spend*k):"—"}</td><td>${x.pension?money(x.pension*k):"—"}</td></tr>`;}
+    h+=`<tr><td>${a}</td><td>${money(x.sup*k)}</td><td>${money(x.sh*k)}</td><td>${money((x.sup+x.sh)*k)}</td><td>${x.spend?money(x.spend*k):"—"}</td><td>${x.work?money(x.work*k):"—"}</td><td>${x.pension?money(x.pension*k):"—"}</td></tr>`;}
   document.getElementById("ms").innerHTML=h+"</tbody>";
 }
 ids.forEach(id=>document.getElementById(id).addEventListener("input",render));
