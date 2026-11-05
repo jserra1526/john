@@ -1,0 +1,272 @@
+<title>Retire at 60 Planner</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: two-column workbench. Inputs in a quiet left rail, projection on the right. Stacks on phones. */
+:root{
+  --bg:#f3f5f2; --surface:#ffffff; --ink:#18231f; --muted:#5b6a64; --line:#d9e0dc;
+  --super:#2f6f5e;   /* eucalyptus */
+  --shares:#c9a227;  /* wattle */
+  --pension:#6b5ca5; /* age pension */
+  --good:#2f7a4a; --warn:#a86a12; --bad:#b23a3a;
+  --good-bg:#e3f1e7; --warn-bg:#f7ecd9; --bad-bg:#f6e1e1;
+  --display:"Instrument Serif", Georgia, "Times New Roman", serif;
+  --body:"Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111816; --surface:#18211e; --ink:#e6ece9; --muted:#9aaaa3; --line:#2c3833;
+  --super:#5fb39b; --shares:#e0bd4a; --pension:#a395e0;
+  --good:#6cc48c; --warn:#e0a04a; --bad:#e07a7a;
+  --good-bg:#1c3326; --warn-bg:#3a2d17; --bad-bg:#3a1f1f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111816; --surface:#18211e; --ink:#e6ece9; --muted:#9aaaa3; --line:#2c3833;
+  --super:#5fb39b; --shares:#e0bd4a; --pension:#a395e0;
+  --good:#6cc48c; --warn:#e0a04a; --bad:#e07a7a;
+  --good-bg:#1c3326; --warn-bg:#3a2d17; --bad-bg:#3a1f1f; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:28px}
+header{display:grid;gap:6px}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,5vw,52px);line-height:1.05;margin:0;text-wrap:balance}
+.lede{color:var(--muted);max-width:68ch;margin:0}
+.grid{display:grid;grid-template-columns:330px minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:880px){.grid{grid-template-columns:minmax(0,1fr)}}
+aside{display:grid;gap:22px}
+fieldset{border:0;padding:0;margin:0;display:grid;gap:12px}
+legend{font-family:var(--display);font-size:22px;padding:0;margin-bottom:6px}
+.field{display:grid;gap:4px}
+.field label{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted);font-weight:500}
+.field output{font-family:var(--mono);color:var(--ink);font-size:13px;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--super)}
+input[type=range]:focus-visible{outline:2px solid var(--super);outline-offset:3px}
+.hint{font-size:12px;color:var(--muted)}
+main{display:grid;gap:24px;min-width:0}
+.verdict{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+@media (max-width:640px){.verdict{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{background:var(--surface);padding:14px 16px;display:grid;gap:2px;align-content:start}
+.stat .k{font-size:12px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;font-weight:600}
+.stat .v{font-family:var(--mono);font-size:22px;font-variant-numeric:tabular-nums;font-weight:500}
+.stat .s{font-size:12px;color:var(--muted)}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;justify-self:start}
+.pill.good{background:var(--good-bg);color:var(--good)} .pill.warn{background:var(--warn-bg);color:var(--warn)} .pill.bad{background:var(--bad-bg);color:var(--bad)}
+section.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 18px 14px;display:grid;gap:12px;min-width:0}
+.panel-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:10px}
+h2{font-family:var(--display);font-weight:400;font-size:26px;margin:0}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+.toggle{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.toggle button{font:inherit;font-size:13px;background:transparent;color:var(--muted);border:0;padding:5px 11px;cursor:pointer}
+.toggle button[aria-pressed=true]{background:var(--ink);color:var(--surface)}
+.toggle button:focus-visible{outline:2px solid var(--super);outline-offset:-2px}
+.chart{width:100%;overflow-x:auto}
+svg text{font-family:var(--mono);font-size:11px;fill:var(--muted)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+td{font-family:var(--mono);font-size:13px}
+td.cell-good{color:var(--good)} td.cell-warn{color:var(--warn)} td.cell-bad{color:var(--bad)}
+td.me{outline:2px solid var(--ink);outline-offset:-2px}
+.note{font-size:12.5px;color:var(--muted);max-width:80ch;margin:0}
+footer{font-size:12.5px;color:var(--muted);max-width:90ch;display:grid;gap:6px}
+@media (prefers-reduced-motion:no-preference){.stat .v{transition:color .2s}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Retirement projection · Australia · ages 56 → 95</div>
+    <h1>Retire at 60 Planner</h1>
+    <p class="lede">Your starting point is loaded: $1.12m combined super, $230k in shares, home owned outright. Move the sliders to see how long the money lasts and when the Age Pension starts to help. All amounts are in today's dollars unless you switch to future dollars.</p>
+  </header>
+
+  <div class="grid">
+    <aside>
+      <fieldset>
+        <legend>Today</legend>
+        <div class="field"><label for="age">Current age <output id="age-o"></output></label><input id="age" type="range" min="50" max="64" step="1" value="56"></div>
+        <div class="field"><label for="retireAge">Retirement age <output id="retireAge-o"></output></label><input id="retireAge" type="range" min="58" max="67" step="1" value="60"><span class="hint">Super is accessible from 60 once you retire.</span></div>
+        <div class="field"><label for="super">Super, combined <output id="super-o"></output></label><input id="super" type="range" min="0" max="3000000" step="10000" value="1120000"></div>
+        <div class="field"><label for="shares">Shares and cash outside super <output id="shares-o"></output></label><input id="shares" type="range" min="0" max="1500000" step="10000" value="230000"></div>
+      </fieldset>
+      <fieldset>
+        <legend>Until retirement</legend>
+        <div class="field"><label for="contrib">Concessional contributions per year <output id="contrib-o"></output></label><input id="contrib" type="range" min="0" max="60000" step="2500" value="50000"><span class="hint">Cap is $30,000 per person (2025–26). 15% contributions tax applied.</span></div>
+        <div class="field"><label for="extraSave">Extra saving into shares per year <output id="extraSave-o"></output></label><input id="extraSave" type="range" min="0" max="100000" step="5000" value="20000"></div>
+      </fieldset>
+      <fieldset>
+        <legend>The florist business</legend>
+        <div class="field"><label for="biz">Net sale proceeds into super <output id="biz-o"></output></label><input id="biz" type="range" min="0" max="1500000" step="25000" value="0"><span class="hint">Added at retirement. With the small business CGT concessions this can go in via the CGT cap.</span></div>
+      </fieldset>
+      <fieldset>
+        <legend>Retirement spending</legend>
+        <div class="field"><label for="spend">Base spending per year <output id="spend-o"></output></label><input id="spend" type="range" min="50000" max="160000" step="2500" value="95000"><span class="hint">ASFA "comfortable" for a homeowning couple is about $76k.</span></div>
+        <div class="field"><label for="goGoExtra">Extra in the active years <output id="goGoExtra-o"></output></label><input id="goGoExtra" type="range" min="0" max="50000" step="2500" value="15000"></div>
+        <div class="field"><label for="goGoYears">Active years last <output id="goGoYears-o"></output></label><input id="goGoYears" type="range" min="0" max="20" step="1" value="10"></div>
+      </fieldset>
+      <fieldset>
+        <legend>Markets</legend>
+        <div class="field"><label for="retAccum">Return before retirement <output id="retAccum-o"></output></label><input id="retAccum" type="range" min="0.02" max="0.09" step="0.0025" value="0.065"><span class="hint">After fees and the 15% tax on super earnings.</span></div>
+        <div class="field"><label for="retPension">Return in retirement <output id="retPension-o"></output></label><input id="retPension" type="range" min="0.02" max="0.09" step="0.0025" value="0.06"></div>
+        <div class="field"><label for="inflation">Inflation <output id="inflation-o"></output></label><input id="inflation" type="range" min="0.01" max="0.05" step="0.0025" value="0.0275"></div>
+      </fieldset>
+    </aside>
+
+    <main>
+      <div class="verdict" aria-live="polite">
+        <div class="stat"><span class="k">Money lasts</span><span class="v" id="v-lasts">—</span><span class="pill" id="v-pill">—</span></div>
+        <div class="stat"><span class="k">At retirement</span><span class="v" id="v-atret">—</span><span class="s" id="v-atret-s">super + shares, end of first year</span></div>
+        <div class="stat"><span class="k">Age Pension starts</span><span class="v" id="v-ap">—</span><span class="s" id="v-ap-s">part pension</span></div>
+        <div class="stat"><span class="k">Left at 90</span><span class="v" id="v-90">—</span><span class="s">for your estate</span></div>
+      </div>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Your money, year by year</h2>
+          <div class="toggle" role="group" aria-label="Dollar basis">
+            <button id="b-real" type="button" aria-pressed="true">Today's $</button>
+            <button id="b-nom" type="button" aria-pressed="false">Future $</button>
+          </div>
+        </div>
+        <div class="legend">
+          <span><i class="sw" style="background:var(--super)"></i>Super</span>
+          <span><i class="sw" style="background:var(--shares)"></i>Shares</span>
+          <span><i class="sw" style="background:var(--pension)"></i>Age Pension per year (right scale)</span>
+        </div>
+        <div class="chart" id="chart"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><h2>How long it lasts</h2><span class="hint">Business proceeds × base spending, your other settings held fixed. Outlined cell is your current mix.</span></div>
+        <div class="tbl"><table id="grid"></table></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><h2>Milestones</h2></div>
+        <div class="tbl"><table id="ms"></table></div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <p class="note"><strong>How this works.</strong> Each year, super grows at the chosen return and receives contributions less 15% tax. From retirement it moves to an account-based pension: earnings are untaxed and at least the legal minimum (4% under 65, 5% from 65, rising with age) is drawn. Spending is paid from super first, then shares. Any minimum drawdown you don't need is reinvested in shares. From 67 the Age Pension is estimated for a homeowning couple using the lower of the assets test (full below $481,500, $3 a fortnight less per $1,000 above) and the income test with deeming (0.75% / 2.75%). Thresholds are September 2025 values, indexed to inflation. $30k of cars and contents is counted as assets.</p>
+    <p class="note">General information only, not financial advice. Centrelink and super rules change often. Confirm figures with Services Australia, the ATO and a licensed adviser.</p>
+  </footer>
+</div>
+
+<script>
+function simulate(p){
+  const rows=[]; let sup=p.super, sh=p.shares, depletedAge=null;
+  for(let i=0;i<=p.endAge-p.age;i++){
+    const age=p.age+i, infl=Math.pow(1+p.inflation,i);
+    let pension=0, spend=0;
+    if(age<p.retireAge){
+      sup=sup*(1+p.retAccum)+p.contrib*0.85;
+      sh=sh*(1+p.retShares)+p.extraSave;
+    } else {
+      if(age===p.retireAge){ sup+=p.biz; }
+      spend=p.spend*infl+(age<p.retireAge+p.goGoYears?p.goGoExtra*infl:0);
+      if(age>=67){
+        const max=p.apMax*infl, assets=sup+sh+p.otherAssets*infl;
+        const byAssets=Math.max(0,max-Math.max(0,assets-p.apLower*infl)*0.078);
+        const fin=sup+sh, dt=p.deemThresh*infl;
+        const deemed=Math.min(fin,dt)*p.deemLow+Math.max(0,fin-dt)*p.deemHigh;
+        const byIncome=Math.max(0,max-Math.max(0,deemed-p.incomeFree*infl)*0.5);
+        pension=Math.min(byAssets,byIncome);
+      }
+      const minRate=age<65?0.04:age<75?0.05:age<80?0.06:age<85?0.07:age<90?0.09:age<95?0.11:0.14;
+      let need=Math.max(0,spend-pension);
+      const fromSuper=Math.min(sup,Math.max(need,sup*minRate));
+      sup-=fromSuper;
+      if(fromSuper>need){ sh+=fromSuper-need; need=0; } else need-=fromSuper;
+      const fromSh=Math.min(sh,need); sh-=fromSh; need-=fromSh;
+      if(need>1&&depletedAge===null) depletedAge=age;
+      sup*=1+p.retPension; sh*=1+p.retPension;
+    }
+    rows.push({age,sup,sh,infl,spend,pension});
+  }
+  return {rows,depletedAge};
+}
+const FIXED={endAge:95,apMax:46202,apLower:481500,deemThresh:103800,deemLow:0.0075,deemHigh:0.0275,incomeFree:9880,otherAssets:30000};
+const ids=["age","retireAge","super","shares","contrib","extraSave","biz","spend","goGoExtra","goGoYears","retAccum","retPension","inflation"];
+const money=n=>{const a=Math.abs(n);return (n<0?"-":"")+(a>=1e6?"$"+(a/1e6).toFixed(2)+"m":a>=1e3?"$"+Math.round(a/1e3)+"k":"$"+Math.round(a));};
+const pct=n=>(n*100).toFixed(2).replace(/0$/,"").replace(/\.0$/,"")+"%";
+const fmt={age:v=>v,retireAge:v=>v,goGoYears:v=>v+" yrs",retAccum:pct,retPension:pct,inflation:pct};
+let real=true;
+function params(){const p={...FIXED};ids.forEach(id=>p[id]=+document.getElementById(id).value);p.retShares=p.retAccum-0.005;return p;}
+
+function render(){
+  const p=params();
+  ids.forEach(id=>document.getElementById(id+"-o").textContent=(fmt[id]||money)(p[id]));
+  const r=simulate(p), rows=r.rows;
+  const adj=x=>real?1/x.infl:1;
+  const at=a=>rows.find(x=>x.age===a);
+  // verdict
+  const lasts=r.depletedAge===null?"95+":"Age "+r.depletedAge;
+  document.getElementById("v-lasts").textContent=lasts;
+  const pill=document.getElementById("v-pill");
+  const d=r.depletedAge;
+  pill.className="pill "+(d===null?"good":d>=90?"warn":"bad");
+  pill.textContent=d===null?"Lasts":d>=90?"Tight":"Runs out early";
+  const ret=at(p.retireAge)||rows[rows.length-1];
+  const atRet=(ret.sup+ret.sh)*adj(ret);
+  document.getElementById("v-atret").textContent=money(atRet);
+  const apRow=rows.find(x=>x.pension>500);
+  document.getElementById("v-ap").textContent=apRow?"Age "+apRow.age:"Not before 95";
+  document.getElementById("v-ap-s").textContent=apRow?(apRow.pension>=p.apMax*apRow.infl-1?"full rate":"part pension"):"assets too high";
+  const r90=at(90); document.getElementById("v-90").textContent=r90?money((r90.sup+r90.sh)*adj(r90)):"—";
+  drawChart(rows,p,adj);
+  drawGrid(p);
+  drawMilestones(rows,p,adj);
+}
+
+function drawChart(rows,p,adj){
+  const W=760,H=320,m={l:56,r:56,t:14,b:30},iw=W-m.l-m.r,ih=H-m.t-m.b;
+  const vals=rows.map(x=>({age:x.age,sup:x.sup*adj(x),sh:x.sh*adj(x),ap:x.pension*adj(x)}));
+  const maxV=Math.max(...vals.map(v=>v.sup+v.sh),1);
+  const step=niceStep(maxV/4), top=Math.ceil(maxV/step)*step;
+  const apTop=Math.max(50000,Math.ceil(Math.max(...vals.map(v=>v.ap))/10000)*10000);
+  const x=a=>m.l+(a-rows[0].age)/(rows[rows.length-1].age-rows[0].age)*iw;
+  const y=v=>m.t+ih-v/top*ih, y2=v=>m.t+ih-v/apTop*ih;
+  const area=(lo,hi)=>"M"+vals.map(v=>x(v.age)+","+y(hi(v))).join("L")+"L"+vals.slice().reverse().map(v=>x(v.age)+","+y(lo(v))).join("L")+"Z";
+  let g="";
+  for(let v=0;v<=top+1;v+=step){g+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-width="1"/><text x="${m.l-8}" y="${y(v)+4}" text-anchor="end">${money(v)}</text>`;}
+  for(let v=0;v<=apTop;v+=apTop/5){g+=`<text x="${W-m.r+8}" y="${y2(v)+4}" style="fill:var(--pension)">${money(v)}</text>`;}
+  for(let a=Math.ceil(rows[0].age/5)*5;a<=95;a+=5){g+=`<text x="${x(a)}" y="${H-10}" text-anchor="middle">${a}</text>`;}
+  const rx=x(p.retireAge);
+  g+=`<line x1="${rx}" x2="${rx}" y1="${m.t}" y2="${m.t+ih}" stroke="var(--ink)" stroke-dasharray="3 4" stroke-width="1"/><text x="${rx+6}" y="${m.t+12}" style="fill:var(--ink)">Retire ${p.retireAge}</text>`;
+  if(p.retireAge!==67&&67>rows[0].age){const ax=x(67);g+=`<line x1="${ax}" x2="${ax}" y1="${m.t}" y2="${m.t+ih}" stroke="var(--pension)" stroke-dasharray="2 4" stroke-width="1"/><text x="${ax+6}" y="${m.t+26}" style="fill:var(--pension)">Age Pension age</text>`;}
+  g+=`<path d="${area(v=>0,v=>v.sup)}" fill="var(--super)" fill-opacity=".85"/>`;
+  g+=`<path d="${area(v=>v.sup,v=>v.sup+v.sh)}" fill="var(--shares)" fill-opacity=".85"/>`;
+  g+=`<path d="M${vals.map(v=>x(v.age)+","+y2(v.ap)).join("L")}" fill="none" stroke="var(--pension)" stroke-width="2.5"/>`;
+  g+=`<line x1="${m.l}" x2="${W-m.r}" y1="${m.t+ih}" y2="${m.t+ih}" stroke="var(--muted)" stroke-width="1"/>`;
+  document.getElementById("chart").innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" style="min-width:520px" role="img" aria-label="Projected super and shares by age, with Age Pension">${g}</svg>`;
+}
+function niceStep(v){const p=Math.pow(10,Math.floor(Math.log10(v)));const n=v/p;return (n<=1?1:n<=2?2:n<=2.5?2.5:n<=5?5:10)*p;}
+
+function drawGrid(p){
+  const bizs=[0,250000,500000,750000,1000000], spends=[75000,85000,95000,110000,130000];
+  let h="<thead><tr><th>Business proceeds</th>"+spends.map(s=>`<th>Spend ${money(s)}</th>`).join("")+"</tr></thead><tbody>";
+  const nb=bizs.reduce((a,b)=>Math.abs(b-p.biz)<Math.abs(a-p.biz)?b:a), ns=spends.reduce((a,b)=>Math.abs(b-p.spend)<Math.abs(a-p.spend)?b:a);
+  for(const b of bizs){h+=`<tr><td>${money(b)}</td>`;for(const s of spends){const d=simulate({...p,biz:b,spend:s}).depletedAge;
+    const c=d===null?"cell-good":d>=90?"cell-warn":"cell-bad";h+=`<td class="${c}${b===nb&&s===ns?" me":""}">${d===null?"95+":"Age "+d}</td>`;}h+="</tr>";}
+  document.getElementById("grid").innerHTML=h+"</tbody>";
+}
+function drawMilestones(rows,p,adj){
+  const ages=[...new Set([p.retireAge,65,67,70,75,80,85,90,95])].filter(a=>a>=rows[0].age).sort((a,b)=>a-b);
+  let h="<thead><tr><th>Age</th><th>Super</th><th>Shares</th><th>Total</th><th>Spending/yr</th><th>Age Pension/yr</th></tr></thead><tbody>";
+  for(const a of ages){const x=rows.find(r=>r.age===a);if(!x)continue;const k=adj(x);
+    h+=`<tr><td>${a}</td><td>${money(x.sup*k)}</td><td>${money(x.sh*k)}</td><td>${money((x.sup+x.sh)*k)}</td><td>${x.spend?money(x.spend*k):"—"}</td><td>${x.pension?money(x.pension*k):"—"}</td></tr>`;}
+  document.getElementById("ms").innerHTML=h+"</tbody>";
+}
+ids.forEach(id=>document.getElementById(id).addEventListener("input",render));
+const br=document.getElementById("b-real"), bn=document.getElementById("b-nom");
+br.onclick=()=>{real=true;br.setAttribute("aria-pressed","true");bn.setAttribute("aria-pressed","false");render();};
+bn.onclick=()=>{real=false;bn.setAttribute("aria-pressed","true");br.setAttribute("aria-pressed","false");render();};
+render();
+</script>
