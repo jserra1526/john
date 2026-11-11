@@ -23,6 +23,9 @@ DATEF = 'dd-mmm-yyyy'
 N_TICKERS = 20          # rows available on Prices / Portfolio
 TX_ROWS = 500           # rows available on Transactions / Dividends
 TX_FIRST, TX_LAST = 5, 5 + TX_ROWS - 1
+IMP_ROWS = 1000         # rows available on CommSec Import
+IM_FIRST, IM_LAST = 6, 6 + IMP_ROWS - 1
+IMP = "'CommSec Import'"
 P_FIRST = 5             # first ticker row on Prices
 PF_FIRST = 7            # first holding row on Portfolio
 PF_LAST = PF_FIRST + N_TICKERS - 1
@@ -63,7 +66,7 @@ g.column_dimensions["A"].width = 24
 g.column_dimensions["B"].width = 95
 rows = [
     ("Step 1 – Prices", "List every share you own (ticker, name) and type its latest price. Update prices whenever you want a fresh valuation."),
-    ("Step 2 – Transactions", "Record every Buy and Sell: date, ticker, type, units, price per unit and brokerage. Net amount is calculated."),
+    ("Step 2 – Trades", "EITHER paste your CommSec CSV export into 'CommSec Import' (recommended) OR type trades into 'Transactions'. Don't enter the same trade in both – it will be counted twice."),
     ("Step 3 – Dividends", "Record each dividend received: date, ticker, units held and dividend per share. Franking/tax credits are optional."),
     ("Step 4 – Review", "Portfolio shows each holding; Summary shows the whole portfolio, capital vs dividend returns, and dividends by year."),
     ("", ""),
@@ -86,8 +89,11 @@ rows = [
     ("Assumptions", ""),
     ("Cost method", "Average cost: average cost per unit = all buy costs (incl. brokerage) ÷ all units bought. Brokerage on sells reduces sale proceeds."),
     ("Not tax advice", "Realised gains here are for tracking only. Tax rules (e.g. CGT discounts, specific-parcel matching) may differ – check with your accountant."),
-    ("Example data", "The example rows (CBA, BHP, VAS, WES) and their prices are illustrative only – delete or overwrite them with your own."),
-    ("Capacity", f"{N_TICKERS} shares, {TX_ROWS} transactions and {TX_ROWS} dividend rows. To add more shares, extend the Prices list and copy a Portfolio row down."),
+    ("CommSec import", "In CommSec: Portfolio > Accounts > Transactions, choose the date range (go back to your first purchase), download as CSV. Open the CSV, copy all rows including the header, and paste into cell A5 of 'CommSec Import'. Lines starting 'B ' (buy) or 'S ' (sell) become trades; cash transfers etc. are ignored. Brokerage is worked out from the Debit/Credit amount."),
+    ("Check column", "Every trade row on 'CommSec Import' shows a Status. 'Add XYZ to Prices' means that ticker is missing from the Prices sheet – add it and its price or it won't appear in Portfolio. The Summary sheet warns you if any rows need attention."),
+    ("Dividends", "CommSec's trading-account export doesn't include dividends (they're paid to your bank account) – enter them on the Dividends sheet from your share registry statements."),
+    ("Example data", "Before importing, delete the example trades on 'Transactions' and the example dividends. The example rows (CBA, BHP, VAS, WES) and their prices are illustrative only – delete or overwrite them with your own."),
+    ("Capacity", f"{N_TICKERS} shares, {TX_ROWS} manual transactions, {IMP_ROWS} CommSec import rows and {TX_ROWS} dividend rows. To add more shares, extend the Prices list and copy a Portfolio row down."),
 ]
 for i, (a, b) in enumerate(rows, 4):
     g.cell(row=i, column=1, value=a).font = f(bold=True)
@@ -151,6 +157,45 @@ for i in range(TX_ROWS):
 t["H5"] = "Example row – overwrite with your own"
 t.freeze_panes = "A5"
 
+# ---------------------------------------------------------------- CommSec Import
+im = wb.create_sheet("CommSec Import")
+title(im, "CommSec Import", "Paste your CommSec Transactions CSV (all rows incl. header) into cell A5. Columns H–N are calculated.")
+im["A3"] = "Paste area (A–F)  →"
+im["A3"].font = f(BLUE, bold=True)
+im["H3"] = "Parsed trades – do not edit"
+im["H3"].font = f(bold=True, color="1F3864")
+header(im, 5, ["Date", "Reference", "Details", "Debit($)", "Credit($)", "Balance($)", "",
+               "Type", "Ticker", "Units", "Price per Unit ($)", "Net Amount ($)", "Brokerage ($)", "Status"],
+       [13, 12, 34, 12, 12, 13, 2, 8, 9, 10, 14, 15, 13, 26])
+im.cell(row=5, column=7).fill = PatternFill(None)
+IM_TICKERS = f"Prices!$A${P_FIRST}:$A${P_FIRST + N_TICKERS - 1}"
+for i in range(IMP_ROWS):
+    r = IM_FIRST + i
+    for col, fmt in ((1, DATEF), (2, None), (3, None), (4, CUR), (5, CUR), (6, CUR)):
+        c = im.cell(row=r, column=col)
+        c.font = f(BLUE); c.fill = INPUT_FILL
+        if fmt: c.number_format = fmt
+    D = f"TRIM($C{r})"
+    sp = f'FIND(" ",{D},3)'
+    at = f'FIND("@",{D})'
+    formulas = {
+        8: (f'=IF(LEFT({D},2)="B ","Buy",IF(LEFT({D},2)="S ","Sell",""))', None),
+        9: (f'=IF($H{r}="","",TRIM(MID({D},{sp}+1,{at}-{sp}-1)))', None),
+        10: (f'=IF($H{r}="","",VALUE(MID({D},3,{sp}-3)))', UNITS),
+        11: (f'=IF($H{r}="","",VALUE(TRIM(MID({D},{at}+1,50))))', '$#,##0.0000'),
+        12: (f'=IF($H{r}="","",IF($H{r}="Buy",ABS(VALUE($D{r})),ABS(VALUE($E{r}))))', CUR),
+        13: (f'=IF($H{r}="","",ROUND(IF($H{r}="Buy",L{r}-J{r}*K{r},J{r}*K{r}-L{r}),2))', CUR),
+        14: (f'=IF($C{r}="","",IF($H{r}="","Ignored (not a trade)",'
+             f'IF(ISERROR(J{r}+K{r}+L{r}),"Check row – could not read",'
+             f'IF(ISNA(MATCH(I{r},{IM_TICKERS},0)),"Add "&I{r}&" to Prices","OK"))))', None),
+    }
+    for col, (fm, fmt) in formulas.items():
+        c = im.cell(row=r, column=col, value=fm)
+        c.font = f(); c.border = BOX
+        if fmt: c.number_format = fmt
+im.freeze_panes = "A6"
+IMP_STATUS = f"{IMP}!$N${IM_FIRST}:$N${IM_LAST}"
+
 # ---------------------------------------------------------------- Dividends
 d = wb.create_sheet("Dividends")
 title(d, "Dividends Received", "Record each dividend payment. Cash dividend = units held × dividend per share")
@@ -204,6 +249,7 @@ header(pf, 6, ["Ticker", "Name", "Units Bought", "Units Sold", "Units Held",
                "Capital Return %", "Dividend Return %", "Total Return %", "Portfolio Weight %"],
        [10, 30, 10, 10, 10, 15, 13, 15, 12, 15, 15, 11, 14, 14, 14, 14, 14, 11, 11, 11, 11])
 TX = lambda col: f"Transactions!${col}${TX_FIRST}:${col}${TX_LAST}"
+IM = lambda col: f"{IMP}!${col}${IM_FIRST}:${col}${IM_LAST}"
 DV = lambda col: f"Dividends!${col}${TX_FIRST}:${col}${TX_LAST}"
 for i in range(N_TICKERS):
     r = PF_FIRST + i
@@ -212,17 +258,17 @@ for i in range(N_TICKERS):
     cells = {
         "A": (f'=IF(Prices!A{pr}="","",Prices!A{pr})', None, GREEN),
         "B": (f'=IF(Prices!B{pr}="","",Prices!B{pr})', None, GREEN),
-        "C": (f'={blank}SUMIFS({TX("D")},{TX("B")},$A{r},{TX("C")},"Buy"))', UNITS, BLACK),
-        "D": (f'={blank}SUMIFS({TX("D")},{TX("B")},$A{r},{TX("C")},"Sell"))', UNITS, BLACK),
+        "C": (f'={blank}SUMIFS({TX("D")},{TX("B")},$A{r},{TX("C")},"Buy")+SUMIFS({IM("J")},{IM("I")},$A{r},{IM("H")},"Buy"))', UNITS, BLACK),
+        "D": (f'={blank}SUMIFS({TX("D")},{TX("B")},$A{r},{TX("C")},"Sell")+SUMIFS({IM("J")},{IM("I")},$A{r},{IM("H")},"Sell"))', UNITS, BLACK),
         "E": (f'={blank}C{r}-D{r})', UNITS, BLACK),
-        "F": (f'={blank}SUMIFS({TX("G")},{TX("B")},$A{r},{TX("C")},"Buy"))', CUR, BLACK),
+        "F": (f'={blank}SUMIFS({TX("G")},{TX("B")},$A{r},{TX("C")},"Buy")+SUMIFS({IM("L")},{IM("I")},$A{r},{IM("H")},"Buy"))', CUR, BLACK),
         "G": (f'={blank}IF(C{r}=0,0,F{r}/C{r}))', CUR, BLACK),
         "H": (f'={blank}E{r}*G{r})', CUR, BLACK),
         "I": (f'=IF($A{r}="","",Prices!C{pr})', CUR, GREEN),
         "J": (f'={blank}E{r}*I{r})', CUR, BLACK),
         "K": (f'={blank}J{r}-H{r})', CUR, BLACK),
         "L": (f'={blank}IF(H{r}=0,0,K{r}/H{r}))', PCT, BLACK),
-        "M": (f'={blank}SUMIFS({TX("G")},{TX("B")},$A{r},{TX("C")},"Sell"))', CUR, BLACK),
+        "M": (f'={blank}SUMIFS({TX("G")},{TX("B")},$A{r},{TX("C")},"Sell")+SUMIFS({IM("L")},{IM("I")},$A{r},{IM("H")},"Sell"))', CUR, BLACK),
         "N": (f'={blank}M{r}-D{r}*G{r})', CUR, BLACK),
         "O": (f'={blank}K{r}+N{r})', CUR, BLACK),
         "P": (f'={blank}SUMIFS({DV("E")},{DV("B")},$A{r}))', CUR, BLACK),
@@ -258,6 +304,10 @@ pf.freeze_panes = "C7"
 # ---------------------------------------------------------------- Summary
 s = wb.create_sheet("Summary", 1)
 title(s, "Portfolio Summary", "Whole-portfolio snapshot – everything here is calculated from the other sheets")
+s["A3"] = (f'=IF(COUNTIF({IMP_STATUS},"Add*")+COUNTIF({IMP_STATUS},"Check*")=0,"",'
+           f'"⚠ "&(COUNTIF({IMP_STATUS},"Add*")+COUNTIF({IMP_STATUS},"Check*"))'
+           f'&" CommSec import row(s) need attention – see Status column on CommSec Import")')
+s["A3"].font = Font(name=FONT, bold=True, color="C00000")
 s.column_dimensions["A"].width = 34
 s.column_dimensions["B"].width = 18
 s.column_dimensions["C"].width = 4
